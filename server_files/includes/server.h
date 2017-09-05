@@ -36,6 +36,9 @@
 # define MASTER_ADDRLEN	g_env.main_sock.addrlen
 # define MASTER_MAX_SD	g_env.main_sock.max_sd
 
+# define INPUT_FLAG(X)	g_env.settings.set_flags.X
+# define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
+
 // # define RET_ERR(X)		{MSG_ERROR=ft_strdup(X);return(0);}
 
 /*
@@ -47,6 +50,16 @@
 /*
 ** env components
 */
+typedef struct		s_flags
+{
+	char			p:1;
+	char			x:1;
+	char			y:1;
+	char			n:1;
+	char			c:1;
+	char			t:1;
+}					t_flags;
+
 typedef struct		s_team
 {
 	char			*name;
@@ -74,6 +87,7 @@ typedef struct		s_settings
 	unsigned int	num_start_clients;
 	float			fps;
 	t_team			*teams;
+	t_flags			set_flags;
 }					t_settings;
 
 /*

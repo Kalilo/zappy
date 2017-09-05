@@ -14,14 +14,14 @@
 
 static char	parse_basic_arg2(int ac, char **av, int *k, int itmp)
 {
-	if (!ft_strcmp(av[*k], "-c"))
+	if (!ft_strcmp(av[*k], "-c") && SET_FLAG(c))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify number of clients.");
-		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 10,
+		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 2,
 			"Invalid number of clients.");
 		g_env.settings.num_start_clients = itmp;
 	}
-	else if (!ft_strcmp(av[*k], "-t"))
+	else if (!ft_strcmp(av[*k], "-t") && SET_FLAG(t))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify time unit.");
 		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 10,
@@ -35,20 +35,20 @@ static char	parse_basic_arg2(int ac, char **av, int *k, int itmp)
 
 static char	parse_basic_arg(int ac, char **av, int *k, int itmp)
 {
-	if (!ft_strcmp(av[*k], "-p"))
+	if (!ft_strcmp(av[*k], "-p") && SET_FLAG(p))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify port.");
 		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 0 || itmp >= SHRT_MAX,
 			"Invalid port number.");
 		g_env.settings.port = itmp;
 	}
-	else if (!ft_strcmp(av[*k], "-x"))
+	else if (!ft_strcmp(av[*k], "-x") && SET_FLAG(x))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify width.");
 		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 10, "Invalid width.");
 		g_env.settings.width = itmp;
 	}
-	else if (!ft_strcmp(av[*k], "-y"))
+	else if (!ft_strcmp(av[*k], "-y") && SET_FLAG(y))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify height.");
 		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 10, "Invalid height.");
@@ -96,7 +96,7 @@ void		parse_arguments(int ac, char **av)
 	{
 		if (parse_basic_arg(ac, av, &k, itmp))
 			continue ;
-		else if (!ft_strcmp(av[k], "-n"))
+		else if (!ft_strcmp(av[k], "-n") && SET_FLAG(n))
 			parse_teams(ac, av, &k, itmp);
 		else
 			error_quit(ft_strjoin("Unknown paramiter: ", av[k]));

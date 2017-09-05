@@ -136,6 +136,11 @@ char				init_main_socket(int port);
 void				set_defults(void);
 
 /*
+** input_flags.c
+*/
+char				is_input_flag_set(char *flag);
+
+/*
 ** parse_arguments.c
 */
 void				parse_arguments(int ac, char **av);

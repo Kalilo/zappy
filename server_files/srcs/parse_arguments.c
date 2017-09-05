@@ -98,6 +98,8 @@ void		parse_arguments(int ac, char **av)
 			continue ;
 		else if (!ft_strcmp(av[k], "-n") && SET_FLAG(n))
 			parse_teams(ac, av, &k, itmp);
+		else if (is_input_flag_set(av[k]))
+			error_quit(ft_strjoin(av[k], " flag already set."));
 		else
 			error_quit(ft_strjoin("Unknown paramiter: ", av[k]));
 	}

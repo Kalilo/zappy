@@ -73,7 +73,7 @@ typedef struct		s_settings
 	unsigned int	num_teams;
 	unsigned int	num_start_clients;
 	float			fps;
-	s_team			*teams;
+	t_team			*teams;
 }					t_settings;
 
 /*
@@ -116,7 +116,12 @@ void				accept_new_client(void);
 /*
 ** init.c
 */
-char				init(int port);
+char				init_main_socket(int port);
+
+/*
+** parse_arguments.c
+*/
+void				parse_arguments(int ac, char **av);
 
 /*
 **                                /----------\                                **

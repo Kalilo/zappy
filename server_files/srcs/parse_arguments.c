@@ -12,7 +12,7 @@
 
 #include "../includes/server.h"
 
-char	parse_basic_arg2(int ac, char **av, int *k, int itmp)
+static char	parse_basic_arg2(int ac, char **av, int *k, int itmp)
 {
 	if (!ft_strcmp(av[*k], "-c"))
 	{
@@ -33,7 +33,7 @@ char	parse_basic_arg2(int ac, char **av, int *k, int itmp)
 	return (1);
 }
 
-char	parse_basic_arg(int ac, char **av, int *k, int itmp)
+static char	parse_basic_arg(int ac, char **av, int *k, int itmp)
 {
 	if (!ft_strcmp(av[*k], "-p"))
 	{
@@ -59,7 +59,7 @@ char	parse_basic_arg(int ac, char **av, int *k, int itmp)
 	return (1);
 }
 
-char	parse_teams(int ac, char **av, int *k, int itmp)
+static char	parse_teams(int ac, char **av, int *k, int itmp)
 {
 	t_team	*team;
 	t_team	*previous;
@@ -72,7 +72,8 @@ char	parse_teams(int ac, char **av, int *k, int itmp)
 	while (itmp-- && ++k)
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please specify team's name");
-		team = (t_team *)ft_strnew(sizeof(t_team));
+		if (!(team = (t_team *)ft_strnew(sizeof(t_team))))
+			error_quit("Insufficient memory avaliable.");
 		team->name = av[(*k)];
 		team->id = itmp;
 		if (previous)
@@ -83,7 +84,7 @@ char	parse_teams(int ac, char **av, int *k, int itmp)
 	}
 }
 
-void	parse_arguments(int ac, char **av)
+void		parse_arguments(int ac, char **av)
 {
 	int		k;
 	int		itmp;

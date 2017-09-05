@@ -36,11 +36,10 @@ void	sig_setter(void)
 		signal(k, sig_listener);
 }
 
-char	init(int port)
+char	init_main_socket(int port)
 {
 	if (port <= 0 || SHRT_MAX <= port)
 		error_quit("Invalid port number given.");
-	ft_bzero(&g_env, sizeof(t_env));
 	if ((MASTER_SOCK = socket(AF_INET, SOCK_STREAM, 0)) == 0)
 		error_quit("Failed to open master socket.");
 	sig_setter();

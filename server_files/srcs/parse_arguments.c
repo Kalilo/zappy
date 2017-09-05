@@ -82,6 +82,7 @@ static char	parse_teams(int ac, char **av, int *k, int itmp)
 			g_env.settings.teams = team;
 		previous = team;
 	}
+	return (1);
 }
 
 void		parse_arguments(int ac, char **av)
@@ -97,5 +98,7 @@ void		parse_arguments(int ac, char **av)
 			continue ;
 		else if (!ft_strcmp(av[k], "-n"))
 			parse_teams(ac, av, &k, itmp);
+		else
+			error_quit(ft_strjoin("Unknown paramiter: ", av[k]));
 	}
 }

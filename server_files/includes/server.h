@@ -116,7 +116,10 @@ void				accept_new_client(void);
 /*
 ** init.c
 */
+void				sig_listener(int signo);
+void				sig_setter(void);
 char				init_main_socket(int port);
+void				set_defults(void);
 
 /*
 ** parse_arguments.c

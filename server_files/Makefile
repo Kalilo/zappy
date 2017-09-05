@@ -12,7 +12,10 @@
 
 NAME = server
 
-SRCS_NAME =		\
+SRCS_NAME =		accept_new_client.c			\
+				init.c						\
+				main.c						\
+				parse_arguments.c			\
 
 HEADER_NAMES =	server.h					\
 
@@ -22,7 +25,7 @@ else
 SYS = LINUX
 endif
 
-CFLAGS =	-Wall -Wextra -Werror -O3
+CFLAGS =	-Wall -Wextra -Werror -O3 -Wno-constant-logical-operand
 
 ifeq ($(SYS), OSX) 
 

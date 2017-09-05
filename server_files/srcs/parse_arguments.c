@@ -69,12 +69,12 @@ static char	parse_teams(int ac, char **av, int *k, int itmp)
 		"Invalid number of teams.");
 	g_env.settings.num_teams = itmp;
 	previous = NULL;
-	while (itmp-- && ++k)
+	while (itmp-- && k)
 	{
-		ERR_QUIT_CON((*k + 1) >= ac, "Please specify team's name");
+		ERR_QUIT_CON(((*k) + 1) >= ac, "Please specify team's name");
 		if (!(team = (t_team *)ft_strnew(sizeof(t_team))))
 			error_quit("Insufficient memory avaliable.");
-		team->name = av[(*k)];
+		team->name = av[(*k)++];
 		team->id = itmp;
 		if (previous)
 			previous->next = team;

@@ -53,6 +53,7 @@ typedef struct		s_team
 	int				id;
 	unsigned int	num_members;
 	unsigned int	max_members;
+	struct s_team	*next;
 }					t_team;
 
 typedef struct		s_main_sock
@@ -72,8 +73,7 @@ typedef struct		s_settings
 	unsigned int	num_teams;
 	unsigned int	num_start_clients;
 	float			fps;
-	//linked list of teams.
-
+	s_team			*teams;
 }					t_settings;
 
 /*

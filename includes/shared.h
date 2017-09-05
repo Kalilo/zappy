@@ -70,6 +70,8 @@
 
 # define FREE_LST(x)	free(x->content);free(x);
 
+# define ERR_QUIT_CON(X, Y) if(X)error_quit(Y)
+
 /*
 ** Typedefs
 */

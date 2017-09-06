@@ -61,18 +61,23 @@ void	set_defults(void)
 {
 	t_team	*team;
 
-	g_env.settings.port = g_env.settings.port || 4000;
-	g_env.settings.width = g_env.settings.width || 100;
-	g_env.settings.height = g_env.settings.height || 100;
-	g_env.settings.num_teams = g_env.settings.num_teams || 1;
-	g_env.settings.num_start_clients = g_env.settings.num_start_clients || 10;
-	g_env.settings.fps = g_env.settings.fps || 30;
-	if (!g_env.settings.teams)
+	if (!INPUT_FLAG(p))
+		g_env.settings.port = 4000;
+	if (!INPUT_FLAG(x))
+		g_env.settings.width = 100;
+	if (!INPUT_FLAG(y))
+		g_env.settings.height = 100;
+	if (!INPUT_FLAG(c))
+		g_env.settings.num_start_clients = 10;
+	if (!INPUT_FLAG(t))
+		g_env.settings.fps = 30;
+	if (!INPUT_FLAG(n))
 	{
 		if (!(team = (t_team *)ft_strnew(sizeof(t_team))))
 			error_quit("Insufficient memory avaliable.");
 		team->name = "Team00";
 		team->id = 1;
+		g_env.settings.num_teams = 1;
 		g_env.settings.teams = team;
 	}
 }

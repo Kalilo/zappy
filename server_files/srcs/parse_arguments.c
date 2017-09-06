@@ -85,6 +85,21 @@ static char	parse_teams(int ac, char **av, int *k, int itmp)
 	return (1);
 }
 
+static void	print_help(char **av)
+{
+	printf("Usage: %s -p <port> -x <width> -y <height> ", av[0]);
+	printf("-n <team> [<team>] [<team>] ... -c <nb> -t <t>\n\n");
+	printf("-p\tport number\n");
+	printf("-x\tworld width\n");
+	printf("-y\tworld height\n");
+	printf("-n\tteam_name_1 team_name_2 ...\n");
+	printf("-c\tnumber of clients authorized at the beginning of the game\n");
+	printf("-t\ttime unit divider (the greater, the faster the game runs)\n");
+	printf("-h\t(--help) print this help menu\n");
+	printf("\n");
+	exit(0);
+}
+
 void		parse_arguments(int ac, char **av)
 {
 	int		k;
@@ -98,6 +113,8 @@ void		parse_arguments(int ac, char **av)
 			continue ;
 		else if (!ft_strcmp(av[k], "-n") && SET_FLAG(n))
 			parse_teams(ac, av, &k, itmp);
+		else if (!ft_strcmp(av[k], "-h") || !ft_strcmp(av[k], "--help"))
+			print_help(av);
 		else if (is_input_flag_set(av[k]))
 			error_quit(ft_strjoin(av[k], " flag already set."));
 		else

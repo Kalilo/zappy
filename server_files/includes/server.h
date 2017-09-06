@@ -81,9 +81,10 @@ typedef struct		s_client
 	unsigned int	pos_x;
 	unsigned int	pos_y;
 	t_direction		direction;
+	int				delay;
 	//inventory
 	//buffer of commands
-	int				delay;
+	//next client
 }					t_struct;
 
 typedef struct		s_team

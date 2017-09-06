@@ -26,6 +26,8 @@ char	is_input_flag_set(char *flag)
 		return (INPUT_FLAG(c));
 	if (!ft_strcmp(flag, "-t"))
 		return (INPUT_FLAG(t));
+	if (!ft_strcmp(flag, "-h") || !ft_strcmp(flag, "--help"))
+		return (0);
 	error_quit(ft_strjoin("unrecognized input flag: ", flag));
 	return (0);
 }

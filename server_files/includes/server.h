@@ -28,6 +28,11 @@
 */
 
 /*
+** limits
+*/
+# define MAX_CLIENTS	SHRT_MAX
+
+/*
 ** shorthand
 */
 # define MASTER_SOCK	g_env.main_sock.sock
@@ -39,7 +44,16 @@
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
-// # define RET_ERR(X)		{MSG_ERROR=ft_strdup(X);return(0);}
+/*
+** enums
+*/
+typedef enum		e_direction
+{
+	north,
+	east,
+	south,
+	west
+}					t_direction;
 
 /*
 ** ----------\
@@ -48,7 +62,7 @@
 */
 
 /*
-** env components
+** General
 */
 typedef struct		s_flags
 {
@@ -60,6 +74,18 @@ typedef struct		s_flags
 	char			t:1;
 }					t_flags;
 
+typedef struct		s_client
+{
+	unsigned int	sock;
+	int				team_id;
+	unsigned int	pos_x;
+	unsigned int	pos_y;
+	t_direction		direction;
+	//inventory
+	//buffer of commands
+	int				delay;
+}					t_struct;
+
 typedef struct		s_team
 {
 	char			*name;
@@ -69,6 +95,9 @@ typedef struct		s_team
 	struct s_team	*next;
 }					t_team;
 
+/*
+** env components
+*/
 typedef struct		s_main_sock
 {
 	int				sock_opt;

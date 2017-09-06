@@ -89,12 +89,14 @@ static void	print_help(char **av)
 {
 	printf("Usage: %s -p <port> -x <width> -y <height> ", av[0]);
 	printf("-n <team> [<team>] [<team>] ... -c <nb> -t <t>\n\n");
-	printf("-p\tport number\n");
-	printf("-x\tworld width\n");
-	printf("-y\tworld height\n");
-	printf("-n\tteam_name_1 team_name_2 ...\n");
-	printf("-c\tnumber of clients authorized at the beginning of the game\n");
-	printf("-t\ttime unit divider (the greater, the faster the game runs)\n");
+	printf("-p\tport number (default 4000)\n");
+	printf("-x\tworld width (defult 100)\n");
+	printf("-y\tworld height (defult 100)\n");
+	printf("-n\tteam_name_1 team_name_2 ... (defult Team00)\n");
+	printf("-c\tnumber of clients authorized at the beginning of the game ");
+	printf("(defult 10)\n");
+	printf("-t\ttime unit divider (the greater, the faster the game runs) ");
+	printf("(defult 30)\n");
 	printf("-h\t(--help) print this help menu\n");
 	printf("\n");
 	exit(0);

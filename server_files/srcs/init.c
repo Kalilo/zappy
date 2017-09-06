@@ -72,7 +72,7 @@ void	set_defults(void)
 		if (!(team = (t_team *)ft_strnew(sizeof(t_team))))
 			error_quit("Insufficient memory avaliable.");
 		team->name = "Team00";
-		team->id = 0;
+		team->id = 1;
 		g_env.settings.teams = team;
 	}
 }

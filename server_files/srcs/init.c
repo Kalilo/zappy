@@ -20,6 +20,7 @@
 
 void	sig_listener(int signo)
 {
+	printf("\rgot signal: %d                    \n", signo);//debug
 	if (signo == SIGPIPE || signo == SIGURG || signo == SIGCONT ||
 			signo == SIGCHLD || signo == SIGIO)
 		return ;

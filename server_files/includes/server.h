@@ -188,6 +188,7 @@ void				accept_new_client(void);
 */
 t_client			*new_client(unsigned int sock);
 void				delete_client(t_client *client);
+void				delete_all_clients(void);
 
 /*
 ** command_lst.c

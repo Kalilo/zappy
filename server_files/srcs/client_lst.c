@@ -51,3 +51,17 @@ void	delete_client(t_client *client)
 		free(client);
 	}
 }
+
+void	delete_all_clients(void)
+{
+	t_client	*client;
+	t_client	*tmp;
+
+	client = g_env.clients;
+	while (client)
+	{
+		tmp = client;
+		client = client->next;
+		delete_client(tmp);
+	}
+}

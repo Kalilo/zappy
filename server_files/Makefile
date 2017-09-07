@@ -18,6 +18,7 @@ SRCS_NAME =		accept_new_client.c			\
 				init.c						\
 				input_flags.c				\
 				main.c						\
+				manage_clients.c			\
 				parse_arguments.c			\
 				prep_client_sockets.c		\
 

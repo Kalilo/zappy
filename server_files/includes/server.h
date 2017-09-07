@@ -42,6 +42,8 @@
 # define MASTER_MAX_SD	g_env.main_sock.max_sd
 
 # define READ_FDS		g_env.main_sock.read_fds
+# define ACTIVE_SOCK	g_env.active_sock
+# define LINE			g_env.line
 
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
@@ -110,6 +112,7 @@ typedef struct		s_client
 	t_direction		direction;
 	int				delay;
 	t_inventory		inventory;
+	int				num_commands;
 	t_comm			*command;
 	struct s_client	*next;
 }					t_client;
@@ -155,6 +158,7 @@ typedef struct		s_env
 {
 	t_main_sock		main_sock;
 	int				active_sock;
+	char			*line;
 	t_settings		settings;
 	t_client		*clients;
 }					t_env;
@@ -212,6 +216,11 @@ void				set_defults(void);
 ** input_flags.c
 */
 char				is_input_flag_set(char *flag);
+
+/*
+** manage_clients.c
+*/
+void				manage_clients(void);
 
 /*
 ** parse_arguments.c

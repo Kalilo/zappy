@@ -37,6 +37,7 @@ t_comm	*new_command(t_client *client, char *comm_str)
 			return (NULL);
 		}
 	}
+	(client->num_commands)++;
 	return (command);
 }
 
@@ -63,6 +64,8 @@ void	delete_command(t_client *client, t_comm *command)
 		ft_strdel(&command->str);
 		free(command);
 	}
+	if (client->num_commands)
+		client->num_commands--;
 }
 
 void	delete_all_commands(t_client *client)

@@ -33,6 +33,7 @@ int		main(int ac, char **av)
 	ft_bzero(&g_env, sizeof(t_env));
 	parse_arguments(ac, av);
 	set_defults();
+	init_main_socket(g_env.settings.port);
 	main_loop();
 	return (0);
 }

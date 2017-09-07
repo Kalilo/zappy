@@ -41,6 +41,8 @@
 # define MASTER_ADDRLEN	g_env.main_sock.addrlen
 # define MASTER_MAX_SD	g_env.main_sock.max_sd
 
+# define READ_FDS		g_env.main_sock.read_fds
+
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
@@ -131,6 +133,7 @@ typedef struct		s_main_sock
 	int				addrlen;
 	int				max_sd;
 	t_sock_addrin	addr;
+	fd_set			read_fds;
 }					t_main_sock;
 
 typedef struct		s_settings
@@ -214,6 +217,11 @@ char				is_input_flag_set(char *flag);
 ** parse_arguments.c
 */
 void				parse_arguments(int ac, char **av);
+
+/*
+** prep_client_sockets.c
+*/
+void				prep_client_sockets(void);
 
 /*
 **                                /----------\                                **

@@ -62,6 +62,25 @@ typedef enum		e_direction
 */
 
 /*
+** Gameplay
+*/
+typedef struct		s_inventory
+{
+	unsigned short	linemate;
+	unsigned short	deraumere;
+	unsigned short	sibur;
+	unsigned short	mendiane;
+	unsigned short	phiras;
+	unsigned short	thystame;
+}					t_inventory;
+
+// typedef struct		s_tile
+// {
+// 	t_inventory		inventory;
+// 	int				num_players;
+// }					t_tile;
+
+/*
 ** General
 */
 typedef struct		s_flags
@@ -74,6 +93,12 @@ typedef struct		s_flags
 	char			t:1;
 }					t_flags;
 
+typedef struct		s_comm
+{
+	char			*str;
+	struct s_comm	*next;
+}					t_comm;
+
 typedef struct		s_client
 {
 	unsigned int	sock;
@@ -82,10 +107,10 @@ typedef struct		s_client
 	unsigned int	pos_y;
 	t_direction		direction;
 	int				delay;
-	//inventory
-	//buffer of commands
-	//next client
-}					t_struct;
+	t_inventory		inventory;
+	t_comm			*command;
+	struct s_client	*next;
+}					t_client;
 
 typedef struct		s_team
 {
@@ -128,6 +153,7 @@ typedef struct		s_env
 	t_main_sock		main_sock;
 	int				active_sock;
 	t_settings		settings;
+	t_client		*clients;
 }					t_env;
 
 /*
@@ -156,6 +182,19 @@ extern t_env		g_env;
 ** accept_new_client.c
 */
 void				accept_new_client(void);
+
+/*
+** client_lst.c
+*/
+t_client			*new_client(unsigned int sock);
+void				delete_client(t_client *client);
+
+/*
+** command_lst.c
+*/
+t_comm				*new_command(t_client *client, char *comm_str);
+void				delete_command(t_client *client, t_comm *command);
+void				delete_all_commands(t_client *client);
 
 /*
 ** init.c

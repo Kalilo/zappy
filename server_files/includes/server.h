@@ -43,7 +43,7 @@
 
 # define READ_FDS		g_env.main_sock.read_fds
 # define ACTIVE_SOCK	g_env.active_sock
-# define LINE			g_env.line
+# define GNL_LINE			g_env.line
 
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))

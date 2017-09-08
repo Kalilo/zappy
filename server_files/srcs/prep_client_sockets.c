@@ -29,5 +29,6 @@ void	prep_client_sockets(void)
 		if (sd > MASTER_MAX_SD)
 			MASTER_MAX_SD = sd;
 		FD_SET(sd, &READ_FDS);
+		client = client->next;
 	}
 }

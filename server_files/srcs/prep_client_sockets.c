@@ -19,10 +19,13 @@ void	prep_client_sockets(void)
 
 	FD_ZERO(&READ_FDS);
 	FD_SET(MASTER_SOCK, &READ_FDS);
+	MASTER_MAX_SD = MASTER_SOCK;
 	client = g_env.clients;
 	while (client)
 	{
 		sd = client->sock;
+		if (sd < 1)
+			continue ;
 		if (sd > MASTER_MAX_SD)
 			MASTER_MAX_SD = sd;
 		FD_SET(sd, &READ_FDS);

@@ -19,7 +19,7 @@ void	main_loop(void)
 	{
 		prep_client_sockets();
 		//change to have a delay timer...
-		// ACTIVE_SOCK = select(MASTER_MAX_SD + 1, &READ_FDS, NULL, NULL, NULL);
+		ACTIVE_SOCK = select(MASTER_MAX_SD + 1, &READ_FDS, NULL, NULL, NULL);
 		if (ACTIVE_SOCK < 0)
 			error_quit("Failed to monitor sockets.");
 		if (FD_ISSET(MASTER_SOCK, &READ_FDS))

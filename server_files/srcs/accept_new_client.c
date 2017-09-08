@@ -20,5 +20,6 @@ void	accept_new_client(void)
 			(socklen_t *)&MASTER_ADDRLEN)) < 0)
 		error_quit("Failed to accept new client");
 	ft_putendl("New client connected.");
-	new_client(sock);
+	if (!new_client(sock))
+		error_quit("Failed to create new client");
 }

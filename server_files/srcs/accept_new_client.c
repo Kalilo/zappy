@@ -22,4 +22,6 @@ void	accept_new_client(void)
 	ft_putendl("New client connected.");
 	if (!new_client(sock))
 		error_quit("Failed to create new client");
+	if (write_msg_to_sock(sock, "WELCOME\n") < 1)
+		error_quit("Failed to accept client connection");
 }

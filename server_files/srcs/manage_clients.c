@@ -30,10 +30,11 @@ void	manage_clients(void)
 				ft_putendl("Client disconnected...");
 				close(sd);
 				client = (previous) ? previous : g_env.clients;
-				delete_client(previous->next);
+				delete_client((previous) ? previous->next : g_env.clients);
 			}
 			else
 				new_command(client, GNL_LINE);
+			GNL_LINE = NULL;
 		}
 		previous = client;
 		client = client->next;

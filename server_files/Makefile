@@ -17,7 +17,6 @@ SRCS_NAME =		accept_new_client.c			\
 				client_lst.c				\
 				command_lst.c				\
 				command_validation.c		\
-				do_command.c				\
 				gameplay.c					\
 				init.c						\
 				input_flags.c				\
@@ -26,6 +25,7 @@ SRCS_NAME =		accept_new_client.c			\
 				parse_arguments.c			\
 				populate_map.c				\
 				prep_client_sockets.c		\
+				run_command.c				\
 
 HEADER_NAMES =	server.h					\
 

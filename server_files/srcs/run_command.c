@@ -12,7 +12,7 @@
 
 #include "../includes/server.h"
 
-void	do_command(t_client *client, char *command)
+void	run_command(t_client *client, char *command)
 {
 	if (!ft_strncmp(command, "a", 1))
 		(void)command;

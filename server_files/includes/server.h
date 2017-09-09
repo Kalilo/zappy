@@ -236,9 +236,9 @@ char				valid_command(char *str);
 char				can_do_command(char *str, int delay);
 
 /*
-** do_command.c
+** run_command.c
 */
-void				do_command(t_client *client, char *command);
+void				run_command(t_client *client, char *command);
 
 /*
 ** gameplay.c

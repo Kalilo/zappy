@@ -112,6 +112,7 @@ typedef struct		s_client
 	t_inventory		inventory;
 	int				num_commands;
 	t_comm			*command;
+	int				level;
 	struct s_client	*next;
 }					t_client;
 
@@ -233,6 +234,18 @@ void				delete_all_commands(t_client *client);
 */
 char				valid_command(char *str);
 char				can_do_command(char *str, int delay);
+
+/*
+** do_command.c
+*/
+void				do_command(t_client *client, char *command);
+
+/*
+** gameplay.c
+*/
+void				play_choice(void);
+void				inc_user_delays(void);
+char				run_iteration(void);
 
 /*
 ** init.c

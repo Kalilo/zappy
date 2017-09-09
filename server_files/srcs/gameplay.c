@@ -19,8 +19,9 @@ void	play_choice(void)
 	client = g_env.clients;
 	while (client)
 	{
-		if (can_do_command(client->command->str, client->delay))
-			(void)client;//execute the command here.
+		if (client->command &&
+				can_do_command(client->command->str, client->delay))
+			do_command(client, client->command->str);
 		client = client->next;
 	}
 }

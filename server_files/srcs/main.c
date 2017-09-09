@@ -25,7 +25,7 @@ void	main_loop(void)
 		if (FD_ISSET(MASTER_SOCK, &READ_FDS))
 			accept_new_client();
 		manage_clients();
-		//game play
+		run_iteration();
 	}
 }
 

@@ -16,4 +16,5 @@ void	do_advance(t_client *client)
 {
 	move_cli(client, client->direction);
 	write_msg_to_sock(client->sock, "ok\n");
+	client->delay -= 7;
 }

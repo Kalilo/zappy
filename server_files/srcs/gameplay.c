@@ -33,7 +33,8 @@ void	inc_user_delays(void)
 	client = g_env.clients;
 	while (client)
 	{
-		client->delay++;
+		if (client->command)
+			client->delay++;
 		client = client->next;
 	}
 }

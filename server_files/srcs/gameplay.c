@@ -12,10 +12,36 @@
 
 #include "../includes/server.h"
 
+void	play_choice(void)
+{
+	t_client	*client;
+
+	client = g_env.clients;
+	while (client)
+	{
+		if (can_do_command(client->command->str, client->delay))
+			(void)client;//execute the command here.
+		client = client->next;
+	}
+}
+
+void	inc_user_delays(void)
+{
+	t_client	*client;
+
+	client = g_env.clients;
+	while (client)
+	{
+		client->delay++;
+		client = client->next;
+	}
+}
+
 char	run_iteration(void)
 {
-	// read client instructions.
-	// play appropiate moves.
+	play_choice();
 	// generate resources.
+	inc_user_delays();
+	// check if the game is still in play
 	return (1);//if the game is still in play
 }

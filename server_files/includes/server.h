@@ -229,6 +229,12 @@ void				delete_command(t_client *client, t_comm *command);
 void				delete_all_commands(t_client *client);
 
 /*
+** command_validation.c
+*/
+char				valid_command(char *str);
+char				can_do_command(char *str, int delay);
+
+/*
 ** init.c
 */
 void				sig_listener(int signo);

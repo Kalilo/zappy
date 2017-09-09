@@ -12,7 +12,15 @@
 
 #include "../includes/server.h"
 
-void	manage_clients(void)
+static void	handle_command(t_client *client, char *line)
+{
+	if (!valid_command(line))
+		write_msg_to_sock(client->sock, "error\n");
+	else
+		new_command(client, line);
+}
+
+void		manage_clients(void)
 {
 	int			sd;
 	t_client	*client;
@@ -33,7 +41,7 @@ void	manage_clients(void)
 				delete_client((previous) ? previous->next : g_env.clients);
 			}
 			else
-				new_command(client, GNL_LINE);
+				handle_command(client, GNL_LINE);
 			GNL_LINE = NULL;
 		}
 		previous = client;

@@ -36,7 +36,8 @@ void	delete_cli(t_tile *tile, t_client *client)
 	t_cli		*tmp;
 	t_cli		*previous;
 
-	previous = tile->players;
+	if (!(previous = tile->players))
+		return ;
 	if (previous->client == client)
 	{
 		tile->players = previous->next;

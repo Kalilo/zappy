@@ -21,7 +21,7 @@ void	play_choice(void)
 	{
 		if (client->command &&
 				can_do_command(client->command->str, client->delay))
-			do_command(client, client->command->str);
+			run_command(client, client->command->str);
 		client = client->next;
 	}
 }

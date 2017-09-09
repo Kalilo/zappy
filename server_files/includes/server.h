@@ -173,6 +173,7 @@ typedef struct		s_env
 	t_settings		settings;
 	t_client		*clients;
 	t_tile			**map;
+	char			play;
 }					t_env;
 
 /*

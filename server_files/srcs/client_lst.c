@@ -17,7 +17,7 @@ t_client	*new_client(unsigned int sock)
 	t_client	*client;
 	t_client	*lst;
 
-	if (!(client = (t_client *)calloc(sizeof(t_client), 1)))
+	if (!(client = (t_client *)ft_strnew(sizeof(t_client))))
 		error_quit("Insufficient memory avaliable.");
 	client->sock = sock;
 	if (!g_env.clients)

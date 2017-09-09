@@ -17,7 +17,7 @@ t_cli	*new_cli(t_tile *tile)
 	t_cli		*cli;
 	t_cli		*previous;
 
-	if (!(cli = (t_cli *)calloc(sizeof(t_cli), 1)))
+	if (!(cli = (t_cli *)ft_strnew(sizeof(t_cli))))
 		error_quit("Insufficient memory avaliable.");
 	if (!tile->players)
 		tile->players = cli;

@@ -45,5 +45,5 @@ char	run_iteration(void)
 	// generate resources.
 	inc_user_delays();
 	// check if the game is still in play
-	return (1);//if the game is still in play
+	return (g_env.play);//if the game is still in play
 }

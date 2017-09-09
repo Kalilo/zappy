@@ -18,7 +18,7 @@ t_comm	*new_command(t_client *client, char *comm_str)
 	t_comm		*lst;
 	char		k;
 
-	if (!(command = (t_comm *)calloc(sizeof(t_comm), 1)))
+	if (!(command = (t_comm *)ft_strnew(sizeof(t_comm))))
 		error_quit("Insufficient memory avaliable.");
 	command->str = comm_str;
 	if (!(client->command))

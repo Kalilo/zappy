@@ -18,31 +18,33 @@ void	add_random_gem(int x, int y)
 
 	type = rand() % 100;
 	if (type < 20)
-		MAP(x, y).inventory.linemate++;
+		(MAP(x, y).inventory.linemate)++;
 	else if (type < 40)
-		MAP(x, y).inventory.deraumere++;
+		(MAP(x, y).inventory.deraumere)++;
 	else if (type < 60)
-		MAP(x, y).inventory.sibur++;
+		(MAP(x, y).inventory.sibur)++;
 	else if (type < 75)
-		MAP(x, y).inventory.mendiane++;
+		(MAP(x, y).inventory.mendiane)++;
 	else if (type < 90)
-		MAP(x, y).inventory.phiras++;
+		(MAP(x, y).inventory.phiras)++;
 	else
-		MAP(x, y).inventory.thystame++;
+		(MAP(x, y).inventory.thystame)++;
 }
 
 void	populate_map(void)
 {
 	unsigned int	k;
 	unsigned int	l;
+	unsigned int	max;
 
 	k = 0;
 	while (k < G_WIDTH)
 	{
 		l = 0;
+		max = 0;
 		while (l < G_HEIGHT)
 		{
-			while (rand() % 100 > 60)
+			while (rand() % 100 > 60 && max < 20)
 				add_random_gem(k, l);
 			l++;
 		}

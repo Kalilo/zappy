@@ -33,7 +33,7 @@ void		manage_clients(void)
 		sd = client->sock;
 		if (FD_ISSET(sd, &READ_FDS) && client->num_commands < 10)
 		{
-			if (get_next_line(sd, &GNL_LINE) < 1 || !ft_strcmp(GNL_LINE, "quit\n"))
+			if (get_next_line(sd, &GNL_LINE) < 1 || !ft_strcmp(GNL_LINE, "quit"))
 			{
 				ft_putendl("Client disconnected...");
 				close(sd);

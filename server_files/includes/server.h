@@ -43,7 +43,11 @@
 
 # define READ_FDS		g_env.main_sock.read_fds
 # define ACTIVE_SOCK	g_env.active_sock
-# define GNL_LINE			g_env.line
+# define GNL_LINE		g_env.line
+
+# define G_WIDTH		g_env.settings.width
+# define G_HEIGHT		g_env.settings.height
+# define MAP(X,Y)		g_env.map[X][Y]
 
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
@@ -78,12 +82,6 @@ typedef struct		s_inventory
 	unsigned short	thystame;
 }					t_inventory;
 
-// typedef struct		s_tile
-// {
-// 	t_inventory		inventory;
-// 	int				num_players;
-// }					t_tile;
-
 /*
 ** General
 */
@@ -117,6 +115,18 @@ typedef struct		s_client
 	struct s_client	*next;
 }					t_client;
 
+typedef struct		s_cli
+{
+	t_client		*client;
+	struct s_cli	*next;
+}					t_cli;
+
+typedef struct		s_tile
+{
+	t_inventory		inventory;
+	t_cli			*players;
+}					t_tile;
+
 typedef struct		s_team
 {
 	char			*name;
@@ -125,6 +135,12 @@ typedef struct		s_team
 	unsigned int	max_members;
 	struct s_team	*next;
 }					t_team;
+
+// typedef struct		s_gameplay
+// {
+	
+// 	// log of changes?
+// }					t_gameplay;
 
 /*
 ** env components
@@ -161,6 +177,7 @@ typedef struct		s_env
 	char			*line;
 	t_settings		settings;
 	t_client		*clients;
+	t_tile			**map;
 }					t_env;
 
 /*
@@ -211,6 +228,7 @@ void				sig_listener(int signo);
 void				sig_setter(void);
 char				init_main_socket(int port);
 void				set_defults(void);
+void				init_gameplay(void);
 
 /*
 ** input_flags.c
@@ -226,6 +244,12 @@ void				manage_clients(void);
 ** parse_arguments.c
 */
 void				parse_arguments(int ac, char **av);
+
+/*
+** populate_map.c
+*/
+void				add_random_gem(int x, int y);
+void				populate_map(void);
 
 /*
 ** prep_client_sockets.c

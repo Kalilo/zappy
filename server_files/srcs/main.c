@@ -25,6 +25,7 @@ void	main_loop(void)
 		if (FD_ISSET(MASTER_SOCK, &READ_FDS))
 			accept_new_client();
 		manage_clients();
+		//game play
 	}
 }
 
@@ -34,6 +35,7 @@ int		main(int ac, char **av)
 	parse_arguments(ac, av);
 	set_defults();
 	init_main_socket(g_env.settings.port);
+	init_gameplay();
 	main_loop();
 	return (0);
 }

@@ -82,3 +82,16 @@ void	set_defults(void)
 		g_env.settings.teams = team;
 	}
 }
+
+void	init_gameplay(void)
+{
+	int		k;
+
+	k = -1;
+	if (!(g_env.map = (t_tile **)calloc(sizeof(t_tile *), G_WIDTH * 2)))
+		error_quit("Insufficient memory avaliable.");
+	while ((unsigned int)++k < G_HEIGHT)
+		if (!(g_env.map[k] = (t_tile *)calloc(sizeof(t_tile), 2)))
+			error_quit("Insufficient memory avaliable.");
+	// populate_map();
+}

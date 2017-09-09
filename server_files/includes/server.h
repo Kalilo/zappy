@@ -137,12 +137,6 @@ typedef struct		s_team
 	struct s_team	*next;
 }					t_team;
 
-// typedef struct		s_gameplay
-// {
-	
-// 	// log of changes?
-// }					t_gameplay;
-
 /*
 ** env components
 */
@@ -236,9 +230,9 @@ char				valid_command(char *str);
 char				can_do_command(char *str, int delay);
 
 /*
-** run_command.c
+** do_advance.c
 */
-void				run_command(t_client *client, char *command);
+void				do_advance(t_client *client);
 
 /*
 ** gameplay.c
@@ -281,6 +275,11 @@ void				populate_map(void);
 ** prep_client_sockets.c
 */
 void				prep_client_sockets(void);
+
+/*
+** run_command.c
+*/
+void				run_command(t_client *client, char *command);
 
 /*
 **                                /----------\                                **

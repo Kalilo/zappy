@@ -61,11 +61,23 @@ void	move_cli(t_client *client, t_direction direction)
 {
 	delete_cli(&MAP(client->pos_x, client->pos_y), client);
 	if (direction == north)
-		new_cli(&MAP(client->pos_x, --client->pos_y));
+	{
+		client->pos_y = (client->pos_y == 0) ? G_WIDTH - 1 : client->pos_y - 1;
+		new_cli(&MAP(client->pos_x, client->pos_y));
+	}
 	else if (direction == east)
-		new_cli(&MAP(++client->pos_x, client->pos_y));
+	{
+		client->pos_x = (G_WIDTH - 1 == client->pos_x) ? 0 : client->pos_x - 1;
+		new_cli(&MAP(client->pos_x, client->pos_y));
+	}
 	else if (direction == south)
-		new_cli(&MAP(client->pos_x, ++client->pos_y));
+	{
+		client->pos_y = (G_WIDTH - 1 == client->pos_y) ? 0 : client->pos_y - 1;
+		new_cli(&MAP(client->pos_x, client->pos_y));
+	}
 	else if (direction == west)
-		new_cli(&MAP(--client->pos_x, client->pos_y));
+	{
+		client->pos_x = (client->pos_x == 0) ? G_WIDTH - 1 : client->pos_x - 1;
+		new_cli(&MAP(client->pos_x, client->pos_y));
+	}
 }

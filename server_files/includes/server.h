@@ -208,6 +208,13 @@ extern t_env		g_env;
 void				accept_new_client(void);
 
 /*
+** cli_lst.c
+*/
+t_cli				*new_cli(t_tile *tile);
+void				delete_cli(t_tile *tile, t_client *client);
+void				move_cli(t_client *client, t_direction direction);
+
+/*
 ** client_lst.c
 */
 t_client			*new_client(unsigned int sock);

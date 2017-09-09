@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cli_lst.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khansman <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/09 11:23:18 by khansman          #+#    #+#             */
+/*   Updated: 2017/09/09 11:23:19 by khansman         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/server.h"
+
+t_cli	*new_cli(t_tile *tile)
+{
+	t_cli		*cli;
+	t_cli		*previous;
+
+	if (!(cli = (t_cli *)calloc(sizeof(t_cli), 1)))
+		error_quit("Insufficient memory avaliable.");
+	if (!tile->players)
+		tile->players = cli;
+	else
+	{
+		previous = tile->players;
+		while (previous->next)
+			previous = previous->next;
+		previous->next = cli;
+	}
+	return (cli);
+}
+
+void	delete_cli(t_tile *tile, t_client *client)
+{
+	t_cli		*tmp;
+	t_cli		*previous;
+
+	previous = tile->players;
+	if (previous->client == client)
+	{
+		tile->players = previous->next;
+		free(previous);
+	}
+	else
+	{
+		tmp = previous->next;
+		while (tmp && tmp->client != client)
+		{
+			previous = tmp;
+			tmp = tmp->next;
+		}
+		if (!tmp)
+			return ;
+		previous->next = tmp->next;
+		free(tmp);
+	}
+}
+
+void	move_cli(t_client *client, t_direction direction)
+{
+	delete_cli(&MAP(client->pos_x, client->pos_y), client);
+	if (direction == north)
+		new_cli(&MAP(client->pos_x, --client->pos_y));
+	else if (direction == east)
+		new_cli(&MAP(++client->pos_x, client->pos_y));
+	else if (direction == south)
+		new_cli(&MAP(client->pos_x, ++client->pos_y));
+	else if (direction == west)
+		new_cli(&MAP(--client->pos_x, client->pos_y));
+}

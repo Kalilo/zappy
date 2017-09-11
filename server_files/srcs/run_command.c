@@ -27,7 +27,7 @@ void	run_command(t_client *client, char *command)
 	else if (!ft_strncmp(command, "t", 1))
 		do_take(client, command + 5);
 	else if (!ft_strncmp(command, "p", 1))
-		(void)command;
+		do_put(client, command + 4);
 	else if (!ft_strncmp(command, "k", 1))
 		do_kick(client);
 	else if (!ft_strncmp(command, "b", 1))

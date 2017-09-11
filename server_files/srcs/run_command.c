@@ -17,9 +17,9 @@ void	run_command(t_client *client, char *command)
 	if (!ft_strncmp(command, "a", 1))
 		do_advance(client);
 	else if (!ft_strncmp(command, "r", 1))
-		(void)command;
+		do_right(client);
 	else if (!ft_strncmp(command, "l", 1))
-		(void)command;
+		do_left(client);
 	else if (!ft_strncmp(command, "s", 1))
 		(void)command;
 	else if (!ft_strncmp(command, "inv", 3))

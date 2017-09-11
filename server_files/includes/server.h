@@ -236,6 +236,16 @@ char				can_do_command(char *str, int delay);
 void				do_advance(t_client *client);
 
 /*
+** do_left.c
+*/
+void				do_left(t_client *client);
+
+/*
+** do_right.c
+*/
+void				do_right(t_client *client);
+
+/*
 ** gameplay.c
 */
 void				play_choice(void);

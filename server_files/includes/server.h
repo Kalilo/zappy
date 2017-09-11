@@ -52,6 +52,8 @@
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
+# define TRANSFER(X)	inventory->X--,client->inventory.X++
+
 /*
 ** enums
 */
@@ -80,6 +82,7 @@ typedef struct		s_inventory
 	unsigned short	mendiane;
 	unsigned short	phiras;
 	unsigned short	thystame;
+	unsigned short	food;
 }					t_inventory;
 
 /*
@@ -250,6 +253,11 @@ void				do_left(t_client *client);
 ** do_right.c
 */
 void				do_right(t_client *client);
+
+/*
+** do_take.c
+*/
+void				do_take(t_client *client, char *what);
 
 /*
 ** gameplay.c

@@ -52,8 +52,10 @@
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
-# define TAKE(X)	inventory->X--,client->inventory.X++
-# define PUT(X)		inventory->X++,client->inventory.X--
+# define TAKE(X)		inventory->X--,client->inventory.X++
+# define PUT(X)			inventory->X++,client->inventory.X--
+
+# define REP_APPEND(X)	while(k--)ft_str_append(&str,X)
 
 /*
 ** enums

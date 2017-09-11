@@ -25,7 +25,7 @@ void	run_command(t_client *client, char *command)
 	else if (!ft_strncmp(command, "inv", 3))
 		(void)command;
 	else if (!ft_strncmp(command, "t", 1))
-		(void)command;
+		do_take(client, command + 5);
 	else if (!ft_strncmp(command, "p", 1))
 		(void)command;
 	else if (!ft_strncmp(command, "k", 1))

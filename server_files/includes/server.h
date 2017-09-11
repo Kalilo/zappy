@@ -138,6 +138,7 @@ typedef struct		s_team
 	int				id;
 	unsigned int	num_members;
 	unsigned int	max_members;
+	int				avaliable_cons;
 	struct s_team	*next;
 }					t_team;
 
@@ -240,6 +241,11 @@ char				can_do_command(char *str, int delay);
 void				do_advance(t_client *client);
 
 /*
+** do_connect_nbr.c
+*/
+void				do_connect_nbr(t_client *client);
+
+/*
 ** do_kick.c
 */
 void				send_moving_msg(int sock, t_direction direction);
@@ -311,6 +317,11 @@ void				prep_client_sockets(void);
 ** run_command.c
 */
 void				run_command(t_client *client, char *command);
+
+/*
+** team_lst.c
+*/
+t_team				*find_client_team(t_client *client);
 
 /*
 **                                /----------\                                **

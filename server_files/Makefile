@@ -18,6 +18,7 @@ SRCS_NAME =		accept_new_client.c			\
 				command_lst.c				\
 				command_validation.c		\
 				do_advance.c				\
+				do_connect_nbr.c			\
 				do_kick.c					\
 				do_left.c					\
 				do_put.c					\
@@ -32,6 +33,7 @@ SRCS_NAME =		accept_new_client.c			\
 				populate_map.c				\
 				prep_client_sockets.c		\
 				run_command.c				\
+				team_lst.c					\
 
 HEADER_NAMES =	server.h					\
 

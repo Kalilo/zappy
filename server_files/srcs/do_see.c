@@ -35,6 +35,6 @@ char	*sum_time_content(t_tile *tile)
 	REP_APPEND(" food");
 	cli = tile->players;
 	while (cli && ((cli = cli->next) || 1))
-		REP_APPEND(" player");
+		ft_str_append(&str, " player");
 	return (str);
 }

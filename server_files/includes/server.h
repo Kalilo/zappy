@@ -49,6 +49,9 @@
 # define G_HEIGHT		g_env.settings.height
 # define MAP(X,Y)		g_env.map[X][Y]
 
+/*
+** shortened code
+*/
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 

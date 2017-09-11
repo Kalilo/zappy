@@ -29,7 +29,7 @@ void	run_command(t_client *client, char *command)
 	else if (!ft_strncmp(command, "p", 1))
 		(void)command;
 	else if (!ft_strncmp(command, "k", 1))
-		(void)command;
+		do_kick(client);
 	else if (!ft_strncmp(command, "b", 1))
 		(void)command;
 	else if (!ft_strncmp(command, "inc", 3))

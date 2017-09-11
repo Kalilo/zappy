@@ -23,4 +23,5 @@ void	do_right(t_client *client)
 	else if (client->direction == west)
 		client->direction = north;
 	write_msg_to_sock(client->sock, "ok\n");
+	client->delay -= 7;
 }

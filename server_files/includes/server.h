@@ -236,6 +236,12 @@ char				can_do_command(char *str, int delay);
 void				do_advance(t_client *client);
 
 /*
+** do_kick.c
+*/
+void				send_moving_msg(int sock, t_direction direction);
+void				do_kick(t_client *client);
+
+/*
 ** do_left.c
 */
 void				do_left(t_client *client);

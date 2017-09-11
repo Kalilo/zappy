@@ -52,7 +52,8 @@
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
-# define TRANSFER(X)	inventory->X--,client->inventory.X++
+# define TAKE(X)	inventory->X--,client->inventory.X++
+# define PUT(X)		inventory->X++,client->inventory.X--
 
 /*
 ** enums
@@ -248,6 +249,11 @@ void				do_kick(t_client *client);
 ** do_left.c
 */
 void				do_left(t_client *client);
+
+/*
+** do_put.c
+*/
+void				do_put(t_client *client, char *what);
 
 /*
 ** do_right.c

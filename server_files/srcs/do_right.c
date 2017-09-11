@@ -11,3 +11,16 @@
 /* ************************************************************************** */
 
 #include "../includes/server.h"
+
+void	do_right(t_client *client)
+{
+	if (client->direction == north)
+		client->direction = east;
+	else if (client->direction == east)
+		client->direction = south;
+	else if (client->direction == south)
+		client->direction = west;
+	else if (client->direction == west)
+		client->direction = north;
+	write_msg_to_sock(client->sock, "ok\n");
+}

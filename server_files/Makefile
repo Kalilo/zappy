@@ -19,6 +19,7 @@ SRCS_NAME =		accept_new_client.c			\
 				command_validation.c		\
 				do_advance.c				\
 				do_connect_nbr.c			\
+				do_inventory.c				\
 				do_kick.c					\
 				do_left.c					\
 				do_put.c					\

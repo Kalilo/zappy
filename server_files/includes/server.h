@@ -246,6 +246,12 @@ void				do_advance(t_client *client);
 void				do_connect_nbr(t_client *client);
 
 /*
+** do_inventory.c
+*/
+char				*take_inventory(t_inventory *inventory);
+void				do_inventory(t_client *client);
+
+/*
 ** do_kick.c
 */
 void				send_moving_msg(int sock, t_direction direction);

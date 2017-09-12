@@ -55,7 +55,7 @@ char	*sum_range(t_coord min, t_coord max, t_direction dir, t_client *client)
 			break ;
 		else
 			min = move_coord(min, dir);
-		ft_str_append(&str, ", ");
+		ft_str_append(&str, ",");
 		tmp = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT), client);
 		str = ft_str_append3(&str, &tmp);
 	}
@@ -71,17 +71,20 @@ char	*get_in_sight(t_client *client)
 	t_coord	max;
 
 	level = client->level;
-	str = ft_strdup("{");
 	min = max = (t_coord){client->pos_x, client->pos_y};
-	while (level-- >= 0)
+	str = sum_range(min, max, tangent_right_direction(client->direction),
+		client);
+	ft_str_append2("{", &str);
+	while (--level >= 0)
 	{
-		tmp = sum_range(min, max, tangent_right_direction(client->direction),
-			client);
-		str = ft_str_append3(&str, &tmp);
+		ft_str_append(&str, ",");
 		min = move_coord(min, client->direction);
 		max = move_coord(max, client->direction);
 		min = move_coord(min, tangent_left_direction(client->direction));
 		max = move_coord(max, tangent_right_direction(client->direction));
+		tmp = sum_range(min, max, tangent_right_direction(client->direction),
+			client);
+		str = ft_str_append3(&str, &tmp);
 	}
 	ft_str_append(&str, "}\n");
 	return (str);

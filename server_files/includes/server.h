@@ -60,6 +60,11 @@
 
 # define REP_APPEND(X)	while(k--)ft_str_append(&str,X)
 
+# define MOVE_NW		pos.x--, pos.y++
+# define MOVE_NE		pos.x++, pos.y++
+# define MOVE_SE		pos.x++, pos.y--
+# define MOVE_SW		pos.x--, pos.y--
+
 /*
 ** enums
 */
@@ -68,7 +73,12 @@ typedef enum		e_direction
 	north,
 	east,
 	south,
-	west
+	west,
+	north_west,
+	north_east,
+	south_east,
+	south_west,
+	no_direction
 }					t_direction;
 
 /*
@@ -76,6 +86,15 @@ typedef enum		e_direction
 ** Structures |
 ** ----------/
 */
+
+/*
+** Coordination
+*/
+typedef struct		s_coord
+{
+	int				x;
+	int				y;
+}					t_coord;
 
 /*
 ** Gameplay
@@ -239,6 +258,20 @@ void				delete_all_commands(t_client *client);
 */
 char				valid_command(char *str);
 char				can_do_command(char *str, int delay);
+
+/*
+** coords.c
+*/
+t_coord				move_coord(t_coord pos, t_direction direction);
+
+/*
+** direction.c
+*/
+t_direction 		opposite_direction(t_direction direction);
+t_direction 		tangent_right_direction(t_direction direction);
+t_direction 		tangent_left_direction(t_direction direction);
+t_direction 		adjacent_right_direction(t_direction direction);
+t_direction 		adjacent_left_direction(t_direction direction);
 
 /*
 ** do_advance.c

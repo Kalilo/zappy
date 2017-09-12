@@ -44,7 +44,7 @@ void	populate_map(void)
 		max = 0;
 		while (l < G_HEIGHT)
 		{
-			while (rand() % 100 > 60 && max < 20)
+			while (rand() % 100 > 40 && max < 20)
 				add_random_gem(k, l);
 			l++;
 		}

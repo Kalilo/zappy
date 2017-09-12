@@ -15,7 +15,7 @@
 /*
 ** these functions aren't very effient, though should serve their purpose
 */
-char	*sum_tile_content(t_tile *tile)
+char	*sum_tile_content(t_tile *tile, t_client *client)
 {
 	char	*str;
 	int		k;
@@ -38,24 +38,25 @@ char	*sum_tile_content(t_tile *tile)
 	REP_APPEND(" food");
 	cli = tile->players;
 	while (cli && ((cli = cli->next) || 1))
-		ft_str_append(&str, " player");//change to not list the current player
+		if (cli->client != client)
+			ft_str_append(&str, " player");
 	return (str);
 }
 
-char	*sum_range(t_coord min, t_coord max, t_direction dir)
+char	*sum_range(t_coord min, t_coord max, t_direction dir, t_client *client)
 {
 	char	*str;
 	char	*tmp;
 
-	str = sum_tile_content(&MAP(min.x % G_WIDTH, min.y % G_HEIGHT));
+	str = sum_tile_content(&MAP(min.x % G_WIDTH, min.y % G_HEIGHT), client);
 	while (1)
 	{
 		if (min.x == max.x && min.y == max.y)
 			break ;
 		else
-			move_coord(min, dir);
+			min = move_coord(min, dir);
 		ft_str_append(&str, ", ");
-		tmp = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT));
+		tmp = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT), client);
 		str = ft_str_append3(&str, &tmp);
 	}
 	return (str);
@@ -74,7 +75,8 @@ char	*get_in_sight(t_client *client)
 	min = max = (t_coord){client->pos_x, client->pos_y};
 	while (level-- >= 0)
 	{
-		tmp = sum_range(min, max, tangent_right_direction(client->direction));
+		tmp = sum_range(min, max, tangent_right_direction(client->direction),
+			client);
 		str = ft_str_append3(&str, &tmp);
 		min = move_coord(min, client->direction);
 		max = move_coord(max, client->direction);

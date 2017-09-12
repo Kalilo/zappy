@@ -28,6 +28,7 @@ SRCS_NAME =		accept_new_client.c			\
 				do_right.c					\
 				do_see.c					\
 				do_take.c					\
+				egg_lst.c					\
 				gameplay.c					\
 				init.c						\
 				input_flags.c				\

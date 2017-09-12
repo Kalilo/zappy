@@ -313,8 +313,9 @@ void				do_right(t_client *client);
 /*
 ** do_see.c
 */
-char				*sum_tile_content(t_tile *tile);
-char				*sum_range(t_coord min, t_coord max, t_direction dir);
+char				*sum_tile_content(t_tile *tile, t_client *client);
+char				*sum_range(t_coord min, t_coord max, t_direction dir,
+					t_client *client);
 char				*get_in_sight(t_client *client);
 void				do_see(t_client *client);
 

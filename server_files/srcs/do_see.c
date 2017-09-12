@@ -38,7 +38,7 @@ char	*sum_tile_content(t_tile *tile)
 	REP_APPEND(" food");
 	cli = tile->players;
 	while (cli && ((cli = cli->next) || 1))
-		ft_str_append(&str, " player");
+		ft_str_append(&str, " player");//change to not list the current player
 	return (str);
 }
 
@@ -47,7 +47,7 @@ char	*sum_range(t_coord min, t_coord max, t_direction dir)
 	char	*str;
 	char	*tmp;
 
-	str = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT));
+	str = sum_tile_content(&MAP(min.x % G_WIDTH, min.y % G_HEIGHT));
 	while (1)
 	{
 		if (min.x == max.x && min.y == max.y)
@@ -76,6 +76,8 @@ char	*get_in_sight(t_client *client)
 	{
 		tmp = sum_range(min, max, tangent_right_direction(client->direction));
 		str = ft_str_append3(&str, &tmp);
+		min = move_coord(min, client->direction);
+		max = move_coord(max, client->direction);
 		min = move_coord(min, tangent_left_direction(client->direction));
 		max = move_coord(max, tangent_right_direction(client->direction));
 	}

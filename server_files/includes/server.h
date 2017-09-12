@@ -311,6 +311,14 @@ void				do_put(t_client *client, char *what);
 void				do_right(t_client *client);
 
 /*
+** do_see.c
+*/
+char				*sum_tile_content(t_tile *tile);
+char				*sum_range(t_coord min, t_coord max, t_direction dir);
+char				*get_in_sight(t_client *client);
+void				do_see(t_client *client);
+
+/*
 ** do_take.c
 */
 void				do_take(t_client *client, char *what);

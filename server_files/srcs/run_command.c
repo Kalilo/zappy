@@ -21,7 +21,7 @@ void	run_command(t_client *client, char *command)
 	else if (!ft_strncmp(command, "l", 1))
 		do_left(client);
 	else if (!ft_strncmp(command, "s", 1))
-		(void)command;
+		do_see(client);
 	else if (!ft_strncmp(command, "inv", 3))
 		do_inventory(client);
 	else if (!ft_strncmp(command, "t", 1))

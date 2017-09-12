@@ -12,6 +12,9 @@
 
 #include "../includes/server.h"
 
+/*
+** these functions aren't very effient, though should serve their purpose
+*/
 char	*sum_tile_content(t_tile *tile)
 {
 	char	*str;
@@ -39,30 +42,20 @@ char	*sum_tile_content(t_tile *tile)
 	return (str);
 }
 
-/*
-** Need to rewrite usiing direction to update the position
-** Current method can't account for wrapping around the edge
-*/
-char	*sum_range(int x_min, int y_min, int x_max, int y_max)
+char	*sum_range(t_coord min, t_coord max, t_direction dir)
 {
 	char	*str;
 	char	*tmp;
 
-	str = sum_tile_content(&MAP(x_min, y_min));
+	str = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT));
 	while (1)
 	{
-		if (x_min == x_max && y_min == y_max)
+		if (min.x == max.x && min.y == max.y)
 			break ;
-		else if (x_min < x_max)
-			x_min++;
-		else if (x_min > x_max)
-			x_min--;
-		else if (y_min < y_max)
-			y_min++;
-		else if (y_min > y_max)
-			y_min--;
+		else
+			move_coord(min, dir);
 		ft_str_append(&str, ", ");
-		tmp = sum_tile_content(&MAP(x_min, y_min));
+		tmp = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT));
 		str = ft_str_append3(&str, &tmp);
 	}
 	return (str);
@@ -73,13 +66,29 @@ char	*get_in_sight(t_client *client)
 	int		level;
 	char	*str;
 	char	*tmp;
+	t_coord	min;
+	t_coord	max;
 
 	level = client->level;
 	str = ft_strdup("{");
+	min = max = (t_coord){client->pos_x, client->pos_y};
 	while (level-- >= 0)
 	{
-		//
+		tmp = sum_range(min, max, tangent_right_direction(client->direction));
+		ft_str_append3(&str, &tmp);
+		min = move_coord(min, tangent_left_direction(client->direction));
+		max = move_coord(max, tangent_right_direction(client->direction));
 	}
-	ft_str_append(&str, "}");
+	ft_str_append(&str, "}\n");
 	return (str);
+}
+
+void	do_see(t_client *client)
+{
+	char	*str;
+
+	str = get_in_sight(client);
+	write_msg_to_sock(client->sock, str);
+	ft_strdel(&str);
+	client->delay -= 7;
 }

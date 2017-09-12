@@ -150,10 +150,17 @@ typedef struct		s_cli
 	struct s_cli	*next;
 }					t_cli;
 
+typedef struct		s_egg
+{
+	int				team_id;
+	struct s_egg	*next;
+}					t_egg;
+
 typedef struct		s_tile
 {
 	t_inventory		inventory;
 	t_cli			*players;
+	t_egg			*eggs;
 }					t_tile;
 
 typedef struct		s_team

@@ -75,7 +75,7 @@ char	*get_in_sight(t_client *client)
 	while (level-- >= 0)
 	{
 		tmp = sum_range(min, max, tangent_right_direction(client->direction));
-		ft_str_append3(&str, &tmp);
+		str = ft_str_append3(&str, &tmp);
 		min = move_coord(min, tangent_left_direction(client->direction));
 		max = move_coord(max, tangent_right_direction(client->direction));
 	}

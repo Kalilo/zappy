@@ -37,7 +37,7 @@ t_direction	incomming_direction(t_coord src, t_coord dest)
 	}
 	if (fabs(delta_x) > fabs(delta_y))
 		return ((delta_x > 0) ? east : west);
-	return ()
+	return ((delta_y > 0) ? north : south);
 }
 
 t_coord		closest_coord(t_coord src, t_coord dest)

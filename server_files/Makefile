@@ -19,6 +19,7 @@ SRCS_NAME =		accept_new_client.c			\
 				command_validation.c		\
 				coords.c					\
 				direction.c					\
+				direction2.c				\
 				do_advance.c				\
 				do_connect_nbr.c			\
 				do_fork.c					\

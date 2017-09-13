@@ -81,15 +81,15 @@
 */
 typedef enum		e_direction
 {
+	no_direction = -1,
 	north,
-	east,
-	south,
-	west,
-	north_west,
 	north_east,
+	east,
 	south_east,
+	south,
 	south_west,
-	no_direction
+	west,
+	north_west
 }					t_direction;
 
 /*
@@ -292,6 +292,14 @@ t_direction			tangent_right_direction(t_direction direction);
 t_direction			tangent_left_direction(t_direction direction);
 t_direction			adjacent_right_direction(t_direction direction);
 t_direction			adjacent_left_direction(t_direction direction);
+
+/*
+** direction2.c
+*/
+t_direction			inc_dir(t_direction dir, int amount);
+t_direction			dec_dir(t_direction dir, int amount);
+int					north_diff(t_direction dir);
+
 
 /*
 ** do_advance.c

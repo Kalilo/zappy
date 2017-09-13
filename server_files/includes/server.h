@@ -19,6 +19,8 @@
 ** ----------/
 */
 
+# include <math.h>
+
 # include "../../includes/shared.h"
 
 /*

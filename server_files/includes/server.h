@@ -65,6 +65,15 @@
 # define MOVE_SE		pos.x++, pos.y--
 # define MOVE_SW		pos.x--, pos.y--
 
+# define I_CHECK_1(X,Y)	inventory->linemate>=X&&inventory->deraumere>=Y
+# define I_CHECK_2(X,Y)	inventory->sibur>=X&&inventory->mendiane>=Y
+# define I_CHECK_3(X,Y)	inventory->phiras>=X&&inventory->thystame>=Y
+
+# define I_ADJ_1(X,Y)	inventory->linemate+=X,inventory->deraumere+=Y
+# define I_ADJ_2(X,Y)	inventory->sibur+=X,inventory->mendiane+=Y
+# define I_ADJ_3(X,Y)	inventory->phiras+=X,inventory->thystame+=Y
+# define I_ADJ(X,Y,Z,U,V,W) I_ADJ_1(X,Y),I_ADJ_2(Z,U),I_ADJ_3(V,W)
+
 /*
 ** enums
 */
@@ -276,11 +285,11 @@ t_coord				move_coord(t_coord pos, t_direction direction);
 /*
 ** direction.c
 */
-t_direction 		opposite_direction(t_direction direction);
-t_direction 		tangent_right_direction(t_direction direction);
-t_direction 		tangent_left_direction(t_direction direction);
-t_direction 		adjacent_right_direction(t_direction direction);
-t_direction 		adjacent_left_direction(t_direction direction);
+t_direction			opposite_direction(t_direction direction);
+t_direction			tangent_right_direction(t_direction direction);
+t_direction			tangent_left_direction(t_direction direction);
+t_direction			adjacent_right_direction(t_direction direction);
+t_direction			adjacent_left_direction(t_direction direction);
 
 /*
 ** do_advance.c
@@ -291,6 +300,19 @@ void				do_advance(t_client *client);
 ** do_connect_nbr.c
 */
 void				do_connect_nbr(t_client *client);
+
+/*
+** do_fork.c
+*/
+void				do_fork(t_client *client);
+
+/*
+** do_incantation.c
+*/
+char				enough_clients_to_incantate(int level);
+char				can_incanate(t_inventory *inventory, int level);
+void				incanate_invent_adjust(t_inventory *inventory, int level);
+void				do_incantation(t_client *client);
 
 /*
 ** do_inventory.c

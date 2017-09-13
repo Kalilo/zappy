@@ -11,3 +11,10 @@
 /* ************************************************************************** */
 
 #include "../includes/server.h"
+
+void	do_fork(t_client *client)
+{
+	lay_egg(client);
+	write_msg_to_sock(client->sock, "ok\n");
+	client->delay -= 42;
+}

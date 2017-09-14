@@ -21,6 +21,7 @@ SRCS_NAME =		accept_new_client.c			\
 				direction.c					\
 				direction2.c				\
 				do_advance.c				\
+				do_broadcast.c				\
 				do_connect_nbr.c			\
 				do_fork.c					\
 				do_incantation.c			\
@@ -37,6 +38,7 @@ SRCS_NAME =		accept_new_client.c			\
 				input_flags.c				\
 				main.c						\
 				manage_clients.c			\
+				maths.c						\
 				parse_arguments.c			\
 				populate_map.c				\
 				prep_client_sockets.c		\

@@ -311,6 +311,14 @@ int					north_diff(t_direction dir);
 void				do_advance(t_client *client);
 
 /*
+** do_broadcast.c
+*/
+t_direction			incomming_direction(t_coord src, t_coord dest);
+t_coord				closest_coord(t_coord src, t_coord dest);
+void				send_msg(t_client *client, char *msg);
+void				do_bradcast(t_client *client, char *msg);
+
+/*
 ** do_connect_nbr.c
 */
 void				do_connect_nbr(t_client *client);
@@ -400,6 +408,11 @@ char				is_input_flag_set(char *flag);
 ** manage_clients.c
 */
 void				manage_clients(void);
+
+/*
+** maths.c
+*/
+float				ft_dist(t_coord a, t_coord b);
 
 /*
 ** parse_arguments.c

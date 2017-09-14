@@ -12,11 +12,6 @@
 
 #include "../includes/server.h"
 
-float		ft_dist(t_coord a, t_coord b)
-{
-	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
-}
-
 t_direction	incomming_direction(t_coord src, t_coord dest)
 {
 	float		delta_x;

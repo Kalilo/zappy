@@ -31,7 +31,7 @@ void	run_command(t_client *client, char *command)
 	else if (!ft_strncmp(command, "k", 1))
 		do_kick(client);
 	else if (!ft_strncmp(command, "b", 1))
-		(void)command;
+		do_bradcast(client, command + 10);
 	else if (!ft_strncmp(command, "inc", 3))
 		do_incantation(client);
 	else if (!ft_strncmp(command, "f", 1))

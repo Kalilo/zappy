@@ -48,32 +48,56 @@ t_coord		closest_coord(t_coord src, t_coord dest)
 
 	closest = dest;
 	shortest_dist = ft_dist(src, dest);
-	if ((tmp = ft_dist(src, (t_coord){dest.x - G_WIDTH, dest.y - G_HEIGHT})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x - G_WIDTH, dest.y - G_HEIGHT};
-	if ((tmp = ft_dist(src, (t_coord){dest.x, dest.y - G_HEIGHT})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x, dest.y - G_HEIGHT};
-	if ((tmp = ft_dist(src, (t_coord){dest.x + G_WIDTH, dest.y - G_HEIGHT})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x + G_WIDTH, dest.y - G_HEIGHT};
-	if ((tmp = ft_dist(src, (t_coord){dest.x - G_WIDTH, dest.y})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x - G_WIDTH, dest.y};
-	if ((tmp = ft_dist(src, (t_coord){dest.x + G_WIDTH, dest.y})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x + G_WIDTH, dest.y};
-	if ((tmp = ft_dist(src, (t_coord){dest.x - G_WIDTH, dest.y + G_HEIGHT})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x - G_WIDTH, dest.y + G_HEIGHT};
-	if ((tmp = ft_dist(src, (t_coord){dest.x, dest.y + G_HEIGHT})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x, dest.y + G_HEIGHT};
-	if ((tmp = ft_dist(src, (t_coord){dest.x + G_WIDTH, dest.y + G_HEIGHT})) < shortest_dist)
-		shortest_dist = tmp, closest = (t_coord){dest.x + G_WIDTH, dest.y + G_HEIGHT};
+	if (IS_CLOSER(((t_coord){dest.x - G_WIDTH, dest.y - G_HEIGHT})))
+		CLOSEST_CLI = (t_coord){dest.x - G_WIDTH, dest.y - G_HEIGHT};
+	if (IS_CLOSER(((t_coord){dest.x, dest.y - G_HEIGHT})))
+		CLOSEST_CLI = (t_coord){dest.x, dest.y - G_HEIGHT};
+	if (IS_CLOSER(((t_coord){dest.x + G_WIDTH, dest.y - G_HEIGHT})))
+		CLOSEST_CLI = (t_coord){dest.x + G_WIDTH, dest.y - G_HEIGHT};
+	if (IS_CLOSER(((t_coord){dest.x - G_WIDTH, dest.y})))
+		CLOSEST_CLI = (t_coord){dest.x - G_WIDTH, dest.y};
+	if (IS_CLOSER(((t_coord){dest.x + G_WIDTH, dest.y})))
+		CLOSEST_CLI = (t_coord){dest.x + G_WIDTH, dest.y};
+	if (IS_CLOSER(((t_coord){dest.x - G_WIDTH, dest.y + G_HEIGHT})))
+		CLOSEST_CLI = (t_coord){dest.x - G_WIDTH, dest.y + G_HEIGHT};
+	if (IS_CLOSER(((t_coord){dest.x, dest.y + G_HEIGHT})))
+		CLOSEST_CLI = (t_coord){dest.x, dest.y + G_HEIGHT};
+	if (IS_CLOSER(((t_coord){dest.x + G_WIDTH, dest.y + G_HEIGHT})))
+		CLOSEST_CLI = (t_coord){dest.x + G_WIDTH, dest.y + G_HEIGHT};
 	return (closest);
+}
+
+void		send_msg(t_client *client, char *msg)
+{
+	t_client	*cli;
+	char		*str;
+	t_coord		closest;
+
+	cli = g_env.clients;
+	while (cli)
+	{
+		if (cli == client)
+		{
+			str = ft_strdup(msg);
+			ft_str_append2("message 0, ", &str);
+		}
+		else
+		{
+			closest = closest_coord(CLI_POS, (t_coord){cli->pos_x, cli->pos_y});
+			str = ft_itoa((int)dec_dir(incomming_direction(CLI_POS, closest), \
+				north_diff(cli->direction)));
+			ft_str_append2("message ", &str);
+			ft_str_append(&str, ", ");
+			ft_str_append(&str, msg);
+		}
+		write_msg_to_sock(cli->sock, str);
+		ft_strdel(&str);
+		cli = cli->next;
+	}
 }
 
 void		do_bradcast(t_client *client, char *msg)
 {
-	// calculate shortest distance
-	// run line plot between two squares, and return final square before dest
-	// calculate which number the square is
-	// assemble the message
-	// write message to sock
-	// free message
-	// decrease delay.
+	send_msg(client, msg);
+	client->delay -= 7;
 }

@@ -76,6 +76,11 @@
 # define I_ADJ_3(X,Y)	inventory->phiras+=X,inventory->thystame+=Y
 # define I_ADJ(X,Y,Z,U,V,W) I_ADJ_1(X,Y),I_ADJ_2(Z,U),I_ADJ_3(V,W)
 
+# define CLOSEST_CLI	shortest_dist = tmp, closest
+# define IS_CLOSER(X)	((tmp = ft_dist(src, X)) < shortest_dist)
+
+# define CLI_POS		(t_coord){client->pos_x, client->pos_y}
+
 /*
 ** enums
 */
@@ -299,7 +304,6 @@ t_direction			adjacent_left_direction(t_direction direction);
 t_direction			inc_dir(t_direction dir, int amount);
 t_direction			dec_dir(t_direction dir, int amount);
 int					north_diff(t_direction dir);
-
 
 /*
 ** do_advance.c

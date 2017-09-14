@@ -23,7 +23,7 @@ char	join_team(t_client *client, char *team)
 			break;
 		t = t->next;
 	}
-	if (!team || (t->avaliable_cons < 1))
+	if (!team || (t->avaliable_cons < 1 && !g_env.settings.num_unused_conn))
 		return (0);
 	if (t->eggs && ((client->delay = -600) || 1))
 		client->pos = hatch_egg(find_team(team));

@@ -79,7 +79,7 @@
 # define CLOSEST_CLI	shortest_dist = tmp, closest
 # define IS_CLOSER(X)	((tmp = ft_dist(src, X)) < shortest_dist)
 
-# define CLI_POS		(t_coord){client->pos_x, client->pos_y}
+# define CLI_POS		(t_coord){client->pos.x, client->pos.y}
 
 /*
 ** enums
@@ -149,8 +149,9 @@ typedef struct		s_client
 {
 	unsigned int	sock;
 	int				team_id;
-	unsigned int	pos_x;
-	unsigned int	pos_y;
+	// unsigned int	pos_x;
+	// unsigned int	pos_y;
+	t_coord			pos;
 	t_direction		direction;
 	int				delay;
 	t_inventory		inventory;

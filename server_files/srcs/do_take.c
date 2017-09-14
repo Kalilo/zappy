@@ -16,7 +16,7 @@ void	do_take(t_client *client, char *what)
 {
 	t_inventory		*inventory;
 
-	inventory = &(MAP(client->pos_x, client->pos_y).inventory);
+	inventory = &(MAP(client->pos.x, client->pos.y).inventory);
 	if (!ft_strcmp(what, "linemate") && inventory->linemate)
 		TAKE(linemate);
 	else if (!ft_strcmp(what, "deraumere") && inventory->deraumere)

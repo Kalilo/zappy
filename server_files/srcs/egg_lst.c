@@ -18,16 +18,16 @@ void	lay_egg(t_client *client)
 	t_egg	*tmp;
 	t_team	*team;
 
-	egg = MAP(client->pos_x, client->pos_y).eggs;
+	egg = MAP(client->pos.x, client->pos.y).eggs;
 	while (egg && egg->next)
 		egg = egg->next;
 	tmp = (t_egg *)ft_strnew(sizeof(t_egg));
 	tmp->team_id = client->team_id;
-	tmp->pos = (t_coord){client->pos_x, client->pos_y};
+	tmp->pos = (t_coord){client->pos.x, client->pos.y};
 	if (egg)
 		egg->next = tmp;
 	else
-		MAP(client->pos_x, client->pos_y).eggs = tmp;
+		MAP(client->pos.x, client->pos.y).eggs = tmp;
 	team = find_client_team(client);
 	team->avaliable_cons++;
 	egg = ft_memalloc(sizeof(t_egg));

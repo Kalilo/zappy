@@ -29,7 +29,7 @@ void	do_kick(t_client *client)
 	t_cli	*k;
 	char	kicked;
 
-	k = MAP(client->pos_x, client->pos_y).players;
+	k = MAP(client->pos.x, client->pos.y).players;
 	kicked = 0;
 	while (k)
 	{
@@ -37,7 +37,7 @@ void	do_kick(t_client *client)
 		{
 			send_moving_msg(k->client->sock, client->direction);
 			move_cli(k->client, client->direction);
-			k =  MAP(client->pos_x, client->pos_y).players;//temp fix
+			k =  MAP(client->pos.x, client->pos.y).players;//temp fix
 		}
 		else//temp fix
 			k = k->next;

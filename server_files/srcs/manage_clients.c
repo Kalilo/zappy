@@ -14,7 +14,7 @@
 
 static void	handle_command(t_client *client, char *line)
 {
-	if (!valid_command(line))
+	if (!valid_command(line) && client->level)
 		write_msg_to_sock(client->sock, "error\n");
 	else
 		new_command(client, line);

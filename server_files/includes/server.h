@@ -388,6 +388,7 @@ t_coord				hatch_egg(t_team *team);
 /*
 ** gameplay.c
 */
+void				welcome_client(t_client *client);
 void				play_choice(void);
 void				inc_user_delays(void);
 char				run_iteration(void);

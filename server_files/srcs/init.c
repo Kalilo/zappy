@@ -81,6 +81,7 @@ void	set_defults(void)
 		g_env.settings.num_teams = 1;
 		g_env.settings.teams = team;
 	}
+	g_env.settings.num_unused_conn = g_env.settings.num_start_clients;
 }
 
 void	init_gameplay(void)

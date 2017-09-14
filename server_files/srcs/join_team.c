@@ -34,7 +34,7 @@ char	join_team(t_client *client, char *team)
 		return (0);
 	t->avaliable_cons--;
 	t->num_members++;
-	client->direction = (rand() % 4) * 2;
+	client->direction = (rand() & 0b11) << 1;
 	client->level = 1;
 	client->team_id = t->id;
 	client->life = 1260;

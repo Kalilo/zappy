@@ -23,7 +23,7 @@ void	lay_egg(t_client *client)
 		egg = egg->next;
 	tmp = (t_egg *)ft_strnew(sizeof(t_egg));
 	tmp->team_id = client->team_id;
-	tmp->pos = (t_coord){client->pos.x, client->pos.y};
+	tmp->pos =client->pos;
 	if (egg)
 		egg->next = tmp;
 	else

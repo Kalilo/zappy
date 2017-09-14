@@ -71,7 +71,7 @@ char	*get_in_sight(t_client *client)
 	t_coord	max;
 
 	level = client->level;
-	min = max = (t_coord){client->pos.x, client->pos.y};
+	min = max = client->pos;
 	str = sum_range(min, max, tangent_right_direction(client->direction),
 		client);
 	ft_str_append2("{", &str);

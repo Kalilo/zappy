@@ -78,7 +78,7 @@ void		send_msg(t_client *client, char *msg)
 		}
 		else
 		{
-			closest = closest_coord(CLI_POS, (t_coord){cli->pos.x, cli->pos.y});
+			closest = closest_coord(CLI_POS, cli->pos);
 			str = ft_itoa((int)dec_dir(incomming_direction(CLI_POS, closest), \
 				north_diff(cli->direction)));
 			ft_str_append2("message ", &str);

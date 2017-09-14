@@ -103,7 +103,7 @@ int	main(int ac, char **av)
 //	args management here.
 	//if (!(f = fork()))//will either read from here.(if server based timer)
 	//	e.state = receive_line(e.state, e.sockfd, malloc(sizeof(char) * 4096));
-	while (1)
+	while (1)//gameloop
 	{
 		//or will read from server from here (if this client is doing the timing)
 		//render(which will be added to repo later)

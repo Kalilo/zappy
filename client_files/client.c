@@ -30,6 +30,9 @@ int		receive_line(int state, int sockfd, char *recvline)
 
 int	algorithm(void)
 {
+	//(if (can get info to fork new client or))
+
+
 	//SEE (function call)
 	// if player is getting hungry
 	//	if food is in range
@@ -40,7 +43,7 @@ int	algorithm(void)
 	//		if is needed by team(to level up)
 	//			approach nearest stone
 //DOES SOUND MAKE US MORE OR LESS LIKELY TO APPROACH THAT DIRECTION
-//	AND WHEN?
+//	AND WHEN? -5 -4 -3 -2 -1 0 1 2 3 4 5
 	return (1);
 }
 
@@ -103,6 +106,7 @@ int	main(int ac, char **av)
 	else
 		e.sockfd = connect_client(av[1], atoi(av[2]));
 //	args management here.
+//	WELCOME integration with server : procedure here.
 	if (!(f = fork()))
 		e.state = receive_line(e.state, e.sockfd, malloc(sizeof(char) * 4096));
 	while (e.state && algorithm())//while client player is still alive:

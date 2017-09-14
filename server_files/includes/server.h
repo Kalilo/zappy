@@ -185,7 +185,7 @@ typedef struct		s_team
 	char			*name;
 	int				id;
 	unsigned int	num_members;
-	unsigned int	max_members;
+	// unsigned int	max_members;
 	int				avaliable_cons;
 	t_egg			*eggs;
 	struct s_team	*next;

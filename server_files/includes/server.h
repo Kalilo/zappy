@@ -158,6 +158,7 @@ typedef struct		s_client
 	int				num_commands;
 	t_comm			*command;
 	int				level;
+	int				life;
 	struct s_client	*next;
 }					t_client;
 
@@ -186,7 +187,6 @@ typedef struct		s_team
 	char			*name;
 	int				id;
 	unsigned int	num_members;
-	// unsigned int	max_members;
 	int				avaliable_cons;
 	t_egg			*eggs;
 	struct s_team	*next;
@@ -212,6 +212,7 @@ typedef struct		s_settings
 	unsigned int	height;
 	unsigned int	num_teams;
 	unsigned int	num_start_clients;
+	unsigned int	num_unused_conn;
 	float			fps;
 	t_team			*teams;
 	t_flags			set_flags;
@@ -406,6 +407,11 @@ void				init_gameplay(void);
 char				is_input_flag_set(char *flag);
 
 /*
+** join_team.c
+*/
+char				join_team(t_client *client, char *team);
+
+/*
 ** manage_clients.c
 */
 void				manage_clients(void);
@@ -440,6 +446,7 @@ void				run_command(t_client *client, char *command);
 ** team_lst.c
 */
 t_team				*find_client_team(t_client *client);
+t_team				*find_team(char *name);
 
 /*
 **                                /----------\                                **

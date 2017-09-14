@@ -36,6 +36,7 @@ SRCS_NAME =		accept_new_client.c			\
 				gameplay.c					\
 				init.c						\
 				input_flags.c				\
+				join_team.c					\
 				main.c						\
 				manage_clients.c			\
 				maths.c						\

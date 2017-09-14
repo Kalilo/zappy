@@ -25,13 +25,18 @@ char	join_team(t_client *client, char *team)
 	}
 	if (!team || (t->avaliable_cons < 1))
 		return (0);
-	if (t->eggs)
-	{
-		//
-	}
+	if (t->eggs && ((client->delay = -600) || 1))
+		client->pos = hatch_egg(find_team(team));
+	else if (g_env.settings.num_unused_conn && \
+			(g_env.settings.num_unused_conn--))
+		client->pos = (t_coord){rand() % G_WIDTH, rand() % G_HEIGHT};
 	else
-	{
-		//
-	}
+		return (0);
+	t->avaliable_cons--;
+	t->num_members++;
+	client->direction = (rand() % 4) * 2;
+	client->level = 1;
+	client->team_id = t->id;
+	client->life = 1260;
 	return (1);
 }

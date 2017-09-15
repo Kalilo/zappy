@@ -22,7 +22,7 @@ char	*sum_players(t_tile *tile, t_client *client, char *str)
 	cli = tile->players;
 	while (cli)
 	{
-		if (cli->client != client)
+		if (cli->client && cli->client->sock != client->sock)
 			ft_str_append(&str, " player");
 		cli = cli->next;
 	}

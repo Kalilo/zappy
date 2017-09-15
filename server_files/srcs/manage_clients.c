@@ -12,7 +12,7 @@
 
 #include "../includes/server.h"
 
-static void	handle_command(t_client *client, char *line)
+void		handle_command(t_client *client, char *line)
 {
 	if (!valid_command(line) && client->level)
 		write_msg_to_sock(client->sock, "error\n");
@@ -20,25 +20,26 @@ static void	handle_command(t_client *client, char *line)
 		new_command(client, line);
 }
 
-void		manage_clients(void)
+void		manaage_client_loop(int sd,  t_client *start, t_client *client, \
+	t_client *previous)
 {
-	int			sd;
-	t_client	*client;
-	t_client	*previous;
-
-	previous = NULL;
-	client = g_env.clients;
 	while (client)
 	{
 		sd = client->sock;
 		if (FD_ISSET(sd, &READ_FDS) && client->num_commands < 10)
 		{
-			if (get_next_line(sd, &GNL_LINE) < 1 || !ft_strcmp(GNL_LINE, "quit"))
+			if (get_next_line(sd, &GNL_LINE) < 1 || \
+				!ft_strcmp(GNL_LINE, "quit"))
 			{
 				ft_putendl("Client disconnected...");
 				close(sd);
-				client = (previous) ? previous : g_env.clients;
-				delete_client((previous) ? previous->next : g_env.clients);
+				client = (previous) ? previous : start;
+				delete_client((previous) ? previous->next : start);
+			}
+			else if (!ft_strcmp(GNL_LINE, "GRAPHIC"))
+			{
+				join_gfx(client);
+				client = (previous) ? previous : start;
 			}
 			else
 				handle_command(client, GNL_LINE);
@@ -47,4 +48,15 @@ void		manage_clients(void)
 		previous = client;
 		client = client->next;
 	}
+}
+
+void		manage_clients(void)
+{
+	int			sd;
+	t_client	*previous;
+
+	previous = NULL;
+	sd = 0;
+	manaage_client_loop(sd, g_env.clients, g_env.clients, previous);
+	manaage_client_loop(sd, g_env.gfx_cli, g_env.gfx_cli, previous);
 }

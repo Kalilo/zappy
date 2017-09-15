@@ -12,15 +12,10 @@
 
 #include "../includes/server.h"
 
-void	prep_client_sockets(void)
+static void	prep_client_lst(t_client *client)
 {
 	int			sd;
-	t_client	*client;
 
-	FD_ZERO(&READ_FDS);
-	FD_SET(MASTER_SOCK, &READ_FDS);
-	MASTER_MAX_SD = MASTER_SOCK;
-	client = g_env.clients;
 	while (client)
 	{
 		sd = client->sock;
@@ -31,4 +26,13 @@ void	prep_client_sockets(void)
 		FD_SET(sd, &READ_FDS);
 		client = client->next;
 	}
+}
+
+void		prep_client_sockets(void)
+{
+	FD_ZERO(&READ_FDS);
+	FD_SET(MASTER_SOCK, &READ_FDS);
+	MASTER_MAX_SD = MASTER_SOCK;
+	prep_client_lst(g_env.clients);
+	prep_client_lst(g_env.gfx_cli);
 }

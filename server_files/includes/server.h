@@ -149,8 +149,6 @@ typedef struct		s_client
 {
 	unsigned int	sock;
 	int				team_id;
-	// unsigned int	pos_x;
-	// unsigned int	pos_y;
 	t_coord			pos;
 	t_direction		direction;
 	int				delay;
@@ -228,6 +226,7 @@ typedef struct		s_env
 	char			*line;
 	t_settings		settings;
 	t_client		*clients;
+	t_client		*gfx_cli;
 	t_tile			**map;
 	char			play;
 }					t_env;
@@ -395,6 +394,12 @@ void				inc_user_delays(void);
 char				run_iteration(void);
 
 /*
+** gfx_cli.c
+*/
+t_client			*new_gfx_client(unsigned int sock);
+char				join_gfx(t_client *client);
+
+/*
 ** init.c
 */
 void				sig_listener(int signo);
@@ -416,6 +421,9 @@ char				join_team(t_client *client, char *team);
 /*
 ** manage_clients.c
 */
+void				handle_command(t_client *client, char *line);
+void				manaage_client_loop(int sd,  t_client *start, t_client \
+					*client, t_client *previous);
 void				manage_clients(void);
 
 /*

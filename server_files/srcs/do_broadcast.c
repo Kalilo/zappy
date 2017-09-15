@@ -85,6 +85,7 @@ void		send_msg(t_client *client, char *msg)
 			ft_str_append(&str, ", ");
 			ft_str_append(&str, msg);
 		}
+		ft_str_append(&str, "\n");
 		write_msg_to_sock(cli->sock, str);
 		ft_strdel(&str);
 		cli = cli->next;

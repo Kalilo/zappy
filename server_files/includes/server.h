@@ -272,6 +272,7 @@ void				move_cli(t_client *client, t_direction direction);
 t_client			*new_client(unsigned int sock);
 void				delete_client(t_client *client);
 void				delete_all_clients(void);
+t_client			*find_client_by_id(int id);
 
 /*
 ** command_lst.c

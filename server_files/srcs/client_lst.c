@@ -32,7 +32,7 @@ t_client	*new_client(unsigned int sock)
 	return (client);
 }
 
-void	delete_client(t_client *client)
+void		delete_client(t_client *client)
 {
 	t_client	*previous;
 
@@ -52,7 +52,7 @@ void	delete_client(t_client *client)
 	}
 }
 
-void	delete_all_clients(void)
+void		delete_all_clients(void)
 {
 	t_client	*client;
 	t_client	*tmp;
@@ -64,4 +64,14 @@ void	delete_all_clients(void)
 		client = client->next;
 		delete_client(tmp);
 	}
+}
+
+t_client	*find_client_by_id(int id)
+{
+	t_client	*client;
+
+	client = g_env.clients;
+	while (client && client->id != id)
+		client = client->next;
+	return (client);
 }

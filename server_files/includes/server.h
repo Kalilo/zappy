@@ -157,6 +157,7 @@ typedef struct		s_client
 	t_comm			*command;
 	int				level;
 	int				life;
+	int				id;
 	struct s_client	*next;
 }					t_client;
 
@@ -408,9 +409,19 @@ char				join_gfx(t_client *client);
 void				send_gfx(char *str);
 
 /*
+** gfx_mct.c
+*/
+void				gfx_mct(t_client *client);
+
+/*
 ** gfx_msz.c
 */
 void				gfx_msz(t_client *client);
+
+/*
+** gfx_tna.c
+*/
+void				gfx_tna(t_client *client);
 
 /*
 ** init.c

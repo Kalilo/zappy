@@ -36,7 +36,9 @@ SRCS_NAME =		accept_new_client.c			\
 				gameplay.c					\
 				gfx_bct.c					\
 				gfx_cli.c					\
+				gfx_mct.c					\
 				gfx_msz.c					\
+				gfx_tna.c					\
 				init.c						\
 				input_flags.c				\
 				inventory.c					\

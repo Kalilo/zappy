@@ -28,6 +28,10 @@ void	run_gfx_command(t_client *client, char *command)
 		gfx_plv(client, command + 4);
 	else if (!ft_strncmp(command, "pin ", 4))
 		gfx_pin(client, command + 4);
+	else if (!ft_strcmp(command, "sgt"))
+		gfx_sgt(client);
+	else if (!ft_strncmp(command, "sst ", 4))
+		gfx_sst(client, command + 4);
 	else
 		write_msg_to_sock(client->sock, "suc\n");
 	delete_command(client, client->command);

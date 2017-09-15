@@ -438,6 +438,16 @@ char				*gfx_ppo_str(t_client *player);
 void				gfx_ppo(t_client *client, char *player_id);
 
 /*
+** gfx_sgt.c
+*/
+void				gfx_sgt(t_client *client);
+
+/*
+** gfx_sst.c
+*/
+void				gfx_sst(t_client *client, char *new_time);
+
+/*
 ** gfx_tna.c
 */
 void				gfx_tna(t_client *client);

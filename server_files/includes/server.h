@@ -456,6 +456,11 @@ void				manaage_client_loop(int sd,  t_client *start, t_client \
 void				manage_clients(void);
 
 /*
+** manage_gfx_commands.c
+*/
+void				manage_gfx_commands(void);
+
+/*
 ** maths.c
 */
 float				ft_dist(t_coord a, t_coord b);
@@ -479,6 +484,7 @@ void				prep_client_sockets(void);
 /*
 ** run_command.c
 */
+void				run_gfx_command(t_client *client, char *command);
 void				run_command(t_client *client, char *command);
 
 /*

@@ -45,6 +45,7 @@ SRCS_NAME =		accept_new_client.c			\
 				join_team.c					\
 				main.c						\
 				manage_clients.c			\
+				manage_gfx_commands.c		\
 				maths.c						\
 				parse_arguments.c			\
 				populate_map.c				\

@@ -12,6 +12,15 @@
 
 #include "../includes/server.h"
 
+void	run_gfx_command(t_client *client, char *command)
+{
+	if (!ft_strcmp(command, "msz"))
+		gfx_msz(client);
+	else
+		write_msg_to_sock(client->sock, "suc\n");
+	delete_command(client, client->command);
+}
+
 void	run_command(t_client *client, char *command)
 {
 	if (!ft_strncmp(command, "a", 1))

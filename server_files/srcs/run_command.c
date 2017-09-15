@@ -16,6 +16,12 @@ void	run_gfx_command(t_client *client, char *command)
 {
 	if (!ft_strcmp(command, "msz"))
 		gfx_msz(client);
+	else if (!ft_strncmp(command, "bct ", 4))
+		gfx_bct(client, command + 4);
+	else if (!ft_strcmp(command, "mct"))
+		gfx_mct(client);
+	else if (!ft_strcmp(command, "tna"))
+		gfx_tna(client);
 	else
 		write_msg_to_sock(client->sock, "suc\n");
 	delete_command(client, client->command);

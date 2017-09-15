@@ -15,11 +15,25 @@
 /*
 ** these functions aren't very effient, though should serve their purpose
 */
+char	*sum_players(t_tile *tile, t_client *client, char *str)
+{
+	t_cli	*cli;
+
+	cli = tile->players;
+	(void)client;
+	while (cli)
+	{
+		if (cli->client != client)
+			ft_str_append(&str, " player");
+		cli = cli->next;
+	}
+	return (str);
+}
+
 char	*sum_tile_content(t_tile *tile, t_client *client)
 {
 	char	*str;
 	int		k;
-	t_cli	*cli;
 
 	str = ft_strdup("");
 	k = tile->inventory.linemate;
@@ -36,11 +50,7 @@ char	*sum_tile_content(t_tile *tile, t_client *client)
 	REP_APPEND(" thystame");
 	k = tile->inventory.food;
 	REP_APPEND(" food");
-	cli = tile->players;
-	while (cli && ((cli = cli->next) || 1))
-		if (cli->client != client)
-			ft_str_append(&str, " player");
-	return (str);
+	return (sum_players(tile, client, str));
 }
 
 char	*sum_range(t_coord min, t_coord max, t_direction dir, t_client *client)

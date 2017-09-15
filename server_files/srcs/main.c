@@ -46,8 +46,8 @@ void	main_loop(void)
 	while (1)
 	{
 		gettimeofday(&reff, NULL);
-		run_iteration();
 		tend_clients(reff);
+		run_iteration();
 	}
 }
 

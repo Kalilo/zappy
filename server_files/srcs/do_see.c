@@ -20,7 +20,6 @@ char	*sum_players(t_tile *tile, t_client *client, char *str)
 	t_cli	*cli;
 
 	cli = tile->players;
-	(void)client;
 	while (cli)
 	{
 		if (cli->client != client)

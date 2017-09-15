@@ -32,3 +32,25 @@ t_coord		move_coord(t_coord pos, t_direction direction)
 		MOVE_SW;
 	return (pos);
 }
+
+char		*coord_to_str(t_coord coord)
+{
+	char	*str;
+	char	*x;
+	char	*y;
+	int		len;
+	int		tmp;
+
+	x = ft_itoa(coord.x);
+	y = ft_itoa(coord.y);
+	len = (tmp = ft_strlen(x)) + ft_strlen(y) + 2;
+	if (!(str = (char *)malloc(len)))
+		error_quit("Insufficient memory");
+	ft_memcpy(str, x, tmp);
+	str[tmp++] = ' ';
+	ft_memcpy(&str[tmp], y, ft_strlen(y));
+	str[len - 1] = '\0';
+	free(x);
+	free(y);
+	return (str);
+}

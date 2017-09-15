@@ -289,6 +289,7 @@ char				can_do_command(char *str, int delay);
 ** coords.c
 */
 t_coord				move_coord(t_coord pos, t_direction direction);
+char				*coord_to_str(t_coord coord);
 
 /*
 ** direction.c
@@ -399,6 +400,11 @@ char				run_iteration(void);
 t_client			*new_gfx_client(unsigned int sock);
 char				join_gfx(t_client *client);
 void				send_gfx(char *str);
+
+/*
+** gfx_msz.c
+*/
+void				gfx_msz(t_client *client);
 
 /*
 ** init.c

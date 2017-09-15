@@ -49,7 +49,7 @@ void	main_loop(void)
 	{
 		gettimeofday(&reff, NULL);
 		run_iteration();
-		// GFX here
+		manage_gfx_commands();
 		tend_clients(reff);
 	}
 }

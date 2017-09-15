@@ -20,7 +20,7 @@ void	tend_clients(struct timeval reff)
 
 	gettimeofday(&now, NULL);
 	rem = abs(reff.tv_usec - now.tv_usec);
-	while (rem < (1000000 / g_env.settings.fps))
+	while (1)
 	{
 		prep_client_sockets();
 		reff.tv_sec = (g_env.settings.fps == 1) ? 1 : 0;
@@ -36,6 +36,8 @@ void	tend_clients(struct timeval reff)
 			manage_clients();
 		gettimeofday(&now, NULL);
 		rem = abs(reff.tv_usec - now.tv_usec);
+		if (rem >= (1000000 / g_env.settings.fps))
+			break ;
 	}
 }
 

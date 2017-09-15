@@ -395,6 +395,12 @@ void				inc_user_delays(void);
 char				run_iteration(void);
 
 /*
+** gfx_bct.c
+*/
+char				*gfx_bct_str(t_coord pos);
+void				gfx_bct(t_client *client, char *params);
+
+/*
 ** gfx_cli.c
 */
 t_client			*new_gfx_client(unsigned int sock);

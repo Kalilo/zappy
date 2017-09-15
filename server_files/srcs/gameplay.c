@@ -69,8 +69,8 @@ void	inc_user_delays(void)
 char	run_iteration(void)
 {
 	play_choice();
-	// generate resources.
 	inc_user_delays();
+	// dec user health
 	// check if the game is still in play
 	return (g_env.play);//if the game is still in play
 }

@@ -420,6 +420,18 @@ void				gfx_mct(t_client *client);
 void				gfx_msz(t_client *client);
 
 /*
+** gfx_pin.c
+*/
+char				*gfx_pin_str(t_client *player);
+void				gfx_pin(t_client *client, char *player_id);
+
+/*
+** gfx_plv.c
+*/
+char				*gfx_plv_str(t_client *player);
+void				gfx_plv(t_client *client, char *player_id);
+
+/*
 ** gfx_ppo.c
 */
 char				*gfx_ppo_str(t_client *player);

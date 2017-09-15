@@ -398,6 +398,7 @@ char				run_iteration(void);
 */
 t_client			*new_gfx_client(unsigned int sock);
 char				join_gfx(t_client *client);
+void				send_gfx(char *str);
 
 /*
 ** init.c

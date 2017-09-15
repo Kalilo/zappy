@@ -41,3 +41,15 @@ char		join_gfx(t_client *client)
 	delete_client(client);
 	return (1);
 }
+
+void		send_gfx(char *str)
+{
+	t_client	*client;
+
+	client = g_env.gfx_cli;
+	while (client)
+	{
+		write_msg_to_sock(client->sock, str);
+		client = client->next;
+	}
+}

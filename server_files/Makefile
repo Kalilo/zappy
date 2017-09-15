@@ -37,6 +37,7 @@ SRCS_NAME =		accept_new_client.c			\
 				gfx_cli.c					\
 				init.c						\
 				input_flags.c				\
+				inventory.c					\
 				join_team.c					\
 				main.c						\
 				manage_clients.c			\

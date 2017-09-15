@@ -117,13 +117,13 @@ typedef struct		s_coord
 */
 typedef struct		s_inventory
 {
+	unsigned short	food;
 	unsigned short	linemate;
 	unsigned short	deraumere;
 	unsigned short	sibur;
 	unsigned short	mendiane;
 	unsigned short	phiras;
 	unsigned short	thystame;
-	unsigned short	food;
 }					t_inventory;
 
 /*
@@ -419,6 +419,11 @@ void				init_gameplay(void);
 ** input_flags.c
 */
 char				is_input_flag_set(char *flag);
+
+/*
+** inventory.c
+*/
+char				*inventory_to_str(t_inventory *inventory);
 
 /*
 ** join_team.c

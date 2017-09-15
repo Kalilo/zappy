@@ -420,6 +420,12 @@ void				gfx_mct(t_client *client);
 void				gfx_msz(t_client *client);
 
 /*
+** gfx_ppo.c
+*/
+char				*gfx_ppo_str(t_client *player);
+void				gfx_ppo(t_client *client, char *player_id);
+
+/*
 ** gfx_tna.c
 */
 void				gfx_tna(t_client *client);

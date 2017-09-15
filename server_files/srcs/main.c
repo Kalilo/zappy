@@ -52,6 +52,7 @@ int		main(int ac, char **av)
 	set_defults();
 	init_main_socket(g_env.settings.port);
 	init_gameplay();
+	srand(time(NULL));
 	main_loop();
 	return (0);
 }

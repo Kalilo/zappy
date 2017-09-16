@@ -37,6 +37,7 @@ SRCS_NAME =		accept_new_client.c			\
 				gfx_bct.c					\
 				gfx_cli.c					\
 				gfx_ebo.c					\
+				gfx_edi.c					\
 				gfx_eht.c					\
 				gfx_enw.c 					\
 				gfx_mct.c					\

@@ -417,6 +417,12 @@ char				*gfx_ebo_str(void);
 void				gfx_ebo_auto(void);
 
 /*
+** gfx_edi.c
+*/
+char				*gfx_edi_str(void);
+void				gfx_edi_auto(void);
+
+/*
 ** gfx_eht.c
 */
 char				*gfx_eht_str(void);

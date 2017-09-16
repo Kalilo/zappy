@@ -73,5 +73,6 @@ char	run_iteration(void)
 	inc_user_delays();
 	// dec user health, and use gfx_pdi
 	// check if the game is still in play
+	// death of an egg?
 	return (g_env.play);//if the game is still in play
 }

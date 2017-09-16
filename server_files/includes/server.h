@@ -57,7 +57,7 @@
 # define INPUT_FLAG(X)	g_env.settings.set_flags.X
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
-# define TAKE(X)		inventory->X--,client->inventory.X++
+# define TAKE(X, Y)		inventory->X--,client->inventory.X++,id=Y
 # define PUT(X, Y)		inventory->X++,client->inventory.X--,id=Y
 
 # define REP_APPEND(X)	while(k--)ft_str_append(&str,X)
@@ -448,6 +448,12 @@ void				gfx_pfk_auto(int id);
 */
 char				*gfx_pic_str(t_cli *cli, int level, t_coord pos);
 void				gfx_pic_auto(t_coord pos, int level);
+
+/*
+** gfx_pgt.c
+*/
+char				*gfx_pgt_str(int id, int resource_id);
+void				gfx_pgt_auto(int id, int resource_id);
 
 /*
 ** gfx_pie.c

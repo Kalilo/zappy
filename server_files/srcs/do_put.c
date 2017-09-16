@@ -15,22 +15,23 @@
 void	do_put(t_client *client, char *what)
 {
 	t_inventory		*inventory;
+	int				id;
 
 	inventory = &(MAP(client->pos.x, client->pos.y).inventory);
 	if (!ft_strcmp(what, "linemate") && client->inventory.linemate)
-		PUT(linemate);
+		PUT(linemate, 1);
 	else if (!ft_strcmp(what, "deraumere") && client->inventory.deraumere)
-		PUT(deraumere);
+		PUT(deraumere, 2);
 	else if (!ft_strcmp(what, "sibur") && client->inventory.sibur)
-		PUT(sibur);
+		PUT(sibur, 3);
 	else if (!ft_strcmp(what, "mendiane") && client->inventory.mendiane)
-		PUT(mendiane);
+		PUT(mendiane, 4);
 	else if (!ft_strcmp(what, "phiras") && client->inventory.phiras)
-		PUT(phiras);
+		PUT(phiras, 5);
 	else if (!ft_strcmp(what, "thystame") && client->inventory.thystame)
-		PUT(thystame);
+		PUT(thystame, 6);
 	else if (!ft_strcmp(what, "food") && client->inventory.food)
-		PUT(food);
+		PUT(food, 0);
 	else
 	{
 		write_msg_to_sock(client->sock, "ko\n");

@@ -58,7 +58,7 @@
 # define SET_FLAG(X)	(!INPUT_FLAG(X) && (INPUT_FLAG(X) = 1))
 
 # define TAKE(X)		inventory->X--,client->inventory.X++
-# define PUT(X)			inventory->X++,client->inventory.X--
+# define PUT(X, Y)		inventory->X++,client->inventory.X--,id=Y
 
 # define REP_APPEND(X)	while(k--)ft_str_append(&str,X)
 
@@ -424,6 +424,12 @@ void				gfx_msz(t_client *client);
 */
 char				*gfx_pbc_str(t_client *client, char *msg);
 void				gfx_pbc_auto(t_client *client, char *msg);
+
+/*
+** gfx_pdr.c
+*/
+char				*gfx_pdr_str(int id, int resource_id);
+void				gfx_pdr_auto(int id, int resource_id);
 
 /*
 ** gfx_pex.c

@@ -523,6 +523,12 @@ void				gfx_ppo_auto(t_client *client);
 void				gfx_sgt(t_client *client);
 
 /*
+** gfx_smg.c
+*/
+char				*gfx_smg_str(char *msg);
+void				gfx_smg_auto(char *msg);
+
+/*
 ** gfx_sst.c
 */
 void				gfx_sst(t_client *client, char *new_time);

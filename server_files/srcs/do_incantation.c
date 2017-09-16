@@ -78,6 +78,7 @@ void	incanate_invent_adjust(t_inventory *inventory, int level)
 
 // needs to be rewritten..
 // add gfx_pic
+// and gfx_pie
 void	do_incantation(t_client *client)
 {
 	char	*str;

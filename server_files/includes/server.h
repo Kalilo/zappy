@@ -438,6 +438,12 @@ char				*gfx_pic_str(t_cli *cli, int level, t_coord pos);
 void				gfx_pic_auto(t_coord pos, int level);
 
 /*
+** gfx_pie.c
+*/
+char				*gfx_pie_str(t_coord pos, char sucess);
+void				gfx_pie_auto(t_coord pos, char sucess);
+
+/*
 ** gfx_pin.c
 */
 char				*gfx_pin_str(t_client *player);

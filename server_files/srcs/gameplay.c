@@ -27,6 +27,7 @@ void	welcome_client(t_client *client)
 	ft_str_append(&str, "\n");
 	write_msg_to_sock(client->sock, str);
 	ft_strdel(&str);
+	gfx_pnw(client);
 }
 
 void	play_choice(void)

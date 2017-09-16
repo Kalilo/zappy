@@ -432,6 +432,12 @@ char				*gfx_plv_str(t_client *player);
 void				gfx_plv(t_client *client, char *player_id);
 
 /*
+** gfx_plv.c
+*/
+char				*gfx_pnw_str(t_client *client);
+void				gfx_pnw(t_client *client);
+
+/*
 ** gfx_ppo.c
 */
 char				*gfx_ppo_str(t_client *player);

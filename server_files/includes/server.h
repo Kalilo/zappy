@@ -411,6 +411,12 @@ char				join_gfx(t_client *client);
 void				send_gfx(char *str);
 
 /*
+** gfx_eht.c
+*/
+char				*gfx_eht_str(void);
+void				gfx_eht_auto(void);
+
+/*
 ** gfx_enw.c 
 */
 char				*gfx_enw_str(t_client *client);

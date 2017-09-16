@@ -24,7 +24,7 @@ void	lay_egg(t_client *client)
 	tmp = (t_egg *)ft_strnew(sizeof(t_egg));
 	tmp->team_id = client->team_id;
 	tmp->pos =client->pos;
-	if (egg)
+	if (++g_env.settings.num_eggs && egg)
 		egg->next = tmp;
 	else
 		MAP(client->pos.x, client->pos.y).eggs = tmp;
@@ -65,5 +65,6 @@ t_coord	hatch_egg(t_team *team)
 		MAP(pos.x, pos.y).eggs = (egg) ? egg->next : NULL;
 		free(egg);
 	}
+	g_env.settings.num_eggs--;
 	return (pos);
 }

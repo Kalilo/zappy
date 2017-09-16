@@ -212,6 +212,7 @@ typedef struct		s_settings
 	unsigned int	num_teams;
 	unsigned int	num_start_clients;
 	unsigned int	num_unused_conn;
+	unsigned int	num_eggs;
 	float			fps;
 	t_team			*teams;
 	t_flags			set_flags;
@@ -408,6 +409,12 @@ void				gfx_bct(t_client *client, char *params);
 t_client			*new_gfx_client(unsigned int sock);
 char				join_gfx(t_client *client);
 void				send_gfx(char *str);
+
+/*
+** gfx_enw.c 
+*/
+char				*gfx_enw_str(t_client *client);
+void				gfx_enw_auto(t_client *client);
 
 /*
 ** gfx_mct.c

@@ -37,6 +37,7 @@ void	do_put(t_client *client, char *what)
 		write_msg_to_sock(client->sock, "ko\n");
 		return ;
 	}
+	gfx_pdr_auto(client->id, id);
 	write_msg_to_sock(client->sock, "ok\n");
 	client->delay -= 7;
 }

@@ -420,6 +420,12 @@ void				gfx_mct(t_client *client);
 void				gfx_msz(t_client *client);
 
 /*
+** gfx_pex.c
+*/
+char				*gfx_pex_str(t_client *client);
+void				gfx_pex_auto(t_client *client);
+
+/*
 ** gfx_pin.c
 */
 char				*gfx_pin_str(t_client *player);
@@ -432,16 +438,17 @@ char				*gfx_plv_str(t_client *player);
 void				gfx_plv(t_client *client, char *player_id);
 
 /*
-** gfx_plv.c
+** gfx_pnw.c
 */
 char				*gfx_pnw_str(t_client *client);
-void				gfx_pnw(t_client *client);
+void				gfx_pnw_auto(t_client *client);
 
 /*
 ** gfx_ppo.c
 */
 char				*gfx_ppo_str(t_client *player);
 void				gfx_ppo(t_client *client, char *player_id);
+void				gfx_ppo_auto(t_client *client);
 
 /*
 ** gfx_sgt.c

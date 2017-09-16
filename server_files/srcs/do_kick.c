@@ -31,16 +31,16 @@ void	do_kick(t_client *client)
 
 	k = MAP(client->pos.x, client->pos.y).players;
 	kicked = 0;
+	gfx_pex_auto(client);
 	while (k)
 	{
-		if (k->client != client && kicked == 1)
+		if (k->client->id != client->id && (kicked = 1))
 		{
 			send_moving_msg(k->client->sock, client->direction);
 			move_cli(k->client, client->direction);
-			k =  MAP(client->pos.x, client->pos.y).players;//temp fix
+			gfx_ppo_auto(k->client);
 		}
-		else//temp fix
-			k = k->next;
+		k = k->next;
 	}
 	if (kicked)
 		write_msg_to_sock(client->sock, "ok\n");

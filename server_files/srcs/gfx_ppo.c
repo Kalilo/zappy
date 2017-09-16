@@ -43,3 +43,14 @@ void	gfx_ppo(t_client *client, char *player_id)
 	write_msg_to_sock(client->sock, str);
 	ft_strdel(&str);
 }
+
+void	gfx_ppo_auto(t_client *client)
+{
+	char	*str;
+
+	if (!g_env.gfx_cli)
+		return ;
+	str = gfx_ppo_str(client);
+	send_gfx(str);
+	ft_strdel(&str);
+}

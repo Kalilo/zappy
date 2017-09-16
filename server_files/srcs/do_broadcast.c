@@ -95,5 +95,6 @@ void		send_msg(t_client *client, char *msg)
 void		do_bradcast(t_client *client, char *msg)
 {
 	send_msg(client, msg);
+	gfx_pbc_auto(client, msg);
 	client->delay -= 7;
 }

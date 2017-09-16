@@ -420,6 +420,12 @@ void				gfx_mct(t_client *client);
 void				gfx_msz(t_client *client);
 
 /*
+** gfx_pbc.c
+*/
+char				*gfx_pbc_str(t_client *client, char *msg);
+void				gfx_pbc_auto(t_client *client, char *msg);
+
+/*
 ** gfx_pex.c
 */
 char				*gfx_pex_str(t_client *client);

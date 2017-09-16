@@ -426,6 +426,12 @@ char				*gfx_pbc_str(t_client *client, char *msg);
 void				gfx_pbc_auto(t_client *client, char *msg);
 
 /*
+** gfx_pdi.c
+*/
+char				*gfx_pdi_str(int id);
+void				gfx_pdi_auto(t_client *client);
+
+/*
 ** gfx_pdr.c
 */
 char				*gfx_pdr_str(int id, int resource_id);

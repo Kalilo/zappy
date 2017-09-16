@@ -71,7 +71,7 @@ char	run_iteration(void)
 {
 	play_choice();
 	inc_user_delays();
-	// dec user health
+	// dec user health, and use gfx_pdi
 	// check if the game is still in play
 	return (g_env.play);//if the game is still in play
 }

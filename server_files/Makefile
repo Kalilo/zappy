@@ -40,6 +40,7 @@ SRCS_NAME =		accept_new_client.c			\
 				gfx_msz.c					\
 				gfx_pbc.c					\
 				gfx_pex.c					\
+				gfx_pfk.c					\
 				gfx_pic.c					\
 				gfx_pie.c					\
 				gfx_pin.c					\

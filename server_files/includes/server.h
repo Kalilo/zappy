@@ -432,6 +432,12 @@ char				*gfx_pex_str(t_client *client);
 void				gfx_pex_auto(t_client *client);
 
 /*
+** gfx_pfk.c
+*/
+char				*gfx_pfk_str(int id);
+void				gfx_pfk_auto(int id);
+
+/*
 ** gfx_pic.c
 */
 char				*gfx_pic_str(t_cli *cli, int level, t_coord pos);

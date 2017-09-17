@@ -32,6 +32,7 @@ char	*gfx_pnw_str(t_client *client)
 	ft_str_append(&str, " ");
 	tmp = ft_itoa(client->level);
 	str = ft_str_append3(&str, &tmp);
+	ft_str_append(&str, " ");
 	ft_str_append(&str, find_client_team(client)->name);
 	ft_str_append(&str, "\n");
 	return (str);

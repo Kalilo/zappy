@@ -7,21 +7,13 @@ rescue
   abort "Error parsing args"
 end
 
-require './server.rb'
+# Initialize the Server
+begin
+  require './server.rb'
 
-@server = Server.new @options[:host], @options[:port], @options[:team]
+  @server = Server.new @options[:host], @options[:port], @options[:team]
+rescue
+  abort "Fatal error initializing the server"
+end
 
-# # Set defaults
-# @port ||= 4000
-# @host ||= 'localhost'
-# @team ||= "Team00"
-
-# sock = TCPSocket.new @host, @port.to_i rescue abort "failed to connect to #{@host} on port #{@port}"
-# # sock.puts @team
-
-# # while line = sock.gets # Read lines from socket
-# #   puts line         # and print them
-# # end
-
-# puts "end"
-# sock.close
+abort "failed to recieve welcome message from server" unless @server.get

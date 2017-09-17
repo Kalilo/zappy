@@ -13,7 +13,7 @@ class Server
 	end
 
 	def get
-		@sock.get
+		@sock.gets
 	end
 
 	def puts msg

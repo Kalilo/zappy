@@ -521,6 +521,12 @@ void				gfx_ppo(t_client *client, char *player_id);
 void				gfx_ppo_auto(t_client *client);
 
 /*
+** gfx_seg.c
+*/
+char				*gfx_seg_str(char *team);
+void				gfx_seg_auto(char *team);
+
+/*
 ** gfx_sgt.c
 */
 void				gfx_sgt(t_client *client);

@@ -54,6 +54,7 @@ SRCS_NAME =		accept_new_client.c			\
 				gfx_plv.c					\
 				gfx_pnw.c					\
 				gfx_ppo.c					\
+				gfx_seg.c					\
 				gfx_sgt.c					\
 				gfx_smg.c					\
 				gfx_sst.c					\

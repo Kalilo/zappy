@@ -83,7 +83,6 @@ char	*get_in_sight(t_client *client)
 	min = max = client->pos;
 	str = sum_range(min, max, tangent_right_direction(client->direction),
 		client);
-	ft_str_append2("{", &str);
 	while (--level >= 0)
 	{
 		ft_str_append(&str, ",");
@@ -95,6 +94,10 @@ char	*get_in_sight(t_client *client)
 			client);
 		str = ft_str_append3(&str, &tmp);
 	}
+	if (*str == ' ')
+		*str = '{';
+	else
+		ft_str_append2("{", &str);
 	ft_str_append(&str, "}\n");
 	return (str);
 }

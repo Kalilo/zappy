@@ -7,6 +7,10 @@ rescue
   abort "Error parsing args"
 end
 
+require './server.rb'
+
+@server = Server.new @options[:host], @options[:port], @options[:team]
+
 # # Set defaults
 # @port ||= 4000
 # @host ||= 'localhost'

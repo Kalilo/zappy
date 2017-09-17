@@ -25,5 +25,6 @@ void	gfx_tna(t_client *client)
 		ft_str_append(&str, "\n");
 		write_msg_to_sock(client->sock, str);
 		ft_strdel(&str);
+		team = team->next;
 	}
 }

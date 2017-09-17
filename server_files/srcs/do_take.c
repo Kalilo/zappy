@@ -38,7 +38,7 @@ void	do_take(t_client *client, char *what)
 		return ;
 	}
 	write_msg_to_sock(client->sock, "ok\n");
-	gfx_pgt_auto(client->id, id);
+	gfx_pgt_auto(client, id);
 	add_random_gem(rand() % G_WIDTH, rand() % G_HEIGHT);
 	client->delay -= 7;
 }

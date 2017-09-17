@@ -26,13 +26,18 @@ char	*gfx_pgt_str(int id, int resource_id)
 	return (str);
 }
 
-void	gfx_pgt_auto(int id, int resource_id)
+void	gfx_pgt_auto(t_client *client, int resource_id)
 {
 	char	*str;
+	char	*tmp;
 
 	if (!g_env.gfx_cli)
 		return ;
-	str = gfx_pdr_str(id, resource_id);
+	str = gfx_pdr_str(client->id, resource_id);
+	tmp = gfx_pin_str(client);
+	str = ft_str_append3(&str, &tmp);
+	tmp = gfx_bct_str(client->pos);
+	str = ft_str_append3(&str, &tmp);
 	send_gfx(str);
 	ft_strdel(&str);
 }

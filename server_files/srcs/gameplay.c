@@ -28,6 +28,7 @@ void	welcome_client(t_client *client)
 	write_msg_to_sock(client->sock, str);
 	ft_strdel(&str);
 	gfx_pnw_auto(client);
+	// need to add gfx_eht (hatch egg case)
 }
 
 void	play_choice(void)

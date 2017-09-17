@@ -23,5 +23,6 @@ void	do_left(t_client *client)
 	else if (client->direction == west)
 		client->direction = south;
 	write_msg_to_sock(client->sock, "ok\n");
+	gfx_ppo_auto(client);
 	client->delay -= 7;
 }

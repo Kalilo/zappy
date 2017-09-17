@@ -487,7 +487,7 @@ void				gfx_pic_auto(t_coord pos, int level);
 ** gfx_pgt.c
 */
 char				*gfx_pgt_str(int id, int resource_id);
-void				gfx_pgt_auto(int id, int resource_id);
+void				gfx_pgt_auto(t_client *client, int resource_id);
 
 /*
 ** gfx_pie.c

@@ -66,6 +66,6 @@ t_coord	hatch_egg(t_team *team)
 		free(egg);
 	}
 	g_env.settings.num_eggs--;
-	gfx_eht_auto();// might be ebo...
+	gfx_ebo_auto();
 	return (pos);
 }

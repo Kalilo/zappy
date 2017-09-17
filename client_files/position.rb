@@ -13,6 +13,26 @@ class Position
 		@x, @y, @dir = x, y, dir
 	end
 
+	def move direction
+		case direction
+			when north
+				@y -= 1
+			when east
+				@x += 1
+			when south
+				@y += 1
+			when west
+				@x -= 1
+			else
+				@dir = north
+				@y -= 1
+		end
+	end
+
+	def move x, y
+		@x, @y = x, y
+	end
+
 	def turn_right
 		case @dir
 			when north

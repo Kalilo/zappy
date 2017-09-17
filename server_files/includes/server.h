@@ -463,7 +463,7 @@ void				gfx_pdi_auto(t_client *client);
 ** gfx_pdr.c
 */
 char				*gfx_pdr_str(int id, int resource_id);
-void				gfx_pdr_auto(int id, int resource_id);
+void				gfx_pdr_auto(t_client *client, int resource_id);
 
 /*
 ** gfx_pex.c

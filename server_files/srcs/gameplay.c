@@ -19,10 +19,10 @@ void	welcome_client(t_client *client)
 
 	str = ft_itoa((find_client_team(client))->avaliable_cons + 1);
 	ft_str_append(&str, "\n");
-	tmp = ft_itoa(client->pos.x);
+	tmp = ft_itoa(G_WIDTH);
 	str = ft_str_append3(&str, &tmp);
 	ft_str_append(&str, " ");
-	tmp = ft_itoa(client->pos.y);
+	tmp = ft_itoa(G_HEIGHT);
 	str = ft_str_append3(&str, &tmp);
 	ft_str_append(&str, "\n");
 	write_msg_to_sock(client->sock, str);

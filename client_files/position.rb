@@ -33,6 +33,11 @@ class Position
 		@x, @y = x, y
 	end
 
+	def diff pos
+		throw 'Can only run diff on Positions' unless pos.class == Position
+		((pos.y - @y) + (pos.x - @x)).abs
+	end
+
 	def turn_right
 		case @dir
 			when north

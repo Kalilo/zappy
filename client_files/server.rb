@@ -19,4 +19,9 @@ class Server
 	def puts msg
 		sock.puts msg
 	end
+
+	def response_to msg
+		sock.puts msg
+		@sock.gets
+	end
 end

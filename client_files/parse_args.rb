@@ -2,7 +2,7 @@ require 'optparse'
 
 @options = {}
 OptionParser.new do |opts|
-  opts.banner = "Usage: #{0} -n <team> -p <port> [-h hostname]"
+  opts.banner = "Usage: ruby #{$PROGRAM_NAME} -n <team> -p <port> [-h hostname]"
 
   opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
     @options[:verbose] = v
@@ -21,7 +21,6 @@ OptionParser.new do |opts|
 	@options[:port] = p
   end
 
-  opts.on()
 end.parse!
 
 abort 'Please provide team name' unless @options[:team]

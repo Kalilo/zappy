@@ -1,7 +1,11 @@
 require 'socket'
 
 # Run the argument parser
-require './parse_args.rb'
+begin
+  require './parse_args.rb'
+rescue
+  abort "Error parsing args"
+end
 
 # # Set defaults
 # @port ||= 4000

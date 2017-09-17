@@ -1,11 +1,11 @@
 require 'optparse'
 
-options = {}
+@options = {}
 OptionParser.new do |opts|
   opts.banner = "Usage: #{0} -n <team> -p <port> [-h hostname]"
 
   opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
-    options[:verbose] = v
+    @options[:verbose] = v
   end
 
   opts.on('-h', '--help', 'Prints this help') do
@@ -14,14 +14,17 @@ OptionParser.new do |opts|
   end
 
   opts.on('-nTEAM', '--name=TEAM', 'Set the team name') do |n|
-	options[:name] = n
+	@options[:team] = n
   end
 
   opts.on('-pPORT', '--port=PORT', 'Set the port number') do |p|
-	options[:port] = p
+	@options[:port] = p
   end
 
   opts.on()
 end.parse!
 
-p options
+abort 'Please provide team name' unless @options[:team]
+abort 'Please provide port number' unless @options[:port]
+
+p @options

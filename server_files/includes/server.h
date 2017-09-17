@@ -410,6 +410,7 @@ void				gfx_bct(t_client *client, char *params);
 */
 t_client			*new_gfx_client(unsigned int sock);
 char				join_gfx(t_client *client);
+void				welcome_gfx(t_client *client);
 void				send_gfx(char *str);
 
 /*

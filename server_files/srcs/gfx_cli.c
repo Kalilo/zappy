@@ -32,6 +32,14 @@ t_client	*new_gfx_client(unsigned int sock)
 	return (client);
 }
 
+void		welcome_gfx(t_client *client)
+{
+	gfx_msz(client);
+	gfx_sgt(client);
+	gfx_mct(client);
+	gfx_tna(client);
+}
+
 char		join_gfx(t_client *client)
 {
 	t_client	*new_gfx;
@@ -39,6 +47,7 @@ char		join_gfx(t_client *client)
 	new_gfx = new_gfx_client(client->sock);
 	new_gfx->command = client->command;
 	delete_client(client);
+	welcome_gfx(new_gfx);
 	return (1);
 }
 

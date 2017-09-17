@@ -1,10 +1,8 @@
 # This class is to handle player positions
-enum {
-	north,
-	east,
-	south,
-	west
-}
+NORTH = 0
+EAST = 1
+SOUTH = 2
+WEST = 3
 
 class Position
 	attr_accessor :x, :y, :dir
@@ -15,23 +13,23 @@ class Position
 
 	def move direction
 		case direction
-			when north
+			when NORTH
 				@y -= 1
-			when east
+			when EAST
 				@x += 1
-			when south
+			when SOUTH
 				@y += 1
-			when west
+			when WEST
 				@x -= 1
 			else
-				@dir = north
+				@dir = NORTH
 				@y -= 1
 		end
 	end
 
-	def move x, y
-		@x, @y = x, y
-	end
+	# def move x, y
+	# 	@x, @y = x, y
+	# end
 
 	def diff pos
 		throw 'Can only run diff on Positions' unless pos.class == Position
@@ -40,107 +38,107 @@ class Position
 
 	def turn_right
 		case @dir
-			when north
-				@dir = east
-			when east
-				@dir = south
-			when south
-				@dir = west
-			when west
-				@dir = north
+			when NORTH
+				@dir = EAST
+			when EAST
+				@dir = SOUTH
+			when SOUTH
+				@dir = WEST
+			when WEST
+				@dir = NORTH
 			else
-				@dir = north
+				@dir = NORTH
 		end
 	end
 
 	def turn_left
 		case @dir
-			when north
-				@dir = west
-			when east
-				@dir = north
-			when south
-				@dir = east
-			when west
-				@dir = south
+			when NORTH
+				@dir = WEST
+			when EAST
+				@dir = NORTH
+			when SOUTH
+				@dir = EAST
+			when WEST
+				@dir = SOUTH
 			else
-				@dir = north
+				@dir = NORTH
 		end
 	end
 
 	def set_opposite_dir
 		case @dir
-			when north
-				@dir = south
-			when east
-				@dir = west
-			when south
-				@dir = north
-			when west
-				@dir = east
+			when NORTH
+				@dir = SOUTH
+			when EAST
+				@dir = WEST
+			when SOUTH
+				@dir = NORTH
+			when WEST
+				@dir = EAST
 			else
-				@dir = south
+				@dir = SOUTH
 		end
 	end
 
 	def advance
 		case @dir
-			when north
+			when NORTH
 				@y -= 1
-			when east
+			when EAST
 				@x += 1
-			when south
+			when SOUTH
 				@y += 1
-			when west
+			when WEST
 				@x -= 1
 			else
-				@dir = north
+				@dir = NORTH
 				@y -= 1
 		end
 	end
 
 	def get_opposite_dir
 		case @dir
-			when north
-				south
-			when east
-				west
-			when south
-				north
-			when west
-				east
+			when NORTH
+				SOUTH
+			when EAST
+				WEST
+			when SOUTH
+				NORTH
+			when WEST
+				EAST
 			else
-				south
+				SOUTH
 		end
 	end
 
 	def get_left_dir
 		case @dir
-			when north
-				west
-			when east
-				north
-			when south
-				east
-			when west
-				south
+			when NORTH
+				WEST
+			when EAST
+				NORTH
+			when SOUTH
+				EAST
+			when WEST
+				SOUTH
 			else
-				north
+				NORTH
 		end
 	end
 
 	def get_right_dir
 		case @dir
-			when north
-				east
-			when east
-				south
-			when south
-				west
-			when west
-				north
+			when NORTH
+				EAST
+			when EAST
+				SOUTH
+			when SOUTH
+				WEST
+			when WEST
+				NORTH
 			else
-				north
+				NORTH
 		end
 	end
 end

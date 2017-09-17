@@ -17,3 +17,15 @@ rescue
 end
 
 abort "failed to recieve welcome message from server" unless @server.get
+
+abort "no connections avaliable" if @server.get.to_i == -1
+
+# Initialize the Player
+require './player.rb'
+
+size = @server.get.split(' ')
+puts size
+
+@player = Player.new(size[0], size[1])
+
+@player.see @server.response_to 'see'

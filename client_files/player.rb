@@ -5,11 +5,11 @@ class Player
 	attr_accessor :width, :height, :map, :level, :pos
 
 	def initialize width, height
-		@pos = Position.new(0, 0, north)
+		@pos = Position.new(0, 0, NORTH)
 		@level = 1
-		@width = width
-		@height = height
-		map = Array.new(width) { Array.new(height, '') }
+		@width = width.to_i
+		@height = height.to_i
+		@map = Array.new(@width) { Array.new(@height, '') }
 	end
 
 	def see vision
@@ -20,10 +20,10 @@ class Player
 		level.times do
 			l = 0
 			min.diff(max).times do
-				if min.x == max.x do
-					map[(min.x + l) % @width][min.y % @height] = vision[k]
+				if min.x == max.x
+					@map[(min.x + l) % @width][min.y % @height] = vision[k]
 				else
-					map[min.x % @width][(min.y + l) % @height] = vision[k]
+					@map[min.x % @width][(min.y + l) % @height] = vision[k]
 				end
 				l += 1
 				k += 1

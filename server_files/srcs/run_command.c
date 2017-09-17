@@ -71,7 +71,5 @@ void	run_command(t_client *client, char *command)
 		do_incantation(client);
 	else if (!ft_strncmp(command, "f", 1))
 		do_fork(client);
-	else if (!ft_strncmp(command, "c", 1))
-		
 	delete_command(client, client->command);
 }

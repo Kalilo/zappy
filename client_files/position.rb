@@ -43,6 +43,21 @@ class Position
 		end
 	end
 
+	def set_opposite_dir
+		case @dir
+			when north
+				@dir = south
+			when east
+				@dir = west
+			when south
+				@dir = north
+			when west
+				@dir = east
+			else
+				@dir = south
+		end
+	end
+
 	def advance
 		case @dir
 			when north
@@ -56,6 +71,51 @@ class Position
 			else
 				@dir = north
 				@y -= 1
+		end
+	end
+
+	def get_opposite_dir
+		case @dir
+			when north
+				south
+			when east
+				west
+			when south
+				north
+			when west
+				east
+			else
+				south
+		end
+	end
+
+	def get_left_dir
+		case @dir
+			when north
+				west
+			when east
+				north
+			when south
+				east
+			when west
+				south
+			else
+				north
+		end
+	end
+
+	def get_right_dir
+		case @dir
+			when north
+				east
+			when east
+				south
+			when south
+				west
+			when west
+				north
+			else
+				north
 		end
 	end
 end

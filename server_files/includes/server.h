@@ -62,10 +62,10 @@
 
 # define REP_APPEND(X)	while(k--)ft_str_append(&str,X)
 
-# define MOVE_NW		pos.x--, pos.y++
-# define MOVE_NE		pos.x++, pos.y++
-# define MOVE_SE		pos.x++, pos.y--
-# define MOVE_SW		pos.x--, pos.y--
+# define MOVE_NW		pos.x--, pos.y--
+# define MOVE_NE		pos.x++, pos.y--
+# define MOVE_SE		pos.x++, pos.y++
+# define MOVE_SW		pos.x--, pos.y++
 
 # define I_CHECK_1(X,Y)	inventory->linemate>=X&&inventory->deraumere>=Y
 # define I_CHECK_2(X,Y)	inventory->sibur>=X&&inventory->mendiane>=Y

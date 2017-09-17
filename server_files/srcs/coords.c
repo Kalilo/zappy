@@ -15,11 +15,11 @@
 t_coord		move_coord(t_coord pos, t_direction direction)
 {
 	if (direction == north)
-		pos.y++;
+		pos.y--;
 	else if (direction == east)
 		pos.x++;
 	else if (direction == south)
-		pos.y--;
+		pos.y++;
 	else if (direction == west)
 		pos.x--;
 	else if (direction == north_west)

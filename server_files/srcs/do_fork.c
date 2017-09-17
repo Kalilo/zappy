@@ -17,6 +17,10 @@ void	do_fork(t_client *client)
 	lay_egg(client);
 	write_msg_to_sock(client->sock, "ok\n");
 	client->delay -= 42;
-	gfx_pfk_auto(client->id);//need to move to a precommand...
 	gfx_enw_auto(client);
+}
+
+void	pre_fork(t_client *client)
+{
+	gfx_pfk_auto(client->id);
 }

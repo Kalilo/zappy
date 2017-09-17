@@ -47,6 +47,8 @@ void	play_choice(void)
 					write_msg_to_sock(client->sock, "-1\n");
 				delete_command(client, client->command);
 			}
+			else if (client->delay == 0)
+				pre_run_command(client, client->command->str);
 			else if (can_do_command(client->command->str, client->delay))
 				run_command(client, client->command->str);
 		}

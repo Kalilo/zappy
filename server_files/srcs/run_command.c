@@ -37,6 +37,16 @@ void	run_gfx_command(t_client *client, char *command)
 	delete_command(client, client->command);
 }
 
+void	pre_run_command(t_client *client, char *command)
+{
+	if (!ft_strncmp(command, "f", 1))
+		pre_fork(client);
+	else if (!ft_strncmp(command, "inc", 3))
+		pre_incanation(client);
+	else if (!ft_strncmp(command, "c", 1))
+		do_connect_nbr(client);
+}
+
 void	run_command(t_client *client, char *command)
 {
 	if (!ft_strncmp(command, "a", 1))
@@ -62,6 +72,6 @@ void	run_command(t_client *client, char *command)
 	else if (!ft_strncmp(command, "f", 1))
 		do_fork(client);
 	else if (!ft_strncmp(command, "c", 1))
-		do_connect_nbr(client);
+		
 	delete_command(client, client->command);
 }

@@ -76,6 +76,17 @@ void	incanate_invent_adjust(t_inventory *inventory, int level)
 		I_ADJ(-2, -2, -2, -2, -2, -1);
 }
 
+void	pre_incanation(t_client *client)
+{
+	if (!can_incanate(&client->inventory, client->level))
+	{
+		write_msg_to_sock(client->sock, "ko\n");
+		delete_command(client, client->command);
+		return ;
+	}
+	gfx_pic_auto(client->pos, client->level);// need to adjust the level to average
+}
+
 // needs to be rewritten..
 // add gfx_pic
 // and gfx_pie

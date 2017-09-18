@@ -13,25 +13,25 @@ class Player
 	end
 
 	def see vision
-		vision = vision[1..-2].split(',')
-		level = @level
-		min = max = @pos
+		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! }
+		min = @pos.dup
+		max = min.dup
 		k = 0
-		level.times do
+		(@level + 1).times do
 			l = 0
-			min.diff(max).times do
+			(min.diff(max) + 1).times do
 				if min.x == max.x
-					@map[(min.x + l) % @width][min.y % @height] = vision[k]
+					@map[min.x][min.y + l] = v[k]
 				else
-					@map[min.x % @width][(min.y + l) % @height] = vision[k]
+					@map[min.x + l][min.y] = v[k]
 				end
 				l += 1
 				k += 1
 			end
 			min.advance
 			max.advance
-			min.move pos.get_left_dir
-			max.move pos.get_right_dir
+			min.move @pos.get_left_dir
+			max.move @pos.get_right_dir
 		end
 	end
 end

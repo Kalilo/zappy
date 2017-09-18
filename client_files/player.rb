@@ -74,7 +74,8 @@ class Player
 					sibur: 0,
 					mendiane: 0,
 					phiras: 0,
-					thystame: 0
+					thystame: 0,
+					player: 1 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 			when 2
 				{
@@ -83,7 +84,8 @@ class Player
 					sibur: (1 - @inventory[:sibur]),
 					mendiane: 0,
 					phiras: 0,
-					thystame: 0
+					thystame: 0,
+					player: 2 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 			when 3
 				{
@@ -92,7 +94,8 @@ class Player
 					sibur: (1 - @inventory[:sibur]),
 					mendiane: 0,
 					phiras: (2 - @inventory[:phiras]),
-					thystame: 0
+					thystame: 0,
+					player: 2 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 			when 4
 				{
@@ -101,7 +104,8 @@ class Player
 					sibur: (2 - @inventory[:sibur]),
 					mendiane: 0,
 					phiras: (1 - @inventory[:phiras]),
-					thystame: 0
+					thystame: 0,
+					player: 4 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 			when 5
 				{
@@ -110,7 +114,8 @@ class Player
 					sibur: (1 - @inventory[:sibur]),
 					mendiane: (3 - @inventory[:mendiane]),
 					phiras: 0,
-					thystame: 0
+					thystame: 0,
+					player: 4 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 			when 6
 				{
@@ -119,7 +124,8 @@ class Player
 					sibur: (3 - @inventory[:sibur]),
 					mendiane: 0,
 					phiras: (1 - @inventory[:phiras]),
-					thystame: 0
+					thystame: 0,
+					player: 6 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 			when 7
 				{
@@ -128,7 +134,8 @@ class Player
 					sibur: (2 - @inventory[:sibur]),
 					mendiane: (2 - @inventory[:mendiane]),
 					phiras: (1 - @inventory[:phiras]),
-					thystame: (1 - @inventory[:thystame])
+					thystame: (1 - @inventory[:thystame]),
+					player: 6 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
 				}
 		end
 	end

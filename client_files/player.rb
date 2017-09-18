@@ -69,6 +69,7 @@ class Player
 		case @level
 			when 1
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (1 - @inventory[:linemate]),
 					deraumere: 0,
 					sibur: 0,
@@ -79,6 +80,7 @@ class Player
 				}
 			when 2
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (1 - @inventory[:linemate]),
 					deraumere: (1 - @inventory[:deraumere]),
 					sibur: (1 - @inventory[:sibur]),
@@ -89,6 +91,7 @@ class Player
 				}
 			when 3
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (2 - @inventory[:linemate]),
 					deraumere: 0,
 					sibur: (1 - @inventory[:sibur]),
@@ -99,6 +102,7 @@ class Player
 				}
 			when 4
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (1 - @inventory[:linemate]),
 					deraumere: (1 - @inventory[:deraumere]),
 					sibur: (2 - @inventory[:sibur]),
@@ -109,6 +113,7 @@ class Player
 				}
 			when 5
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (1 - @inventory[:linemate]),
 					deraumere: (2 - @inventory[:deraumere]),
 					sibur: (1 - @inventory[:sibur]),
@@ -119,6 +124,7 @@ class Player
 				}
 			when 6
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (1 - @inventory[:linemate]),
 					deraumere: (2 - @inventory[:deraumere]),
 					sibur: (3 - @inventory[:sibur]),
@@ -129,6 +135,7 @@ class Player
 				}
 			when 7
 				{
+					food: (3 - @inventory[:food]),
 					linemate: (2 - @inventory[:linemate]),
 					deraumere: (2 - @inventory[:deraumere]),
 					sibur: (2 - @inventory[:sibur]),

@@ -4,7 +4,7 @@ require './position.rb'
 class Player
 	attr_accessor :width, :height, :map, :level, :pos
 
-	def initialize width, height
+	def initialize(width, height)
 		@pos = Position.new(0, 0, NORTH)
 		@level = 1
 		@width = width.to_i
@@ -13,7 +13,7 @@ class Player
 		@inventory = Hash.new(0)
 	end
 
-	def see vision
+	def see(vision)
 		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! }
 		min = @pos.dup
 		max = min.dup
@@ -48,11 +48,11 @@ class Player
 		@pos.left
 	end
 
-	def take item
+	def take(item)
 		@inventory[item.to_sym] += 1
 	end
 
-	def put item
+	def put(item)
 		@inventory[item.to_sym] -= 1
 	end
 

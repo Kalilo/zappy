@@ -1,3 +1,5 @@
+#!/usr/bin/ruby
+
 # debug
 require 'pry'
 

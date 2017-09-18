@@ -10,6 +10,7 @@ class Player
 		@width = width.to_i
 		@height = height.to_i
 		@map = Array.new(@width) { Array.new(@height, '') }
+		@inventory = Hash.new(0)
 	end
 
 	def see vision
@@ -33,5 +34,34 @@ class Player
 			min.move @pos.get_left_dir
 			max.move @pos.get_right_dir
 		end
+	end
+
+	def advance
+		@pos.advance
+	end
+
+	def right
+		@pos.right
+	end
+
+	def left
+		@pos.left
+	end
+
+	def take item
+		@inventory[item.to_sym] += 1
+	end
+
+	def put item
+		@inventory[item.to_sym] -= 1
+	end
+
+	def kick
+		pos = @pos.dup
+		pos.advance
+		map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count.times do
+			map[pos.x][pos.y] += " player"
+		end
+		map[pos.x][pos.y].strip!
 	end
 end

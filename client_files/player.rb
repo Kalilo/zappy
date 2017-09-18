@@ -64,4 +64,72 @@ class Player
 		end
 		map[pos.x][pos.y].strip!
 	end
+
+	def required_res
+		case @level
+			when 1
+				{
+					linemate: (1 - @inventory[:linemate]),
+					deraumere: 0,
+					sibur: 0,
+					mendiane: 0,
+					phiras: 0,
+					thystame: 0
+				}
+			when 2
+				{
+					linemate: (1 - @inventory[:linemate]),
+					deraumere: (1 - @inventory[:deraumere]),
+					sibur: (1 - @inventory[:sibur]),
+					mendiane: 0,
+					phiras: 0,
+					thystame: 0
+				}
+			when 3
+				{
+					linemate: (2 - @inventory[:linemate]),
+					deraumere: 0,
+					sibur: (1 - @inventory[:sibur]),
+					mendiane: 0,
+					phiras: (2 - @inventory[:phiras]),
+					thystame: 0
+				}
+			when 4
+				{
+					linemate: (1 - @inventory[:linemate]),
+					deraumere: (1 - @inventory[:deraumere]),
+					sibur: (2 - @inventory[:sibur]),
+					mendiane: 0,
+					phiras: (1 - @inventory[:phiras]),
+					thystame: 0
+				}
+			when 5
+				{
+					linemate: (1 - @inventory[:linemate]),
+					deraumere: (2 - @inventory[:deraumere]),
+					sibur: (1 - @inventory[:sibur]),
+					mendiane: (3 - @inventory[:mendiane]),
+					phiras: 0,
+					thystame: 0
+				}
+			when 6
+				{
+					linemate: (1 - @inventory[:linemate]),
+					deraumere: (2 - @inventory[:deraumere]),
+					sibur: (3 - @inventory[:sibur]),
+					mendiane: 0,
+					phiras: (1 - @inventory[:phiras]),
+					thystame: 0
+				}
+			when 7
+				{
+					linemate: (2 - @inventory[:linemate]),
+					deraumere: (2 - @inventory[:deraumere]),
+					sibur: (2 - @inventory[:sibur]),
+					mendiane: (2 - @inventory[:mendiane]),
+					phiras: (1 - @inventory[:phiras]),
+					thystame: (1 - @inventory[:thystame])
+				}
+		end
+	end
 end

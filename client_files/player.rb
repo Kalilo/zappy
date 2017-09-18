@@ -152,6 +152,9 @@ class Player
 	end
 
 	def path_to(resource)
+		res_pos_hash = scan_map(resource)
+		return { error: true } unless res_pos_hash[:count] > 0
+		{ error: false, path: gen_path_to_resource(res_pos_hash) }
 	end
 
 	private
@@ -182,5 +185,39 @@ class Player
 			return result if result[:count] > 0
 		end
 		{ count: 0 }
+	end
+
+	def gen_path_to_resource(res_pos_hash)
+		res_pos = Position.new(res_pos_hash[:x], res_pos_hash[:y])
+		result = []
+
+		pos = @pos.dup
+		while (diff = pos.diff(res_pos)) > 0
+			if pos.diff(pos.advance_pos) < diff
+				pos.advance
+				result << :advance
+			elsif pos.diff(pos.right_pos) < diff
+				pos.right
+				pos.advance
+				result << :right << :advance
+			elsif pos.diff(pos.left_pos) < diff
+				pos.left
+				pos.advance
+				result << :left :advance
+			else
+				if rand(0..1) == 1
+					pos.right
+					pos.right
+					pos.advance
+					result << :right << :right << :advance
+				else
+					pos.left
+					pos.left
+					pos.advance
+					result << :left << :left << :advance
+				end
+			end
+		end
+		result
 	end
 end

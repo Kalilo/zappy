@@ -97,6 +97,55 @@ class Position
 		end
 	end
 
+	def advance_pos
+		y_new = @y.dup
+		x_new = @x.dup
+		case @dir
+			when NORTH
+				y_new -= 1
+			when EAST
+				x_new += 1
+			when SOUTH
+				y_new += 1
+			when WEST
+				x_new -= 1
+			else
+				@dir = NORTH
+				y_new -= 1
+		end
+		Position.new x_new, y_new, @dir
+	end
+
+	def left_pos
+		case @dir
+			when NORTH
+				Position.new(@x - 1, @y, WEST)
+			when EAST
+				Position.new(@x, @y - 1, NORTH)
+			when SOUTH
+				Position.new(@x + 1, @y, EAST)
+			when WEST
+				Position.new(@x, @y + 1, SOUTH)
+			else
+				Position.new(@x - 1, @y, WEST)
+		end
+	end
+
+	def right_pos
+		case @dir
+			when NORTH
+				Position.new(@x + 1, @y, EAST)
+			when EAST
+				Position.new(@x, @y + 1, SOUTH)
+			when SOUTH
+				Position.new(@x - 1, @y, WEST)
+			when WEST
+				Position.new(@x, @y - 1, NORTH)
+			else
+				Position.new(@x + 1, @y, EAST)
+		end
+	end
+
 	def get_opposite_dir
 		case @dir
 			when NORTH

@@ -1,6 +1,8 @@
 #include "main.h"
 #define BUF_SIZE 512
 
+main	_main;
+
 int		receive_line(int state, int sockfd, char *recvline)
 {
 	int	len;
@@ -90,6 +92,9 @@ int		choose_pc_port(void)// /Connect  (as required by the pdf)
 	return (0);
 }
 
+
+
+
 int	main(int ac, char **av)
 {
 	t_env	e;
@@ -101,8 +106,8 @@ int	main(int ac, char **av)
 	else
 		e.sockfd = connect_client(av[1], atoi(av[2]));
 //	args management here.
-	//if (!(f = fork()))//will either read from here.(if server based timer)
-	//	e.state = receive_line(e.state, e.sockfd, malloc(sizeof(char) * 4096));
+//	if (!(f = fork()))//will either read from here.(if server based timer)
+//		e.state = receive_line(e.state, e.sockfd, malloc(sizeof(char) * 4096));
 	while (1)//gameloop
 	{
 		//or will read from server from here (if this client is doing the timing)

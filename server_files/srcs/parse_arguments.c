@@ -24,7 +24,7 @@ static char	parse_basic_arg2(int ac, char **av, int *k, int itmp)
 	else if (!ft_strcmp(av[*k], "-t") && SET_FLAG(t))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify time unit.");
-		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 10,
+		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 2,
 			"Invalid time unit.");
 		g_env.settings.fps = itmp;
 	}

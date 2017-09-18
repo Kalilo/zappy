@@ -163,13 +163,13 @@ class Player
 		if (radius == 0)
 			{ count: @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{resource})/).count, x: @pos.x, y: @pos.y }
 		else
-			(@pos.x - radius)..(@pos.x + radius).each do |k|
+			((@pos.x - radius)..(@pos.x + radius)).each do |k|
 				count = @map[k % @width][(@pos.y - radius) % @height].scan(/(?=#{resource})/).count
 				return { count: count, x: k % @width, y: (@pos.y - radius) % @height } if count > 0
 				count = @map[k % @width][(@pos.y + radius) % @height].scan(/(?=#{resource})/).count
 				return { count: count, x: k % @width, y: (@pos.y - radius) % @height } if count > 0
 			end
-			(@pos.y - radius + 1)..(@pos.y + radius - 1).each do |k|
+			((@pos.y - radius + 1)..(@pos.y + radius - 1)).each do |k|
 				count = @map[(@pos.x - radius) % @width][k % @height].scan(/(?=#{resource})/).count
 				return { count: count, x: (@pos.x - radius) % @width, y: k % @height } if count > 0
 				count = @map[(@pos.x + radius) % @width][k % @height].scan(/(?=#{resource})/).count
@@ -188,7 +188,7 @@ class Player
 	end
 
 	def gen_path_to_resource(res_pos_hash)
-		res_pos = Position.new(res_pos_hash[:x], res_pos_hash[:y])
+		res_pos = Position.new(res_pos_hash[:x], res_pos_hash[:y], @pos.dir)
 		result = []
 
 		pos = @pos.dup
@@ -203,7 +203,7 @@ class Player
 			elsif pos.diff(pos.left_pos) < diff
 				pos.left
 				pos.advance
-				result << :left :advance
+				result << :left << :advance
 			else
 				if rand(0..1) == 1
 					pos.right

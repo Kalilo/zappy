@@ -33,3 +33,5 @@ size = @server.get.split(' ')
 @player = Player.new(size[0], size[1])
 
 @player.see @server.response_to 'see'
+
+binding.pry

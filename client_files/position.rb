@@ -113,7 +113,7 @@ class Position
 				@dir = NORTH
 				y_new -= 1
 		end
-		Position.new x_new, y_new, @dir
+		Position.new(x_new, y_new, @dir)
 	end
 
 	def left_pos

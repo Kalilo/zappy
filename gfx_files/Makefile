@@ -8,18 +8,16 @@ CFLAGS = -I. -g3 -Wall -Werror -Wextra
 LDFLAGS = 
 
 CC = g++
-RM = rm -f
 
-${NAME}:	${OBJS}
-		${CC} -o ${NAME} ${OBJS} ${LDFLAGS}
-		@make clean # shad: added
+${NAME}:
+		g++ -o ${NAME} ${OBJS} ${LDFLAGS}
 
 all:		${NAME}
 
 clean:
-		${RM} ${OBJS} *~ #*#
+		make fclean
 
-fclean:		clean
-		${RM} ${NAME}
+fclean:
+		rm -rf gfx
 
 re:		fclean all

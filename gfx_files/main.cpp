@@ -1,4 +1,4 @@
-#include "client.h"
+#include "main.h"
 #define BUF_SIZE 512
 
 int		receive_line(int state, int sockfd, char *recvline)

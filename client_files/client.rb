@@ -1,3 +1,6 @@
+# debug
+require 'pry'
+
 require 'socket'
 
 # Run the argument parser

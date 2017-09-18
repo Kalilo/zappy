@@ -22,9 +22,9 @@ class Player
 			l = 0
 			(min.diff(max) + 1).times do
 				if min.x == max.x
-					@map[min.x][min.y + l] = v[k]
+					@map[min.x % @width][(min.y + l) % @height] = v[k]
 				else
-					@map[min.x + l][min.y] = v[k]
+					@map[(min.x + l) % @width][min.y % @height] = v[k]
 				end
 				l += 1
 				k += 1
@@ -38,6 +38,10 @@ class Player
 
 	def advance
 		@pos.advance
+		@pos.x -= @width if @pos.x > @width
+		@pos.x += @width if @pos.x < 0
+		@pos.y -= @height if @pos.y > @height
+		@pos.y += @height if @pos.y < 0
 	end
 
 	def right
@@ -76,7 +80,7 @@ class Player
 					mendiane: 0,
 					phiras: 0,
 					thystame: 0,
-					player: 1 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 1 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 			when 2
 				{
@@ -87,7 +91,7 @@ class Player
 					mendiane: 0,
 					phiras: 0,
 					thystame: 0,
-					player: 2 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 2 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 			when 3
 				{
@@ -98,7 +102,7 @@ class Player
 					mendiane: 0,
 					phiras: (2 - @inventory[:phiras]),
 					thystame: 0,
-					player: 2 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 2 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 			when 4
 				{
@@ -109,7 +113,7 @@ class Player
 					mendiane: 0,
 					phiras: (1 - @inventory[:phiras]),
 					thystame: 0,
-					player: 4 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 4 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 			when 5
 				{
@@ -120,7 +124,7 @@ class Player
 					mendiane: (3 - @inventory[:mendiane]),
 					phiras: 0,
 					thystame: 0,
-					player: 4 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 4 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 			when 6
 				{
@@ -131,7 +135,7 @@ class Player
 					mendiane: 0,
 					phiras: (1 - @inventory[:phiras]),
 					thystame: 0,
-					player: 6 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 6 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 			when 7
 				{
@@ -142,8 +146,41 @@ class Player
 					mendiane: (2 - @inventory[:mendiane]),
 					phiras: (1 - @inventory[:phiras]),
 					thystame: (1 - @inventory[:thystame]),
-					player: 6 - @map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count
+					player: 6 - @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{'player'})/).count
 				}
 		end
+	end
+
+	def path_to(resource)
+	end
+
+	private
+
+	def scan_square(radius, resource)
+		if (radius == 0)
+			{ count: @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{resource})/).count, x: @pos.x, y: @pos.y }
+		else
+			(@pos.x - radius)..(@pos.x + radius).each do |k|
+				count = @map[k % @width][(@pos.y - radius) % @height].scan(/(?=#{resource})/).count
+				return { count: count, x: k % @width, y: (@pos.y - radius) % @height } if count > 0
+				count = @map[k % @width][(@pos.y + radius) % @height].scan(/(?=#{resource})/).count
+				return { count: count, x: k % @width, y: (@pos.y - radius) % @height } if count > 0
+			end
+			(@pos.y - radius + 1)..(@pos.y + radius - 1).each do |k|
+				count = @map[(@pos.x - radius) % @width][k % @height].scan(/(?=#{resource})/).count
+				return { count: count, x: (@pos.x - radius) % @width, y: k % @height } if count > 0
+				count = @map[(@pos.x + radius) % @width][k % @height].scan(/(?=#{resource})/).count
+				return { count: count, x: (@pos.x + radius) % @width, y: k % @height } if count > 0
+			end
+		end
+		{ count: 0 }
+	end
+
+	def scan_map(resource)
+		(0..(((@width > @height ? @width : @height) / 20.to_f).ceil)).each do |k|
+			result = scan_square(k, resource)
+			return result if result[:count] > 0
+		end
+		{ count: 0 }
 	end
 end

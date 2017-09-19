@@ -12,7 +12,7 @@
 
 NAME = server
 
-SRCS_NAME =		accept_new_client.c			\
+SRCS_NAME_1 =	accept_new_client.c			\
 				cli_lst.c					\
 				client_lst.c				\
 				command_lst.c				\
@@ -28,7 +28,8 @@ SRCS_NAME =		accept_new_client.c			\
 				do_incantation.c			\
 				do_inventory.c				\
 				do_kick.c					\
-				do_left.c					\
+
+SRCS_NAME_2 =	do_left.c					\
 				do_put.c					\
 				do_right.c					\
 				do_see.c					\
@@ -42,7 +43,8 @@ SRCS_NAME =		accept_new_client.c			\
 				gfx_edi.c					\
 				gfx_eht.c					\
 				gfx_enw.c 					\
-				gfx_mct.c					\
+
+SRCS_NAME_3 =	gfx_mct.c					\
 				gfx_msz.c					\
 				gfx_pbc.c					\
 				gfx_pdi.c					\
@@ -57,7 +59,8 @@ SRCS_NAME =		accept_new_client.c			\
 				gfx_pnw.c					\
 				gfx_ppo.c					\
 				gfx_seg.c					\
-				gfx_sgt.c					\
+
+SRCS_NAME_4 =	gfx_sgt.c					\
 				gfx_smg.c					\
 				gfx_sst.c					\
 				gfx_tna.c					\
@@ -74,6 +77,11 @@ SRCS_NAME =		accept_new_client.c			\
 				prep_client_sockets.c		\
 				run_command.c				\
 				team_lst.c					\
+
+SRCS_NAME =		$(SRCS_NAME_1)				\
+				$(SRCS_NAME_2)				\
+				$(SRCS_NAME_3)				\
+				$(SRCS_NAME_4)				\
 
 HEADER_NAMES =	server.h					\
 
@@ -183,7 +191,10 @@ norme: norm
 
 norm:
 	@$(call colourecho2, "Norminette:")
-	@norminette $(SRCS)
+	@norminette $(addprefix $(SRCS_PATH), $(SRCS_NAME_1))
+	@norminette $(addprefix $(SRCS_PATH), $(SRCS_NAME_2))
+	@norminette $(addprefix $(SRCS_PATH), $(SRCS_NAME_3))
+	@norminette $(addprefix $(SRCS_PATH), $(SRCS_NAME_4))
 	@norminette $(HEADER)
 
 fnorm: fnorme

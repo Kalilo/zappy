@@ -18,6 +18,7 @@
 char	*sum_players(t_tile *tile, t_client *client, char *str)
 {
 	t_cli	*cli;
+	t_egg	*egg;
 
 	cli = tile->players;
 	while (cli)
@@ -25,6 +26,13 @@ char	*sum_players(t_tile *tile, t_client *client, char *str)
 		if (cli->client && cli->client->sock != client->sock)
 			ft_str_append(&str, " player");
 		cli = cli->next;
+	}
+	egg = tile->eggs;
+	while (egg)
+	{
+		if (egg->life > 0)
+			ft_str_append(&str, " egg");
+		egg = egg->next;
 	}
 	return (str);
 }

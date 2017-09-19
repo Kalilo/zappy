@@ -7,6 +7,9 @@
 class Position
 	attr_accessor :x, :y, :dir
 
+	@@width ||= 100
+	@@height ||= 100
+
 	def initialize x, y, dir
 		@x, @y, @dir = x, y, dir
 	end
@@ -27,18 +30,26 @@ class Position
 		end
 	end
 
-	# def move x, y
-	# 	@x, @y = x, y
-	# end
+	def move_to x, y
+		@x, @y = x, y
+	end
+
+	def self.set_width(width)
+		@@width = width
+	end
+
+	def self.set_height(height)
+		@@height = height
+	end
 
 	def diff pos
 		throw 'Can only run diff on Positions' unless pos.class == Position
 
 		y_diff = (pos.y - @y).abs
-		y_diff = (100 - y_diff).abs if (100 - y_diff).abs < y_diff
+		y_diff = (@@height - y_diff).abs if (@@height - y_diff).abs < y_diff
 
 		x_diff = (pos.x - @x).abs
-		x_diff = (100 - x_diff).abs if (100 - x_diff).abs < x_diff
+		x_diff = (@@width - x_diff).abs if (@@width - x_diff).abs < x_diff
 
 		y_diff + x_diff
 	end
@@ -101,16 +112,16 @@ class Position
 	def advance
 		case @dir
 			when :north
-				@y -= 1
+				@y = wrap_adjust_y(-1)
 			when :east
-				@x += 1
+				@x = wrap_adjust_x(1)
 			when :south
-				@y += 1
+				@y = wrap_adjust_y(1)
 			when :west
-				@x -= 1
+				@x = wrap_adjust_x(-1)
 			else
 				@dir = :north
-				@y -= 1
+				@y = wrap_adjust_y(-1)
 		end
 	end
 
@@ -119,16 +130,16 @@ class Position
 		x_new = @x
 		case @dir
 			when :north
-				y_new -= 1
+				y_new = wrap_adjust_y(-1)
 			when :east
-				x_new += 1
+				x_new = wrap_adjust_x(1)
 			when :south
-				y_new += 1
+				y_new = wrap_adjust_y(1)
 			when :west
-				x_new -= 1
+				x_new = wrap_adjust_x(-1)
 			else
 				@dir = :north
-				y_new -= 1
+				y_new = wrap_adjust_y(-1)
 		end
 		Position.new(x_new, y_new, :north)
 	end
@@ -136,30 +147,30 @@ class Position
 	def left_pos
 		case @dir
 			when :north
-				Position.new(@x - 1, @y, :west)
+				Position.new(wrap_adjust_x(-1), @y, :west)
 			when :east
-				Position.new(@x, @y - 1, :north)
+				Position.new(@x, wrap_adjust_y(-1), :north)
 			when :south
-				Position.new(@x + 1, @y, :east)
+				Position.new(wrap_adjust_x(1), @y, :east)
 			when :west
-				Position.new(@x, @y + 1, :south)
+				Position.new(@x, wrap_adjust_y(1), :south)
 			else
-				Position.new(@x - 1, @y, :west)
+				Position.new(wrap_adjust_x(-1), @y, :west)
 		end
 	end
 
 	def right_pos
 		case @dir
 			when :north
-				Position.new(@x + 1, @y, :east)
+				Position.new(wrap_adjust_x(1), @y, :east)
 			when :east
-				Position.new(@x, @y + 1, :south)
+				Position.new(@x, wrap_adjust_y(1), :south)
 			when :south
-				Position.new(@x - 1, @y, :west)
+				Position.new(wrap_adjust_x(-1), @y, :west)
 			when :west
-				Position.new(@x, @y - 1, :north)
+				Position.new(@x, wrap_adjust_y(-1), :north)
 			else
-				Position.new(@x + 1, @y, :east)
+				Position.new(wrap_adjust_x(1), @y, :east)
 		end
 	end
 
@@ -206,5 +217,19 @@ class Position
 			else
 				:north
 		end
+	end
+
+	private
+
+	def wrap_adjust_x(diff)
+		x = @x
+		x += diff
+		x %= @@width
+	end
+
+	def wrap_adjust_y(diff)
+		y = @y
+		y += diff
+		y %= @@height
 	end
 end

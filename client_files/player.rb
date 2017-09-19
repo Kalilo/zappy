@@ -9,6 +9,8 @@ class Player
 		@level = 1
 		@width = width.to_i
 		@height = height.to_i
+		# Position.set_width = @width
+		# Position.set_height = @height
 		@map = Array.new(@width) { Array.new(@height, '') }
 		@inventory = Hash.new(0)
 	end
@@ -201,8 +203,9 @@ class Player
 				result << :right << :advance
 			elsif res_pos.diff(pos.left_pos) < diff
 				pos.left
-				pos.advance
 				result << :left << :advance
+			elsif res_pos.x == pos.x && res_pos.y == pos.y
+				next
 			else
 				if rand(0..1) == 1
 					pos.turn_right

@@ -23,9 +23,8 @@ void	lay_egg(t_client *client)
 		egg = egg->next;
 	tmp = (t_egg *)ft_strnew(sizeof(t_egg));
 	tmp->team_id = client->team_id;
-	tmp->pos =client->pos;
-	tmp->life = 1260;
-	if (++g_env.settings.num_eggs && egg)
+	tmp->pos = client->pos;
+	if ((tmp->life = 1260) && ++g_env.settings.num_eggs && egg)
 		egg->next = tmp;
 	else
 		MAP(client->pos.x, client->pos.y).eggs = tmp;
@@ -98,11 +97,11 @@ void	delete_egg(t_team *team)
 	g_env.settings.num_eggs--;
 }
 
-void		dec_egg_health(void)
+void	dec_egg_health(void)
 {
-	t_team		*team;
-	t_egg		*egg;
-	t_egg		*previous;
+	t_team	*team;
+	t_egg	*egg;
+	t_egg	*previous;
 
 	team = g_env.settings.teams;
 	while (team)

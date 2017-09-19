@@ -81,6 +81,8 @@
 
 # define CLI_POS		(t_coord){client->pos.x, client->pos.y}
 
+# define ADD_OPEN_BRAC	if(*str == ' ')*str='{';else ft_str_append2("{", &str)
+
 /*
 ** enums
 */
@@ -448,7 +450,7 @@ char				*gfx_eht_str(void);
 void				gfx_eht_auto(void);
 
 /*
-** gfx_enw.c 
+** gfx_enw.c
 */
 char				*gfx_enw_str(t_client *client);
 void				gfx_enw_auto(t_client *client);
@@ -591,7 +593,7 @@ char				join_team(t_client *client, char *team);
 ** manage_clients.c
 */
 void				handle_command(t_client *client, char *line);
-void				manaage_client_loop(int sd,  t_client *start, t_client \
+void				manaage_client_loop(int sd, t_client *start, t_client \
 					*client, t_client *previous, char gfx);
 void				manage_clients(void);
 

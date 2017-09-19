@@ -30,6 +30,7 @@ void	send_victory_message(int team_id)
 ** Send all clients GameOver message, and disconnects them
 ** might decide to change this behaviour
 */
+
 void	end_game(t_team *team)
 {
 	send_victory_message(team->id);

@@ -12,7 +12,15 @@
 
 #include "../includes/server.h"
 
-void	do_take(t_client *client, char *what)
+static void	do_take_2(t_client *client, int id)
+{
+	write_msg_to_sock(client->sock, "ok\n");
+	gfx_pgt_auto(client, id);
+	add_random_gem(rand() % G_WIDTH, rand() % G_HEIGHT);
+	client->delay -= 7;
+}
+
+void		do_take(t_client *client, char *what)
 {
 	t_inventory		*inventory;
 	int				id;
@@ -37,8 +45,5 @@ void	do_take(t_client *client, char *what)
 		write_msg_to_sock(client->sock, "ko\n");
 		return ;
 	}
-	write_msg_to_sock(client->sock, "ok\n");
-	gfx_pgt_auto(client, id);
-	add_random_gem(rand() % G_WIDTH, rand() % G_HEIGHT);
-	client->delay -= 7;
+	do_take_2(client, id);
 }

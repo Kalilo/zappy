@@ -43,7 +43,8 @@ char		*coord_to_str(t_coord coord)
 
 	x = ft_itoa(coord.x);
 	y = ft_itoa(coord.y);
-	len = (tmp = ft_strlen(x)) + ft_strlen(y) + 2;
+	tmp = ft_strlen(x);
+	len = tmp + ft_strlen(y) + 2;
 	if (!(str = (char *)malloc(len)))
 		error_quit("Insufficient memory");
 	ft_memcpy(str, x, tmp);

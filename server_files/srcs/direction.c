@@ -12,7 +12,7 @@
 
 #include "../includes/server.h"
 
-t_direction opposite_direction(t_direction direction)
+t_direction	opposite_direction(t_direction direction)
 {
 	if (direction == north)
 		return (south);
@@ -33,7 +33,7 @@ t_direction opposite_direction(t_direction direction)
 	return (no_direction);
 }
 
-t_direction tangent_right_direction(t_direction direction)
+t_direction	tangent_right_direction(t_direction direction)
 {
 	if (direction == north)
 		return (east);
@@ -54,7 +54,7 @@ t_direction tangent_right_direction(t_direction direction)
 	return (no_direction);
 }
 
-t_direction tangent_left_direction(t_direction direction)
+t_direction	tangent_left_direction(t_direction direction)
 {
 	if (direction == north)
 		return (west);
@@ -75,7 +75,7 @@ t_direction tangent_left_direction(t_direction direction)
 	return (no_direction);
 }
 
-t_direction adjacent_right_direction(t_direction direction)
+t_direction	adjacent_right_direction(t_direction direction)
 {
 	if (direction == north)
 		return (north_east);
@@ -96,7 +96,7 @@ t_direction adjacent_right_direction(t_direction direction)
 	return (no_direction);
 }
 
-t_direction adjacent_left_direction(t_direction direction)
+t_direction	adjacent_left_direction(t_direction direction)
 {
 	if (direction == north)
 		return (north_west);

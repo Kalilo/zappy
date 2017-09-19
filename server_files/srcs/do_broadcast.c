@@ -72,10 +72,7 @@ void		send_msg(t_client *client, char *msg)
 	while (cli)
 	{
 		if (cli == client)
-		{
-			str = ft_strdup(msg);
-			ft_str_append2("message 0, ", &str);
-		}
+			str = ft_strjoin("message 0, ", msg);
 		else
 		{
 			closest = closest_coord(CLI_POS, cli->pos);

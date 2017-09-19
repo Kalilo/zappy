@@ -43,6 +43,7 @@ char	enough_clients_to_incantate(t_client *client)
 /*
 ** Formatted to easily translate values from table in pdf
 */
+
 char	can_incanate(t_client *client, t_inventory *inventory, int level)
 {
 	if (!enough_clients_to_incantate(client))

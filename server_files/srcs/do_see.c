@@ -15,6 +15,7 @@
 /*
 ** these functions aren't very effient, though should serve their purpose
 */
+
 char	*sum_players(t_tile *tile, t_client *client, char *str)
 {
 	t_cli	*cli;
@@ -73,7 +74,7 @@ char	*sum_range(t_coord min, t_coord max, t_direction dir, t_client *client)
 		else
 			min = move_coord(min, dir);
 		ft_str_append(&str, ",");
-		tmp = sum_tile_content(&MAP(min.x % G_WIDTH, min.y %G_HEIGHT), client);
+		tmp = sum_tile_content(&MAP(min.x % G_WIDTH, min.y % G_HEIGHT), client);
 		str = ft_str_append3(&str, &tmp);
 	}
 	return (str);
@@ -88,7 +89,8 @@ char	*get_in_sight(t_client *client)
 	t_coord	max;
 
 	level = client->level;
-	min = max = client->pos;
+	min = client->pos;
+	max = min;
 	str = sum_range(min, max, tangent_right_direction(client->direction),
 		client);
 	while (--level >= 0)
@@ -102,10 +104,7 @@ char	*get_in_sight(t_client *client)
 			client);
 		str = ft_str_append3(&str, &tmp);
 	}
-	if (*str == ' ')
-		*str = '{';
-	else
-		ft_str_append2("{", &str);
+	ADD_OPEN_BRAC;
 	ft_str_append(&str, "}\n");
 	return (str);
 }

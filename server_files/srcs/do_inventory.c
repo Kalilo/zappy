@@ -15,6 +15,7 @@
 /*
 ** Might want to recode a more efficient method of gathering the inventory
 */
+
 char	*take_inventory(t_inventory *inventory)
 {
 	char	*str;

@@ -92,7 +92,5 @@ char	run_iteration(void)
 	play_choice();
 	inc_user_delays();
 	dec_egg_health();
-	// check if the game is still in play
-	// death of an egg?
-	return (g_env.play);//if the game is still in play
+	return (g_env.play);
 }

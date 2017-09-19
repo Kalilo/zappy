@@ -12,34 +12,40 @@
 
 #include "../includes/server.h"
 
-char	enough_clients_to_incantate(int level)
+char	enough_clients_to_incantate(t_client *client)
 {
-	t_client	*client;
-	int			num_clients;
+	t_cli	*cli;
+	int		level;
 
-	num_clients = 0;
-	client = g_env.clients;
-	while (client)
+	level = 0;
+	cli = MAP(client->pos.x, client->pos.y).players;
+	while (cli)
 	{
-		if (client->level == level)
-			num_clients++;
-		client = client->next;
+		if (cli->client)
+			level += cli->client->level;
+		cli = cli->next;
 	}
-	if (level < 2)
-		return (num_clients > 0);
-	else if (level < 4)
-		return (num_clients > 1);
-	else if (level < 6)
-		return (num_clients > 3);
-	return (num_clients > 5);
+	if (client->level == 1)
+		return (1);
+	else if (client->level == 2)
+		return (level >= 4);
+	else if (client->level == 3)
+		return (level >= 6);
+	else if (client->level == 4)
+		return (level >= 12);
+	else if (client->level == 5)
+		return (level >= 20);
+	else if (client->level == 6)
+		return (level >= 36);
+	return (level >= 42);
 }
 
 /*
 ** Formatted to easily translate values from table in pdf
 */
-char	can_incanate(t_inventory *inventory, int level)
+char	can_incanate(t_client *client, t_inventory *inventory, int level)
 {
-	if (!enough_clients_to_incantate(level))
+	if (!enough_clients_to_incantate(client))
 		return (0);
 	if (level == 1)
 		return (I_CHECK_1(1, 0));
@@ -78,23 +84,20 @@ void	incanate_invent_adjust(t_inventory *inventory, int level)
 
 void	pre_incanation(t_client *client)
 {
-	if (!can_incanate(&client->inventory, client->level))
+	if (!can_incanate(client, &client->inventory, client->level))
 	{
 		write_msg_to_sock(client->sock, "ko\n");
 		delete_command(client, client->command);
 		return ;
 	}
-	gfx_pic_auto(client->pos, client->level);// need to adjust the level to average
+	gfx_pic_auto(client->pos, client->level);
 }
 
-// needs to be rewritten..
-// add gfx_pic
-// and gfx_pie
 void	do_incantation(t_client *client)
 {
 	char	*str;
 
-	if (!can_incanate(&client->inventory, client->level))
+	if (!can_incanate(client, &client->inventory, client->level))
 	{
 		write_msg_to_sock(client->sock, "ko\n");
 		return ;
@@ -105,5 +108,6 @@ void	do_incantation(t_client *client)
 	ft_str_append(&str, "\n");
 	write_msg_to_sock(client->sock, str);
 	ft_strdel(&str);
+	gfx_pic_auto(client->pos, client->level);
 	client->delay -= 300;
 }

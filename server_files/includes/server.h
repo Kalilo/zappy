@@ -344,8 +344,9 @@ void				pre_fork(t_client *client);
 /*
 ** do_incantation.c
 */
-char				enough_clients_to_incantate(int level);
-char				can_incanate(t_inventory *inventory, int level);
+char				enough_clients_to_incantate(t_client *client);
+char				can_incanate(t_client *client, t_inventory *inventory, \
+					int level);
 void				incanate_invent_adjust(t_inventory *inventory, int level);
 void				pre_incanation(t_client *client);
 void				do_incantation(t_client *client);

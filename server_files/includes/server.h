@@ -296,6 +296,11 @@ t_coord				move_coord(t_coord pos, t_direction direction);
 char				*coord_to_str(t_coord coord);
 
 /*
+** death_event.c
+*/
+void				death_event(t_client *client);
+
+/*
 ** direction.c
 */
 t_direction			opposite_direction(t_direction direction);

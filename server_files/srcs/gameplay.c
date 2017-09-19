@@ -60,7 +60,9 @@ void	play_choice(void)
 void	inc_user_delays(void)
 {
 	t_client	*client;
+	t_client	*previous;
 
+	previous = NULL;
 	client = g_env.clients;
 	while (client)
 	{
@@ -74,8 +76,14 @@ void	inc_user_delays(void)
 				client->life += 126;
 				client->inventory.food--;
 			}
+			if (client->life <= 0)
+			{
+				death_event(client);
+				client = (previous) ? previous : g_env.clients;
+			}
 		}
-		client = client->next;
+		previous = client;
+		client = (client) ? client->next : NULL;
 	}
 }
 

@@ -18,6 +18,7 @@ SRCS_NAME =		accept_new_client.c			\
 				command_lst.c				\
 				command_validation.c		\
 				coords.c					\
+				death_event.c				\
 				direction.c					\
 				direction2.c				\
 				do_advance.c				\

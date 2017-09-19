@@ -66,7 +66,7 @@ void	inc_user_delays(void)
 	{
 		if (client->command)
 			client->delay++;
-		if (client->level)
+		if (client->level > 0)
 		{
 			client->life--;
 			if (client->life % 126 == 0 && client->inventory.food > 0)

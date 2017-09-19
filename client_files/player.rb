@@ -190,8 +190,8 @@ class Player
 	def gen_path_to_resource(res_pos_hash)
 		res_pos = Position.new(res_pos_hash[:x], res_pos_hash[:y], @pos.dir)
 		result = []
-
 		pos = @pos.dup
+
 		while (diff = pos.diff(res_pos)) > 0
 			if res_pos.diff(pos.advance_pos) < diff
 				pos.advance

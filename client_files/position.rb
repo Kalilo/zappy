@@ -33,7 +33,14 @@ class Position
 
 	def diff pos
 		throw 'Can only run diff on Positions' unless pos.class == Position
-		((pos.y - @y) + (pos.x - @x)).abs
+
+		y_diff = (pos.y - @y).abs
+		y_diff = (100 - y_diff).abs if (100 - y_diff).abs < y_diff
+
+		x_diff = (pos.x - @x).abs
+		x_diff = (100 - x_diff).abs if (100 - x_diff).abs < x_diff
+
+		y_diff + x_diff
 	end
 
 	def right

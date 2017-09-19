@@ -21,7 +21,7 @@ void		handle_command(t_client *client, char *line)
 }
 
 void		manaage_client_loop(int sd,  t_client *start, t_client *client, \
-	t_client *previous)
+	t_client *previous, char gfx)
 {
 	while (client)
 	{
@@ -34,7 +34,10 @@ void		manaage_client_loop(int sd,  t_client *start, t_client *client, \
 				ft_putendl("Client disconnected...");
 				close(sd);
 				client = (previous) ? previous : start;
-				delete_client((previous) ? previous->next : start);
+				if (!gfx)
+					delete_client((previous) ? previous->next : start);
+				else
+					delete_gfx_client((previous) ? previous->next : start);
 			}
 			else if (!ft_strcmp(GNL_LINE, "GRAPHIC"))
 			{
@@ -57,6 +60,6 @@ void		manage_clients(void)
 
 	previous = NULL;
 	sd = 0;
-	manaage_client_loop(sd, g_env.clients, g_env.clients, previous);
-	manaage_client_loop(sd, g_env.gfx_cli, g_env.gfx_cli, previous);
+	manaage_client_loop(sd, g_env.clients, g_env.clients, previous, 0);
+	manaage_client_loop(sd, g_env.gfx_cli, g_env.gfx_cli, previous, 1);
 }

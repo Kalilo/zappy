@@ -52,12 +52,39 @@ void		delete_client(t_client *client)
 	}
 }
 
+void		delete_gfx_client(t_client *client)
+{
+	t_client	*previous;
+
+	if (!client)
+		return ;
+	if (g_env.gfx_cli == client)
+		g_env.gfx_cli = client->next;
+	else
+	{
+		previous = g_env.gfx_cli;
+		while (previous->next && previous->next != client)
+			previous = previous->next;
+		if (previous->next == client)
+			previous->next = client->next;
+		delete_all_commands(client);
+		free(client);
+	}
+}
+
 void		delete_all_clients(void)
 {
 	t_client	*client;
 	t_client	*tmp;
 
 	client = g_env.clients;
+	while (client)
+	{
+		tmp = client;
+		client = client->next;
+		delete_client(tmp);
+	}
+	client = g_env.gfx_cli;
 	while (client)
 	{
 		tmp = client;

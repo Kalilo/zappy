@@ -272,6 +272,7 @@ void				move_cli(t_client *client, t_direction direction);
 */
 t_client			*new_client(unsigned int sock);
 void				delete_client(t_client *client);
+void				delete_gfx_client(t_client *client);
 void				delete_all_clients(void);
 t_client			*find_client_by_id(int id);
 
@@ -576,7 +577,7 @@ char				join_team(t_client *client, char *team);
 */
 void				handle_command(t_client *client, char *line);
 void				manaage_client_loop(int sd,  t_client *start, t_client \
-					*client, t_client *previous);
+					*client, t_client *previous, char gfx);
 void				manage_clients(void);
 
 /*

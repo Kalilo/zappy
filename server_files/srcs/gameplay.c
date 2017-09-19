@@ -78,7 +78,7 @@ void	inc_user_delays(void)
 			}
 			if (client->life <= 0)
 			{
-				death_event(client);
+				// death_event(client);
 				client = (previous) ? previous : g_env.clients;
 			}
 		}
@@ -91,7 +91,6 @@ char	run_iteration(void)
 {
 	play_choice();
 	inc_user_delays();
-	// dec user health, and use gfx_pdi
 	// check if the game is still in play
 	// death of an egg?
 	return (g_env.play);//if the game is still in play

@@ -14,13 +14,13 @@
 
 char	join_team(t_client *client, char *team)
 {
-	t_team 	*t;
+	t_team	*t;
 
 	t = g_env.settings.teams;
 	while (t)
 	{
 		if (t->name && !ft_strcmp(t->name, team))
-			break;
+			break ;
 		t = t->next;
 	}
 	if (!t || (t->avaliable_cons < 1 && !g_env.settings.num_unused_conn))

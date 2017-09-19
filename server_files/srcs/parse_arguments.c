@@ -70,13 +70,13 @@ static char	parse_teams(int ac, char **av, int *k, int itmp)
 	while (*k < ac && av[*k][0] != '-' && ++itmp)
 	{
 		if (!(team = (t_team *)ft_strnew(sizeof(t_team))))
-		error_quit("Insufficient memory avaliable.");
+			error_quit("Insufficient memory avaliable.");
 		team->name = av[(*k)++];
 		team->id = itmp;
 		if (previous)
-		previous->next = team;
+			previous->next = team;
 		else
-		g_env.settings.teams = team;
+			g_env.settings.teams = team;
 		previous = team;
 	}
 	--(*k);

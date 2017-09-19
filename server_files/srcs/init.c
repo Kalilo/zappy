@@ -93,7 +93,8 @@ void	init_gameplay(void)
 	if (!(g_env.map = (t_tile **)ft_strnew(sizeof(t_tile *) * (G_WIDTH + 1))))
 		error_quit("Insufficient memory avaliable.");
 	while ((unsigned int)++k < G_HEIGHT)
-		if (!(g_env.map[k] = (t_tile *)ft_strnew(sizeof(t_tile) * (G_HEIGHT + 1))))
+		if (!(g_env.map[k] = \
+				(t_tile *)ft_strnew(sizeof(t_tile) * (G_HEIGHT + 1))))
 			error_quit("Insufficient memory avaliable.");
 	populate_map();
 	g_env.play = 1;

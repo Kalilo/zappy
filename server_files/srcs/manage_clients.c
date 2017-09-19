@@ -20,7 +20,7 @@ void		handle_command(t_client *client, char *line)
 		new_command(client, line);
 }
 
-void		manaage_client_loop(int sd,  t_client *start, t_client *client, \
+void		manaage_client_loop(int sd, t_client *start, t_client *client, \
 	t_client *previous, char gfx)
 {
 	while (client)

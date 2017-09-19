@@ -18,7 +18,7 @@ char	*gfx_pbc_str(t_client *client, char *msg)
 
 	str = ft_itoa(client->id);
 	ft_str_append2("pbc ", &str);
-	ft_str_append(&str , " ");
+	ft_str_append(&str, " ");
 	ft_str_append(&str, msg);
 	ft_str_append(&str, "\n");
 	return (str);

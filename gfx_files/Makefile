@@ -1,4 +1,4 @@
-SRCS =	main.cpp
+SRCS =	main.cpp get_next_line.cpp
 
 OBJS = ${SRCS:.c=.o}
 
@@ -9,10 +9,8 @@ LDFLAGS =
 
 CC = g++
 
-${NAME}:
+all:
 		g++ -o ${NAME} ${OBJS} ${LDFLAGS}
-
-all:		${NAME}
 
 clean:
 		make fclean

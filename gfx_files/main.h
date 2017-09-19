@@ -1,5 +1,5 @@
-#ifndef CLIENT_H
-# define CLIENT_H
+#ifndef MAIN_H
+# define MAIN_H
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/types.h>
@@ -14,7 +14,14 @@
 
 typedef struct  s_env
 {
-	int     sockfd;
-	int     state;//probably not needed.
-}               t_env;
+	int		sockfd;
+	int		state;//probably not needed.
+}			t_env;
+
+class	main
+{
+	private:
+	public:
+};
+
 #endif

@@ -402,6 +402,12 @@ void				delete_egg(t_team *team);
 void				dec_egg_health(void);
 
 /*
+** game_end.c
+*/
+void				send_victory_message(int team_id);
+void				end_game(t_team *team);
+
+/*
 ** gameplay.c
 */
 void				welcome_client(t_client *client);
@@ -627,6 +633,7 @@ void				run_command(t_client *client, char *command);
 */
 t_team				*find_client_team(t_client *client);
 t_team				*find_team(char *name);
+char				has_team_won(int team_id);
 
 /*
 **                                /----------\                                **

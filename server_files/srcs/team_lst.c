@@ -41,3 +41,19 @@ t_team		*find_team(char *name)
 	}
 	return (NULL);
 }
+
+char		has_team_won(int team_id)
+{
+	t_client	*client;
+	int			level_eights;
+
+	level_eights = 0;
+	client = g_env.clients;
+	while (client)
+	{
+		if (client->team_id == team_id && client->level >= 8)
+			level_eights++;
+		client = client->next;
+	}
+	return (level_eights >= 6);
+}

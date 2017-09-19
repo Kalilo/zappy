@@ -34,6 +34,7 @@ SRCS_NAME =		accept_new_client.c			\
 				do_see.c					\
 				do_take.c					\
 				egg_lst.c					\
+				game_end.c					\
 				gameplay.c					\
 				gfx_bct.c					\
 				gfx_cli.c					\

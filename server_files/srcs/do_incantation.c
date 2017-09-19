@@ -110,4 +110,6 @@ void	do_incantation(t_client *client)
 	ft_strdel(&str);
 	gfx_pic_auto(client->pos, client->level);
 	client->delay -= 300;
+	if (has_team_won(client->team_id))
+		end_game(find_client_team(client));
 }

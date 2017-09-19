@@ -5,7 +5,7 @@ class Player
 	attr_accessor :width, :height, :map, :level, :pos
 
 	def initialize(width, height)
-		@pos = Position.new(0, 0, NORTH)
+		@pos = Position.new(0, 0, :north)
 		@level = 1
 		@width = width.to_i
 		@height = height.to_i
@@ -193,26 +193,25 @@ class Player
 
 		pos = @pos.dup
 		while (diff = pos.diff(res_pos)) > 0
-			if pos.diff(pos.advance_pos) < diff
+			if res_pos.diff(pos.advance_pos) < diff
 				pos.advance
 				result << :advance
-			elsif pos.diff(pos.right_pos) < diff
+			elsif res_pos.diff(pos.right_pos) < diff
 				pos.right
-				pos.advance
 				result << :right << :advance
-			elsif pos.diff(pos.left_pos) < diff
+			elsif res_pos.diff(pos.left_pos) < diff
 				pos.left
 				pos.advance
 				result << :left << :advance
 			else
 				if rand(0..1) == 1
-					pos.right
-					pos.right
+					pos.turn_right
+					pos.turn_right
 					pos.advance
 					result << :right << :right << :advance
 				else
-					pos.left
-					pos.left
+					pos.turn_left
+					pos.turn_left
 					pos.advance
 					result << :left << :left << :advance
 				end

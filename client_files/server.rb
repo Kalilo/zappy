@@ -16,12 +16,18 @@ class Server
 		@sock.gets
 	end
 
-	def puts msg
+	def puts(msg)
 		@sock.puts msg
 	end
 
-	def response_to msg
+	def response_to(msg)
 		@sock.puts msg
 		@sock.gets
+	end
+
+	def execute_list(list)
+		list.each do |command|
+			@sock.puts command.to_s << '\n'
+		end
 	end
 end

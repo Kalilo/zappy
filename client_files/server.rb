@@ -13,7 +13,7 @@ class Server
 	end
 
 	def get
-		@sock.gets
+		@sock.gets.strip!.delete("\x00")
 	end
 
 	def puts(msg)
@@ -22,7 +22,7 @@ class Server
 
 	def response_to(msg)
 		@sock.puts msg
-		@sock.gets
+		@sock.gets.strip!.delete("\x00")
 	end
 
 	def execute_list(list)

@@ -159,6 +159,14 @@ class Player
 		{ error: false, path: gen_path_to_resource(res_pos_hash) }
 	end
 
+	def update_inventory(inventory)
+		inventory.delete('{').delete('}').split(',').each do |item|
+			item = item.split(' ')
+			@inventory[item[0].to_sym] = item[1]
+		end
+		@inventory
+	end
+
 	private
 
 	def scan_square(radius, resource)

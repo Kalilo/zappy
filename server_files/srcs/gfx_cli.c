@@ -62,3 +62,13 @@ void		send_gfx(char *str)
 		client = client->next;
 	}
 }
+
+char		make_gfx_cli(t_client *client)
+{
+	if (!ft_strcmp(GNL_LINE, "GRAPHIC"))
+	{
+		join_gfx(client);
+		return (1);
+	}
+	return (0);
+}

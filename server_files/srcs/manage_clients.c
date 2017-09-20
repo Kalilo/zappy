@@ -20,30 +20,26 @@ void		handle_command(t_client *client, char *line)
 		new_command(client, line);
 }
 
-void		manaage_client_loop(int sd, t_client *start, t_client *client, \
+void		manaage_client_loop(t_client *start, t_client *client, \
 	t_client *previous, char gfx)
 {
 	while (client)
 	{
-		sd = client->sock;
-		if (FD_ISSET(sd, &READ_FDS) && client->num_commands < 10)
+		if (FD_ISSET(client->sock, &READ_FDS) && client->num_commands < 10)
 		{
-			if (get_next_line(sd, &GNL_LINE) < 1 || \
+			if (get_next_line(client->sock, &GNL_LINE) < 1 || \
 				!ft_strcmp(GNL_LINE, "quit"))
 			{
 				ft_putendl("Client disconnected...");
-				close(sd);
+				close(client->sock);
 				client = (previous) ? previous : start;
 				if (!gfx)
 					delete_client((previous) ? previous->next : start);
 				else
 					delete_gfx_client((previous) ? previous->next : start);
 			}
-			else if (!ft_strcmp(GNL_LINE, "GRAPHIC"))
-			{
-				join_gfx(client);
+			else if (make_gfx_cli(client))
 				client = (previous) ? previous : start;
-			}
 			else
 				handle_command(client, GNL_LINE);
 			GNL_LINE = NULL;
@@ -60,6 +56,6 @@ void		manage_clients(void)
 
 	previous = NULL;
 	sd = 0;
-	manaage_client_loop(sd, g_env.clients, g_env.clients, previous, 0);
-	manaage_client_loop(sd, g_env.gfx_cli, g_env.gfx_cli, previous, 1);
+	manaage_client_loop(g_env.clients, g_env.clients, previous, 0);
+	manaage_client_loop(g_env.gfx_cli, g_env.gfx_cli, previous, 1);
 }

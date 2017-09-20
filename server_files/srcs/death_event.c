@@ -12,11 +12,12 @@
 
 #include "../includes/server.h"
 
-void	death_event(t_client *client)
+char	death_event(t_client *client)
 {
 	ft_putendl("client died...");
 	write_msg_to_sock(client->sock, "death\n");
 	gfx_pdi_auto(client);
 	close(client->sock);
 	delete_client(client);
+	return (1);
 }

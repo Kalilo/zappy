@@ -301,7 +301,7 @@ char				*coord_to_str(t_coord coord);
 /*
 ** death_event.c
 */
-void				death_event(t_client *client);
+char				death_event(t_client *client);
 
 /*
 ** direction.c
@@ -430,6 +430,7 @@ t_client			*new_gfx_client(unsigned int sock);
 char				join_gfx(t_client *client);
 void				welcome_gfx(t_client *client);
 void				send_gfx(char *str);
+char				make_gfx_cli(t_client *client);
 
 /*
 ** gfx_ebo.c
@@ -593,7 +594,7 @@ char				join_team(t_client *client, char *team);
 ** manage_clients.c
 */
 void				handle_command(t_client *client, char *line);
-void				manaage_client_loop(int sd, t_client *start, t_client \
+void				manaage_client_loop(t_client *start, t_client \
 					*client, t_client *previous, char gfx);
 void				manage_clients(void);
 

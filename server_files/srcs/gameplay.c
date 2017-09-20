@@ -76,11 +76,8 @@ void	inc_user_delays(void)
 				client->life += 126;
 				client->inventory.food--;
 			}
-			if (client->life <= 0)
-			{
-				// death_event(client);
+			if (client->life <= 0 && death_event(client))
 				client = (previous) ? previous : g_env.clients;
-			}
 		}
 		previous = client;
 		client = (client) ? client->next : NULL;

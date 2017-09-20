@@ -51,11 +51,9 @@ void		manaage_client_loop(t_client *start, t_client *client, \
 
 void		manage_clients(void)
 {
-	int			sd;
 	t_client	*previous;
 
 	previous = NULL;
-	sd = 0;
 	manaage_client_loop(g_env.clients, g_env.clients, previous, 0);
 	manaage_client_loop(g_env.gfx_cli, g_env.gfx_cli, previous, 1);
 }

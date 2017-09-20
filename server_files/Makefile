@@ -125,7 +125,7 @@ INCLUDES = -I includes/ -I ../libft/includes
 
 else
 
-LIBRARY = -L ../libft/ -lft
+LIBRARY = -L ../libft/ -lft -lm
 
 INCLUDES = -I includes/ -I ../libft/includes
 

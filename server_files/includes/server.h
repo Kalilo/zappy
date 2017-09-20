@@ -643,6 +643,7 @@ void				run_command(t_client *client, char *command);
 t_team				*find_client_team(t_client *client);
 t_team				*find_team(char *name);
 char				has_team_won(int team_id);
+void				set_team_connections(void);
 
 /*
 **                                /----------\                                **

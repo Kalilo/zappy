@@ -57,3 +57,18 @@ char		has_team_won(int team_id)
 	}
 	return (level_eights >= 6);
 }
+
+void		set_team_connections(void)
+{
+	t_team		*team;
+	int			avaliable_conns;
+
+	avaliable_conns = g_env.settings.num_start_clients / \
+		g_env.settings.num_teams;
+	team = g_env.settings.teams;
+	while (team)
+	{
+		team->avaliable_cons = avaliable_conns;
+		team = team->next;
+	}
+}

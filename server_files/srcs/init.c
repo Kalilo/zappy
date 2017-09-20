@@ -78,11 +78,11 @@ void	set_defults(void)
 			error_quit("Insufficient memory avaliable.");
 		team->name = "Team00";
 		team->id = 1;
-		team->avaliable_cons = 10;
 		g_env.settings.num_teams = 1;
 		g_env.settings.teams = team;
 	}
 	g_env.settings.num_unused_conn = g_env.settings.num_start_clients;
+	set_team_connections();
 }
 
 void	init_gameplay(void)

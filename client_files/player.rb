@@ -167,6 +167,19 @@ class Player
 		@inventory
 	end
 
+	def exec_path(path)
+		path.each do |command|
+			case command
+				when :advance
+					@pos.advance
+				when :left
+					@pos.turn_left
+				when :right
+					@pos.turn_right
+			end
+		end
+	end
+
 	private
 
 	def scan_square(radius, resource)

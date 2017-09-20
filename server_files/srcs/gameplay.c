@@ -17,7 +17,7 @@ void	welcome_client(t_client *client)
 	char	*str;
 	char	*tmp;
 
-	str = ft_itoa((find_client_team(client))->avaliable_cons + 1);
+	str = ft_itoa((find_client_team(client))->avaliable_cons);
 	ft_str_append(&str, "\n");
 	tmp = ft_itoa(G_WIDTH);
 	str = ft_str_append3(&str, &tmp);

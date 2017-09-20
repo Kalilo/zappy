@@ -15,6 +15,7 @@ NAME = server
 SRCS_NAME_1 =	accept_new_client.c			\
 				cli_lst.c					\
 				client_lst.c				\
+				client_lst2.c				\
 				command_lst.c				\
 				command_validation.c		\
 				coords.c					\

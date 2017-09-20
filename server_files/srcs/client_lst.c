@@ -38,6 +38,11 @@ void		delete_client(t_client *client)
 
 	if (!client)
 		return ;
+	if (client->level > 0 && (num_clients_in_team(client->team_id) < \
+			(g_env.settings.num_start_clients / g_env.settings.num_teams)))
+		find_client_team(client)->avaliable_cons++;
+	if (client->level > 0)
+		find_client_team(client)->num_members--;
 	if (g_env.clients == client)
 		g_env.clients = client->next;
 	else
@@ -50,6 +55,8 @@ void		delete_client(t_client *client)
 		delete_all_commands(client);
 		free(client);
 	}
+	if (num_clients() < g_env.settings.num_start_clients)
+		g_env.settings.num_unused_conn++;
 }
 
 void		delete_gfx_client(t_client *client)

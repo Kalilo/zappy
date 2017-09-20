@@ -33,7 +33,7 @@ void		manaage_client_loop(t_client *start, t_client *client, \
 				ft_putendl("Client disconnected...");
 				close(client->sock);
 				client = (previous) ? previous : start;
-				if (!gfx)
+				if (gfx == 0)
 					delete_client((previous) ? previous->next : start);
 				else
 					delete_gfx_client((previous) ? previous->next : start);

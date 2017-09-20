@@ -280,6 +280,12 @@ void				delete_all_clients(void);
 t_client			*find_client_by_id(int id);
 
 /*
+** client_lst2.c
+*/
+unsigned int		num_clients(void);
+unsigned int		num_clients_in_team(int team_id);
+
+/*
 ** command_lst.c
 */
 t_comm				*new_command(t_client *client, char *comm_str);

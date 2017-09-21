@@ -21,17 +21,17 @@ rescue
   abort "Fatal error initializing the server"
 end
 
-abort "failed to recieve welcome message from server" unless @server.get
+abort "failed to recieve welcome message from server" unless @server.get_direct
 
-abort "no connections avaliable" if @server.get.to_i == -1
+abort "no connections avaliable" if @server.get_direct.to_i == -1
 
 # Initialize the Player
 require './player.rb'
 
-size = @server.get.split(' ')
+size = @server.get_direct.split(' ')
 
 @player = Player.new(size[0], size[1])
 
-@player.see @server.response_to 'see'
+# @player.see @server.response_to 'see'
 
 binding.pry

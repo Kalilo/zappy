@@ -47,11 +47,11 @@ class Player
 	end
 
 	def right
-		@pos.right
+		@pos.turn_right
 	end
 
 	def left
-		@pos.left
+		@pos.turn_left
 	end
 
 	def take(item)

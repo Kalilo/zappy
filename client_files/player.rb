@@ -13,10 +13,11 @@ class Player
 		# Position.set_height = @height
 		@map = Array.new(@width) { Array.new(@height, '') }
 		@inventory = Hash.new(0)
+		@path_result = @pos
 	end
 
 	def see(vision)
-		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! } # rescue return
+		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! }
 		min = @pos.dup
 		max = min.dup
 		k = 0
@@ -158,6 +159,10 @@ class Player
 	end
 
 	def path_to(resource)
+		if @map[@pos.x][@pos.y].scan(/(?=#{resource})/)
+			@path_result = @pos
+			return { error: false, path: [] }
+		end
 		res_pos_hash = scan_map(resource)
 		return { error: true } unless res_pos_hash[:count] > 0
 		{ error: false, path: gen_path_to_resource(res_pos_hash) }
@@ -182,6 +187,10 @@ class Player
 					@pos.turn_right
 			end
 		end
+	end
+
+	def current_pos
+		@map[@pos.x][@pos.y]
 	end
 
 	private

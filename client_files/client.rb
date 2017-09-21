@@ -36,4 +36,6 @@ size = @server.get_direct.split(' ')
 
 require './ai.rb'
 
+@ai = AI.new @player, @server, @options[:verbose]
+
 binding.pry

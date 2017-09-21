@@ -12,6 +12,8 @@ class Server
 
 		@sock = TCPSocket.new @host, @port rescue abort "failed to connect to #{@host} on port #{@port}"
 		@sock.puts @team
+
+		@semaphore = Mutex.new
 	end
 
 	def gets
@@ -30,16 +32,19 @@ class Server
 
 	def execute_list(list)
 		list.each do |command|
-			run_request command.to_s << "\n"
+			run_request command
 		end
 	end
 
 	def run_request(request)
 		Thread.new do
-			@sock.puts request.to_s
+			@sock.puts (request.to_s << "\n")
+			request.strip!
 			begin
-				response = @sock.gets.strip!.delete("\x00")
-				if !(%W(death GAMEOVER moving message).find { |e| response.include? e })
+				# @semaphore.lock do
+					response = @sock.gets.strip!.delete("\x00")
+				# end
+				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
 					unless %W(right left advance).include? request
 						@response << { request.to_sym => response }
 						done = true

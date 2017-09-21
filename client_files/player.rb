@@ -16,11 +16,12 @@ class Player
 		@map = Array.new(@width) { Array.new(@height, '') }
 		@inventory = Hash.new(0)
 		@path_result = @pos
-		@@verbose = verbose unless verbose.nil
+		@@verbose = verbose unless verbose.nil?
 	end
 
 	def see(vision)
 		puts "in Player::see('#{vision}')" if @@verbose
+
 		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! }
 		min = @pos.dup
 		max = min.dup
@@ -45,6 +46,7 @@ class Player
 
 	def advance
 		puts "in Player::advance" if @@verbose
+
 		@pos.advance
 		@pos.x -= @width if @pos.x > @width
 		@pos.x += @width if @pos.x < 0
@@ -54,31 +56,37 @@ class Player
 
 	def right
 		puts "in Player::right" if @@verbose
+
 		@pos.turn_right
 	end
 
 	def left
 		puts "in Player::left" if @@verbose
+
 		@pos.turn_left
 	end
 
 	def take(item)
 		puts "in Player::take('#{item}')" if @@verbose
+
 		@inventory[item.to_sym] += 1
 	end
 
 	def put(item)
 		puts "in Player::put('#{item}')" if @@verbose
+
 		@inventory[item.to_sym] -= 1
 	end
 
 	def goto_last_path_result
 		puts "in Player::goto_last_path_result" if @@verbose
+
 		@pos = @path_result
 	end
 
 	def kick
 		puts "in Player::kick" if @@verbose
+
 		pos = @pos.dup
 		pos.advance
 		map[@pos.x][@pos.y].scan(/(?=#{'player'})/).count.times do
@@ -89,6 +97,7 @@ class Player
 
 	def required_res
 		puts "in Player::required_res" if @@verbose
+
 		case @level
 			when 1
 				{
@@ -172,6 +181,7 @@ class Player
 
 	def path_to(resource)
 		puts "in Player::path_to('#{resource}')" if @@verbose
+
 		if @map[@pos.x][@pos.y].scan(/(?=#{resource})/)
 			@path_result = @pos
 			return { error: false, path: [] }
@@ -183,6 +193,7 @@ class Player
 
 	def update_inventory(inventory)
 		puts "in Player::update_inventory('#{inventory}')" if @@verbose
+
 		inventory.delete('{').delete('}').split(',').each do |item|
 			item = item.split(' ')
 			@inventory[item[0].to_sym] = item[1]
@@ -192,6 +203,7 @@ class Player
 
 	def exec_path(path)
 		puts "in Player::exec_path('#{path}')" if @@verbose
+
 		path.each do |command|
 			case command
 				when :advance
@@ -206,6 +218,7 @@ class Player
 
 	def current_pos
 		puts "in Player::current_path" if @@verbose
+
 		@map[@pos.x][@pos.y]
 	end
 
@@ -213,6 +226,7 @@ class Player
 
 	def scan_square(radius, resource)
 		puts "in Player::scan_square('#{radiua}', '#{resource}')" if @@verbose
+
 		if (radius == 0)
 			{ count: @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{resource})/).count, x: @pos.x, y: @pos.y }
 		else
@@ -234,6 +248,7 @@ class Player
 
 	def scan_map(resource)
 		puts "in Player::scan_map('#{resource}')" if @@verbose
+
 		(0..(((@width > @height ? @width : @height) / 20.to_f).ceil)).each do |k|
 			result = scan_square(k, resource)
 			return result if result[:count] > 0
@@ -243,6 +258,7 @@ class Player
 
 	def gen_path_to_resource(res_pos_hash)
 		puts "in Player::gen_path_to_resource('#{res_pos_hash}')" if @@verbose
+
 		res_pos = Position.new(res_pos_hash[:x], res_pos_hash[:y], @pos.dir)
 		result = []
 		pos = @pos.dup

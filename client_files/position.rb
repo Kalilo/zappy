@@ -6,11 +6,16 @@ class Position
 	@@width ||= 100
 	@@height ||= 100
 
-	def initialize x, y, dir
+	@@verbose ||= nil
+
+	def initialize(x, y, dir, verbose = nil)
 		@x, @y, @dir = x, y, dir
+
+		@@verbose = verbose unless verbose.nil?
 	end
 
 	def move direction
+		puts "in Player::direction" if @@verbose
 		case direction
 			when :north
 				@y -= 1
@@ -26,19 +31,24 @@ class Position
 		end
 	end
 
-	def move_to x, y
+	def move_to(x, y)
+		puts "in Player::move_to(#{x}, #{y})" if @@verbose
 		@x, @y = x, y
 	end
 
 	def self.set_width(width)
+		puts "in Player::set_width(#{width})" if @@verbose
 		@@width = width
 	end
 
 	def self.set_height(height)
+		puts "in Player::set_height(#{height})" if @@verbose
 		@@height = height
 	end
 
 	def diff pos
+		puts "in Player::diff(#{pos})" if @@verbose
+
 		throw 'Can only run diff on Positions' unless pos.class == Position
 
 		y_diff = (pos.y - @y).abs
@@ -51,16 +61,19 @@ class Position
 	end
 
 	def right
+		puts "in Player::right" if @@verbose
 		turn_right
 		advance
 	end
 
 	def left
+		puts "in Player::left" if @@verbose
 		turn_left
 		advance
 	end
 
 	def turn_right
+		puts "in Player::turn_right" if @@verbose
 		case @dir
 			when :north
 				@dir = :east
@@ -76,6 +89,7 @@ class Position
 	end
 
 	def turn_left
+		puts "in Player::turn_left" if @@verbose
 		case @dir
 			when :north
 				@dir = :west
@@ -91,6 +105,7 @@ class Position
 	end
 
 	def set_opposite_dir
+		puts "in Player::turn_left" if @@verbose
 		case @dir
 			when :north
 				@dir = :south
@@ -106,6 +121,7 @@ class Position
 	end
 
 	def advance
+		puts "in Player::advance" if @@verbose
 		case @dir
 			when :north
 				@y = wrap_adjust_y(-1)
@@ -122,6 +138,8 @@ class Position
 	end
 
 	def advance_pos
+		puts "in Player::advance_pos" if @@verbose
+
 		y_new = @y
 		x_new = @x
 		case @dir
@@ -141,6 +159,8 @@ class Position
 	end
 
 	def left_pos
+		puts "in Player::left_pos" if @@verbose
+
 		case @dir
 			when :north
 				Position.new(wrap_adjust_x(-1), @y, :west)
@@ -156,6 +176,8 @@ class Position
 	end
 
 	def right_pos
+		puts "in Player::right_pos" if @@verbose
+
 		case @dir
 			when :north
 				Position.new(wrap_adjust_x(1), @y, :east)
@@ -171,6 +193,8 @@ class Position
 	end
 
 	def get_opposite_dir
+		puts "in Player::get_opposite_dir" if @@verbose
+
 		case @dir
 			when :north
 				:south
@@ -186,6 +210,8 @@ class Position
 	end
 
 	def get_left_dir
+		puts "in Player::get_left_dir" if @@verbose
+
 		case @dir
 			when :north
 				:west
@@ -201,6 +227,8 @@ class Position
 	end
 
 	def get_right_dir
+		puts "in Player::get_right_dir" if @@verbose
+
 		case @dir
 			when :north
 				:east
@@ -218,12 +246,16 @@ class Position
 	private
 
 	def wrap_adjust_x(diff)
+		puts "in Player::wrap_adjust_x(#{diff})" if @@verbose
+
 		x = @x
 		x += diff
 		x %= @@width
 	end
 
 	def wrap_adjust_y(diff)
+		puts "in Player::wrap_adjust_y(#{diff})" if @@verbose
+
 		y = @y
 		y += diff
 		y %= @@height

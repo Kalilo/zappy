@@ -2,7 +2,11 @@
 class Server
 	attr_reader :host, :port, :team
 
-	def initialize host, port, team
+	@@verbose ||= false
+
+	def initialize host, port, team, verbose = nil
+		puts "in Server::initialize(#{host}, #{port}, #{team})" if @@verbose
+
 		@host = host
 		@host ||= 'localhost'
 		@port = port.to_i rescue abort('invalid port number')
@@ -13,35 +17,46 @@ class Server
 		@sock = TCPSocket.new @host, @port rescue abort "failed to connect to #{@host} on port #{@port}"
 		@sock.puts @team
 
+		@@verbose = verbose unless verbose.nil?
 		@semaphore = Mutex.new
 	end
 
 	def gets
+		puts "in Server::gets" if @@verbose
+
 		@response.shift
 	end
 
 	def get(key_value)
+		puts "in Server::get(#{value})" if @@verbose
+
 		key_value = key_value.to_sym
 		pos = @response.find_index { |e| e.keys.first == key_value }
 		@response.delete_at(pos) unless pos.nil?
 	end
 
 	def puts(msg)
+		puts "in Server::puts(#{msg})" if @@verbose
+
 		run_request msg
 	end
 
 	def execute_list(list)
+		puts "in Server::execute_list(#{list})" if @@verbose
+
 		list.each do |command|
 			run_request command
 		end
 	end
 
 	def run_request(request)
+		puts "in Server::run_request(#{request})" if @@verbose
+
 		Thread.new do
 			@sock.puts (request.to_s << "\n")
 			request.strip!
+			@semaphore.lock
 			begin
-				# @semaphore.lock do
 					response = @sock.gets.strip!.delete("\x00")
 				# end
 				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
@@ -57,16 +72,21 @@ class Server
 					abort response
 				end
 			end while !done 
+			@semaphore.unlock
 		end
 	end
 
 	# should only be used for debug messages
 	def response_to(msg)
+		puts "in Server::response_to(#{msg})" if @@verbose
+
 		@sock.puts msg
 		@sock.gets.strip!.delete("\x00")
 	end
 
 	def	get_direct
+		puts "in Server::get_direct" if @@verbose
+
 		@sock.gets
 	end
 end

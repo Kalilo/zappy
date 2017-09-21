@@ -42,6 +42,8 @@ class Server
 	def execute_list(list)
 		puts "in Server::execute_list(#{list})" if @@verbose
 
+		return if list.nil?
+
 		list.each do |command|
 			run_request command
 		end
@@ -56,6 +58,7 @@ class Server
 			@sock.puts (request.to_s << "\n")
 			request.strip!
 			@semaphore.lock
+
 			begin
 				response = @sock.gets.strip!.delete("\x00")
 
@@ -71,7 +74,8 @@ class Server
 				else
 					abort response
 				end
-			end while !done 
+			end while !done
+
 			@semaphore.unlock
 		end
 	end

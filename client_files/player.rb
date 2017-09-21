@@ -182,10 +182,10 @@ class Player
 	def path_to(resource)
 		puts "in Player::path_to('#{resource}')" if @@verbose
 
-		if @map[@pos.x][@pos.y].scan(/(?=#{resource})/)
-			@path_result = @pos
-			return { error: false, path: [] }
-		end
+		# if @map[@pos.x][@pos.y].scan(/(?=#{resource})/)
+		# 	@path_result = @pos
+		# 	return { error: false, path: [] }
+		# end
 		res_pos_hash = scan_map(resource)
 		return { error: true } unless res_pos_hash[:count] > 0
 		{ error: false, path: gen_path_to_resource(res_pos_hash) }
@@ -225,7 +225,7 @@ class Player
 	private
 
 	def scan_square(radius, resource)
-		puts "in Player::scan_square('#{radiua}', '#{resource}')" if @@verbose
+		puts "in Player::scan_square('#{radius}', '#{resource}')" if @@verbose
 
 		if (radius == 0)
 			{ count: @map[@pos.x % @width][@pos.y % @height].scan(/(?=#{resource})/).count, x: @pos.x, y: @pos.y }

@@ -1,8 +1,4 @@
 # This class is to handle player positions
-# :north = 0
-# :east = 1
-# :south = 2
-# :west = 3
 
 class Position
 	attr_accessor :x, :y, :dir

@@ -53,10 +53,9 @@ class AI
 		puts "in AI::see" if @@verbose
 
 		@server.puts 'see'
-		s = nil
-		while s.nil? do
+		begin
 			s = @server.get(:see)
-		end
+		end while s.nil?
 		@player.see s[:see]
 		s[:see]
 	end

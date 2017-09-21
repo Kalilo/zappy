@@ -16,7 +16,7 @@ end
 begin
   require './server.rb'
 
-  @server = Server.new @options[:host], @options[:port], @options[:team]
+  @server = Server.new(@options[:host], @options[:port], @options[:team])
 rescue
   abort "Fatal error initializing the server"
 end
@@ -30,7 +30,7 @@ require './player.rb'
 
 size = @server.get_direct.split(' ')
 
-@player = Player.new(size[0], size[1])
+@player = Player.new(size[0], size[1], @options[:verbose])
 
 # @player.see @server.response_to 'see'
 

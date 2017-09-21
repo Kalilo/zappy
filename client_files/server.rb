@@ -4,9 +4,7 @@ class Server
 
 	@@verbose ||= false
 
-	def initialize host, port, team, verbose = nil
-		puts "in Server::initialize(#{host}, #{port}, #{team})" if @@verbose
-
+	def initialize(host, port, team, verbose = nil)
 		@host = host
 		@host ||= 'localhost'
 		@port = port.to_i rescue abort('invalid port number')
@@ -36,7 +34,7 @@ class Server
 	end
 
 	def puts(msg)
-		puts "in Server::puts(#{msg})" if @@verbose
+		puts "in Server::puts('#{msg}')" if @@verbose
 
 		run_request msg
 	end
@@ -50,6 +48,8 @@ class Server
 	end
 
 	def run_request(request)
+		abort "invalid request" unless request
+
 		puts "in Server::run_request(#{request})" if @@verbose
 
 		Thread.new do
@@ -57,8 +57,8 @@ class Server
 			request.strip!
 			@semaphore.lock
 			begin
-					response = @sock.gets.strip!.delete("\x00")
-				# end
+				response = @sock.gets.strip!.delete("\x00")
+
 				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
 					unless %W(right left advance).include? request
 						@response << { request.to_sym => response }

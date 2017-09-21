@@ -18,6 +18,12 @@ class Server
 		@response.shift
 	end
 
+	def get(key_value)
+		key_value = key_value.to_sym
+		pos = @response.find_index { |e| e.keys.first == key_value }
+		@response.delete_at(pos) unless pos.nil?
+	end
+
 	def puts(msg)
 		run_request msg
 	end

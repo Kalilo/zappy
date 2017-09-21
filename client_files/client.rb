@@ -34,4 +34,6 @@ size = @server.get_direct.split(' ')
 
 # @player.see @server.response_to 'see'
 
+require './ai.rb'
+
 binding.pry

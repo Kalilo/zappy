@@ -16,7 +16,7 @@ class Player
 	end
 
 	def see(vision)
-		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! }
+		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! } # rescue return
 		min = @pos.dup
 		max = min.dup
 		k = 0
@@ -60,6 +60,10 @@ class Player
 
 	def put(item)
 		@inventory[item.to_sym] -= 1
+	end
+
+	def goto_last_path_result
+		@pos = @path_result
 	end
 
 	def kick
@@ -241,6 +245,7 @@ class Player
 				end
 			end
 		end
+		@path_result = res_pos
 		result
 	end
 end

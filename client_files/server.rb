@@ -15,9 +15,16 @@ class Server
 		@sock = TCPSocket.new @host, @port rescue abort "failed to connect to #{@host} on port #{@port}"
 		@sock.puts @team
 
+		@queue_read = Queue.new
+		@queue_write = Queue.new 
+		
+		@queue_read << 'welcome'
+		@queue_read << 'connect_nbr'
+		@queue_read << 'pos'
+
 		@@verbose = verbose unless verbose.nil?
-		@read_lock = Mutex.new
-		@write_lock = Mutex.new
+
+		listen_loop
 	end
 
 	def gets
@@ -51,37 +58,9 @@ class Server
 	end
 
 	def run_request(request)
-		abort "invalid request" unless request
+		@sock.puts request.to_s + "\n"
 
-		puts "in Server::run_request(#{request})" if @@verbose
-
-		Thread.new do
-			@write_lock.lock
-			@sock.puts (request.to_s << "\n")
-			@write_lock.unlock
-
-			request.strip!
-			@read_lock.lock
-
-			begin
-				response = @sock.gets.strip!.delete("\x00")
-
-				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
-					# unless %W(right left advance).include? request
-						@response << { request.to_sym => response }
-						done = true
-					# end
-				elsif %W(moving message).find { |e| response.include? e }
-					@response << { move: response } if response.include? 'moving'
-					@response << { message: response } if response.include? 'message'
-					done = false
-				else
-					abort response
-				end
-			end while !done
-
-			@read_lock.unlock
-		end
+		@queue_read << request
 	end
 
 	# should only be used for debug messages
@@ -95,6 +74,28 @@ class Server
 	def	get_direct
 		puts "in Server::get_direct" if @@verbose
 
-		@sock.gets
+		begin
+			response = gets
+		end while response.nil?
+		response
+	end
+
+	private
+
+	def listen_loop
+		Thread.new do
+			loop do
+				response = @sock.gets.strip!.delete("\x00")
+
+				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
+					@response << { @queue_read.pop.to_sym => response }
+				elsif %W(moving message).find { |e| response.include? e }
+					@response << { move: response } if response.include? 'moving'
+					@response << { message: response } if response.include? 'message'
+				else
+					abort "Server Returned: '#{response}'"
+				end
+			end
+		end
 	end
 end

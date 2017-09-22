@@ -14,11 +14,19 @@ class AI
 	def find_food
 		puts "in AI::find_food" if @@verbose
 
+		b = false
 		begin
 			sight = self.see
-			self.right && (sight = self.see) unless sight.include? 'food'
-			self.right && (sight = self.see) unless sight.include? 'food'
-			self.right && (sight = self.see) unless sight.include? 'food'
+			b = b ? false : true
+			if b
+				self.right && (sight = self.see) unless sight.include? 'food'
+				self.right && (sight = self.see) unless sight.include? 'food'
+				self.right && (sight = self.see) unless sight.include? 'food'
+			else
+				self.left && (sight = self.see) unless sight.include? 'food'
+				self.left && (sight = self.see) unless sight.include? 'food'
+				self.left && (sight = self.see) unless sight.include? 'food'
+			end
 			@player.level.times { advance } unless sight.include? 'food'
 		end while !(sight.include? 'food')
 
@@ -86,11 +94,11 @@ class AI
 	def look_for_resources
 		puts "in AI::look_for_resources" if @@verbose
 
-		# binding.pry
 		required = @player.required_res
 		pos = @player.current_pos
 		current_required = required.select { |item| pos.include? item.to_s }
 		found = false
+		binding.pry
 		current_required.each do |e|
 			[pos.scan(/(?=#{e})/).count, e[1]].min.times do
 				self.take e.first
@@ -122,6 +130,7 @@ class AI
 					abort "Fatal error: 'left' returned '#{r.values.first}'" unless r.values.first == 'ok'
 				when :message
 					# handle message case
+					recieve_message r.keys.first
 				when :move
 					@player.move r.values.first.split(' ')[1]
 				when :incantation
@@ -155,7 +164,57 @@ class AI
 			find_food
 			buff_results
 			find_food
-			look_for_resources
+			pre_check_incanation if look_for_resources
 		end
+	end
+
+	def can_incanate?(required_res)
+		return false unless @incanation[:enough_res]
+		return false unless required_res[:player] >= @incanation[:player]
+		return true
+	end
+
+	private
+
+	def pre_check_incanation(required_res)
+		return unless enough_res_to_incanate? required_res
+
+		@incanation[:enough_res] = true
+
+		@server.puts "broadcast can_incanate?"
+	end
+
+	def recieve_message(message)
+		m = (message.split(','))[1] || ''
+
+		if m == "can_incanate?"
+			if @incanation[:enough_res] == true
+				@server.puts "can_incanate? yes"
+			else
+				@server.puts "can_incanate? no"
+			end
+		elsif m == "can_incanate? yes"
+			@incanation[:players] += 1
+		elsif m == "incantation" && @incanation[:enough_res] == false
+			@incanation[:player] = 0
+		end
+	end
+
+	def enough_res_to_incanate?(required_res)
+		return false unless required_res[:food] >= 10
+		return false unless required_res[:linemate] == 0
+		return false unless required_res[:deraumere] == 0
+		return false unless required_res[:sibur] == 0
+		return false unless required_res[:mendiane] == 0
+		return false unless required_res[:phiras] == 0
+		return false unless required_res[:thystame] == 0
+
+		true
+	end
+
+	def init_incanation_variable
+		@incanation = {}
+		@incanation[:enough_res] = false
+		@incanation[:player] = 0
 	end
 end

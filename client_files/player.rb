@@ -2,7 +2,7 @@ require './position.rb'
 
 # This class is the main class for managing a player
 class Player
-	attr_accessor :width, :height, :map, :level, :pos
+	attr_accessor :width, :height, :map, :level, :pos, :team
 
 	@@verbose ||= false
 

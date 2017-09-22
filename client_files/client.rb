@@ -32,7 +32,7 @@ size = (@server.get_direct)[:pos].split(' ')
 
 @player = Player.new(size[0], size[1], @options[:verbose])
 
-# @player.see @server.response_to 'see'
+@player.team = @options[:team]
 
 require './ai.rb'
 

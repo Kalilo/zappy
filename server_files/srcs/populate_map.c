@@ -46,7 +46,7 @@ void	populate_map(void)
 			max = 0;
 			while (rand() % 100 > 60 && ++max < 20)
 				add_random_gem(k, l);
-			while (rand() % 100 > 70 && ++max < 20)
+			while (rand() % 100 > 55 && ++max < 20)
 				(MAP(k, l).inventory.food)++;
 			l++;
 		}

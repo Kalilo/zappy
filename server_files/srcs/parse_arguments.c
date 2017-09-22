@@ -71,7 +71,8 @@ static char	parse_teams(int ac, char **av, int *k, int itmp)
 	{
 		if (!(team = (t_team *)ft_strnew(sizeof(t_team))))
 			error_quit("Insufficient memory avaliable.");
-		team->name = av[(*k)++];
+		if (!ft_strcmp(team->name = av[(*k)++], "GRAPHIC"))
+			error_quit("'GRAPHIC' is a reserved word");
 		team->id = itmp;
 		if (previous)
 			previous->next = team;

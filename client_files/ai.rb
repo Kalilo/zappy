@@ -204,8 +204,11 @@ class AI
     end while f.nil?
 
     # pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
-    # Process.detach(pid)
-    p = "ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
+	# Process.detach(pid)
+
+	# binding.pry
+
+    p = "ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
     puts p
     Process.fork { system p }
   end

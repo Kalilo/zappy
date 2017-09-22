@@ -30,9 +30,9 @@ class Player
 			l = 0
 			(min.diff(max) + 1).times do
 				if min.x == max.x
-					@map[min.x % @width][(min.y + l) % @height] = v[k]
+					@map[min.x % @width][(min.y + l) % @height] = v[k] || ''
 				else
-					@map[(min.x + l) % @width][min.y % @height] = v[k]
+					@map[(min.x + l) % @width][min.y % @height] = v[k] || ''
 				end
 				l += 1
 				k += 1
@@ -76,6 +76,12 @@ class Player
 		puts "in Player::put('#{item}')" if @@verbose
 
 		@inventory[item.to_sym] -= 1
+	end
+
+	def move(dir)
+		puts "in Player::move(#{dir})"
+
+		@pos.move dir.to_sym
 	end
 
 	def goto_last_path_result
@@ -182,10 +188,6 @@ class Player
 	def path_to(resource)
 		puts "in Player::path_to('#{resource}')" if @@verbose
 
-		# if @map[@pos.x][@pos.y].scan(/(?=#{resource})/)
-		# 	@path_result = @pos
-		# 	return { error: false, path: [] }
-		# end
 		res_pos_hash = scan_map(resource)
 		return { error: true } unless res_pos_hash[:count] > 0
 		{ error: false, path: gen_path_to_resource(res_pos_hash) }

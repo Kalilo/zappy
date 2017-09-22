@@ -107,6 +107,45 @@ class AI
 		found
 	end
 
+	def buff_results
+		while (r = @server.gets)
+			case r.keys.first
+				when :advance
+					abort "Fatal error: 'advance' returned '#{r.values.first}'" unless r.values.first == 'ok'
+				when :right
+					abort "Fatal error: 'right' returned '#{r.values.first}'" unless r.values.first == 'ok'
+				when :left
+					abort "Fatal error: 'left' returned '#{r.values.first}'" unless r.values.first == 'ok'
+				when :message
+					# handle message case
+				when :move
+					@player.move r.values.first.split(' ')[1]
+				when :incantation
+					# handle incanation
+					# should go find food?
+				when :inventory
+					# handle inventory
+					@player.update_inventory r.keys.first
+				when :fork
+					abort "Fatal error: 'fork' returned '#{r.values.first}'" unless r.values.first == 'ok'
+					# handle fork
+				when :connect_nbr
+					# handle connect_nbr
+				when :see
+					# handle see
+					@player.see r.keys.first
+				else
+					if r.to_s.include? 'take'
+						@player.put r.keys.first.split(' ')[1] if r.values.first == 'ko'
+					elsif r.to_s.include? 'put'
+						@player.take r.keys.first.split(' ')[1] if r.values.first == 'ko'
+					elsif r.to_s.include? 'broadcast'
+						# handle broadcast
+					end
+			end
+		end
+	end
+
 	# def run
 	# end
 end

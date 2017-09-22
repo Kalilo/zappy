@@ -204,7 +204,7 @@ class Player
 
 		inventory.delete('{').delete('}').split(',').each do |item|
 			item = item.split(' ')
-			@inventory[item[0].to_sym] = item[1]
+			@inventory[item[0].to_sym] = item[1].to_i
 		end
 		@inventory
 	end

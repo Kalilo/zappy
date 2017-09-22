@@ -84,8 +84,6 @@ class AI
 			i = @server.get(:inventory)
 		end while i.nil?
 		@player.update_inventory i[:inventory]
-
-		i[:inventory]
 	end
 
 	def take(resource)
@@ -115,7 +113,6 @@ class AI
 		pos = @player.current_pos
 		current_required = required.select { |item| pos.include? item.to_s }
 		found = false
-		# binding.pry
 		current_required.each do |e|
 			[pos.scan(/(?=#{e})/).count, e[1]].min.times do
 				self.take e.first
@@ -137,6 +134,8 @@ class AI
 	end
 
 	def buff_results
+		puts "in AI::buff_results" if @@verbose
+
 		while (r = @server.gets)
 			case r.keys.first
 				when :advance
@@ -147,7 +146,7 @@ class AI
 					abort "Fatal error: 'left' returned '#{r.values.first}'" unless r.values.first == 'ok'
 				when :message
 					# handle message case
-					recieve_message r.keys.first
+					recieve_message r.values.first
 				when :move
 					@player.move r.values.first.split(' ')[1]
 				when :incantation
@@ -155,7 +154,7 @@ class AI
 					# should go find food?
 				when :inventory
 					# handle inventory
-					@player.update_inventory r.keys.first
+					@player.update_inventory r.values.first
 				when :fork
 					abort "Fatal error: 'fork' returned '#{r.values.first}'" unless r.values.first == 'ok'
 					# handle fork
@@ -163,7 +162,7 @@ class AI
 					# handle connect_nbr
 				when :see
 					# handle see
-					@player.see r.keys.first
+					@player.see r.values.first
 				else
 					if r.to_s.include? 'take'
 						@player.put r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
@@ -177,10 +176,12 @@ class AI
 	end
 
 	def incanate
+		puts "in AI::incanate" if @@verbose
+
 		inventory
 		abort_incanation && return unless can_incanate?(@player.required_res)
 
-		@server.execute_list @player.path_to_pos[:path]
+		@server.execute_list @player.path_to_pos({x: 0, y: 0})
 		@player.goto_last_path_result
 
 		return unless wait_scan
@@ -189,18 +190,29 @@ class AI
 	end
 
 	def fork
-		return unless inventory[:food] >= 10
+		puts "in AI::fork" if @@verbose
 
-		@server.execute_list @player.path_to_pos[:path]
+		return unless inventory[:food].to_i >= 10
+
+		@server.execute_list @player.path_to_pos({x: 0, y: 0})
 		@player.goto_last_path_result
 
 		@server.puts "fork"
 
-		pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
-		Process.detach(pid)
+		begin
+			f = @server.get(:fork)
+		end while f.nil?
+
+		# pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
+		# Process.detach(pid)
+		p = "ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
+		puts p
+		Process.fork { system p }
 	end
 
 	def run
+		puts "in AI::run" if @@verbose
+
 		loop do
 			find_food
 			buff_results
@@ -208,14 +220,17 @@ class AI
 			pre_check_incanation(@player.required_res) if look_for_resources
 
 			if can_incanate?(@player.required_res)
-				#
+				incanate
 			elsif @incanation[:checks] >= 2
-				# fork
+				fork
+				@incanation[:checks] = 0
 			end
 		end
 	end
 
 	def can_incanate?(required_res)
+		puts "in AI::can_incanate?(#{required_res})" if @@verbose
+
 		@incanation[:checks] += 1
 
 		return false unless @incanation[:enough_res]
@@ -224,6 +239,8 @@ class AI
 	end
 
 	def abort_incanation
+		puts "in AI::abort_incanation" if @@verbose
+
 		@server.puts "broadcast can_incanate? abort"
 		@incanation[:abort] += 1
 	end
@@ -231,6 +248,8 @@ class AI
 	private
 
 	def pre_check_incanation(required_res)
+		puts "in AI::pre_check_incanation(#{required_res})" if @@verbose
+
 		return unless enough_res_to_incanate? required_res
 
 		@incanation[:enough_res] = true
@@ -240,6 +259,8 @@ class AI
 	end
 
 	def recieve_message(message)
+		puts "in AI::recieve_message(#{message})" if @@verbose
+
 		m = (message.split(','))[1] || ''
 
 		if m == 'can_incanate?'
@@ -258,6 +279,8 @@ class AI
 	end
 
 	def enough_res_to_incanate?(required_res)
+		puts "in AI::enough_res_to_incanate?(#{required_res})" if @@verbose
+
 		return false unless required_res[:food] >= 10
 		return false unless required_res[:linemate] == 0
 		return false unless required_res[:deraumere] == 0
@@ -270,6 +293,8 @@ class AI
 	end
 
 	def init_incanation_variable
+		puts "in AI::init_incanation_variable" if @@verbose
+
 		@incanation = {}
 		@incanation[:enough_res] = false
 		@incanation[:player] = 0
@@ -280,6 +305,8 @@ class AI
 	end
 
 	def wait_scan
+		puts "in AI::wait_scan" if @@verbose
+
 		loop do
 			pos = @player.current_pos
 			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]

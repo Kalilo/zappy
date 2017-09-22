@@ -6,7 +6,7 @@ class Player
 
 	@@verbose ||= false
 
-	def initialize(width, height, verbose = nil)got
+	def initialize(width, height, verbose = nil)
 		@pos = Position.new(0, 0, :north)
 		@level = 1
 		@width = width.to_i

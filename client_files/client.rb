@@ -25,6 +25,9 @@ abort "failed to recieve welcome message from server" unless (@server.get_direct
 
 abort "no connections avaliable" if (@server.get_direct)[:connect_nbr].to_i < 0
 
+# pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
+# Process.detach(pid)
+
 # Initialize the Player
 require './player.rb'
 

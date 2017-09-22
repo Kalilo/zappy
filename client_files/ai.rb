@@ -115,7 +115,7 @@ class AI
 		pos = @player.current_pos
 		current_required = required.select { |item| pos.include? item.to_s }
 		found = false
-		binding.pry
+		# binding.pry
 		current_required.each do |e|
 			[pos.scan(/(?=#{e})/).count, e[1]].min.times do
 				self.take e.first
@@ -188,14 +188,26 @@ class AI
 		@player.level += 1
 	end
 
+	def fork
+		return unless inventory[:food] >= 10
+
+		@server.execute_list @player.path_to_pos[:path]
+		@player.goto_last_path_result
+
+		@server.puts "fork"
+
+		pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
+		Process.detach(pid)
+	end
+
 	def run
 		loop do
 			find_food
 			buff_results
 			find_food
-			pre_check_incanation if look_for_resources
+			pre_check_incanation(@player.required_res) if look_for_resources
 
-			if can_incanate?
+			if can_incanate?(@player.required_res)
 				#
 			elsif @incanation[:checks] >= 2
 				# fork
@@ -213,6 +225,7 @@ class AI
 
 	def abort_incanation
 		@server.puts "broadcast can_incanate? abort"
+		@incanation[:abort] += 1
 	end
 
 	private
@@ -263,25 +276,26 @@ class AI
 		@incanation[:checks] = 0
 		@incanation[:req_players] = 0
 		@incanation[:res] = Hash.new(0)
+		@incanation[:abort] = 0
 	end
 
 	def wait_scan
 		loop do
 			pos = @player.current_pos
 			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
-			abort_incanation && return false if inventory[:food] <= 5
+			return false if inventory[:food] <= 5
 			see
 			left
 			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
-			abort_incanation && return false if inventory[:food] <= 5
+			return false if inventory[:food] <= 5
 			see
 			left
 			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
-			abort_incanation && return false if inventory[:food] <= 5
+			return false if inventory[:food] <= 5
 			see
 			left
 			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
-			abort_incanation && return false if inventory[:food] <= 5
+			return false if inventory[:food] <= 5
 			see
 			inventory
 		end

@@ -16,7 +16,8 @@ class Server
 		@sock.puts @team
 
 		@@verbose = verbose unless verbose.nil?
-		@semaphore = Mutex.new
+		@read_lock = Mutex.new
+		@write_lock = Mutex.new
 	end
 
 	def gets
@@ -55,18 +56,21 @@ class Server
 		puts "in Server::run_request(#{request})" if @@verbose
 
 		Thread.new do
+			@write_lock.lock
 			@sock.puts (request.to_s << "\n")
+			@write_lock.unlock
+
 			request.strip!
-			@semaphore.lock
+			@read_lock.lock
 
 			begin
 				response = @sock.gets.strip!.delete("\x00")
 
 				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
-					unless %W(right left advance).include? request
+					# unless %W(right left advance).include? request
 						@response << { request.to_sym => response }
 						done = true
-					end
+					# end
 				elsif %W(moving message).find { |e| response.include? e }
 					@response << { move: response } if response.include? 'moving'
 					@response << { message: response } if response.include? 'message'
@@ -76,7 +80,7 @@ class Server
 				end
 			end while !done
 
-			@semaphore.unlock
+			@read_lock.unlock
 		end
 	end
 

@@ -86,6 +86,7 @@ class AI
 	def look_for_resources
 		puts "in AI::look_for_resources" if @@verbose
 
+		# binding.pry
 		required = @player.required_res
 		pos = @player.current_pos
 		current_required = required.select { |item| pos.include? item.to_s }
@@ -97,10 +98,10 @@ class AI
 			end
 		end
 		unless found
-			current_required.each do |e|
+			required.each do |e|
 				path = @player.path_to e.first.to_s
 				unless path[:error]
-					@server.execute_list path
+					@server.execute_list path[:path]
 					@player.goto_last_path_result
 					self.take e.first
 					return true

@@ -22,7 +22,7 @@ class Player
 	def see(vision)
 		puts "in Player::see('#{vision}')" if @@verbose
 
-		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! }
+		v = vision.delete('{').delete('}').split(',').each { |x| x.strip! } rescue return
 		min = @pos.dup
 		max = min.dup
 		k = 0

@@ -6,7 +6,7 @@ class Player
 
 	@@verbose ||= false
 
-	def initialize(width, height, verbose = nil)
+	def initialize(width, height, verbose = nil)got
 		@pos = Position.new(0, 0, :north)
 		@level = 1
 		@width = width.to_i
@@ -82,6 +82,12 @@ class Player
 		puts "in Player::move(#{dir})"
 
 		@pos.move dir.to_sym
+	end
+
+	def path_to_pos(coord)
+		puts "in Player::path_to_pos(#{coord})"
+
+		gen_path_to_resource(coord)
 	end
 
 	def goto_last_path_result

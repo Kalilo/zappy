@@ -9,6 +9,8 @@ class AI
 		@player = player
 		@server = server
 		@@verbose = verbose unless verbose.nil?
+
+		init_incanation_variable
 	end
 
 	def find_food
@@ -69,6 +71,21 @@ class AI
 		end while s.nil?
 		@player.see s[:see]
 		s[:see]
+	end
+
+	def inventory
+		puts "in AI::inventory" if @@verbose
+
+		@server.puts 'inventory'
+		k = 0
+		begin
+			k += 1
+			@server.puts 'inventory' if k % 1000000 == 0
+			i = @server.get(:inventory)
+		end while i.nil?
+		@player.update_inventory i[:inventory]
+
+		i[:inventory]
 	end
 
 	def take(resource)
@@ -159,19 +176,43 @@ class AI
 		end
 	end
 
+	def incanate
+		inventory
+		abort_incanation && return unless can_incanate?(@player.required_res)
+
+		@server.execute_list @player.path_to_pos[:path]
+		@player.goto_last_path_result
+
+		return unless wait_scan
+		@server.puts 'incantation'
+		@player.level += 1
+	end
+
 	def run
 		loop do
 			find_food
 			buff_results
 			find_food
 			pre_check_incanation if look_for_resources
+
+			if can_incanate?
+				#
+			elsif @incanation[:checks] >= 2
+				# fork
+			end
 		end
 	end
 
 	def can_incanate?(required_res)
+		@incanation[:checks] += 1
+
 		return false unless @incanation[:enough_res]
 		return false unless required_res[:player] >= @incanation[:player]
 		return true
+	end
+
+	def abort_incanation
+		@server.puts "broadcast can_incanate? abort"
 	end
 
 	private
@@ -180,6 +221,7 @@ class AI
 		return unless enough_res_to_incanate? required_res
 
 		@incanation[:enough_res] = true
+		@incanation[:req_players] = required_res[:player]
 
 		@server.puts "broadcast can_incanate?"
 	end
@@ -187,15 +229,17 @@ class AI
 	def recieve_message(message)
 		m = (message.split(','))[1] || ''
 
-		if m == "can_incanate?"
+		if m == 'can_incanate?'
 			if @incanation[:enough_res] == true
-				@server.puts "can_incanate? yes"
+				@server.puts 'broadcast can_incanate? yes'
 			else
-				@server.puts "can_incanate? no"
+				@server.puts 'broadcast can_incanate? no'
 			end
-		elsif m == "can_incanate? yes"
-			@incanation[:players] += 1
-		elsif m == "incantation" && @incanation[:enough_res] == false
+		elsif m == 'can_incanate? yes'
+			@incanation[:player] += 1
+		elsif m == 'can_incanate? abort'
+			@incanation[:player] -= 1
+		elsif m == 'incantation' && @incanation[:enough_res] == false
 			@incanation[:player] = 0
 		end
 	end
@@ -216,5 +260,30 @@ class AI
 		@incanation = {}
 		@incanation[:enough_res] = false
 		@incanation[:player] = 0
+		@incanation[:checks] = 0
+		@incanation[:req_players] = 0
+		@incanation[:res] = Hash.new(0)
+	end
+
+	def wait_scan
+		loop do
+			pos = @player.current_pos
+			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+			abort_incanation && return false if inventory[:food] <= 5
+			see
+			left
+			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+			abort_incanation && return false if inventory[:food] <= 5
+			see
+			left
+			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+			abort_incanation && return false if inventory[:food] <= 5
+			see
+			left
+			return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+			abort_incanation && return false if inventory[:food] <= 5
+			see
+			inventory
+		end
 	end
 end

@@ -38,4 +38,6 @@ require './ai.rb'
 
 @ai = AI.new @player, @server, @options[:verbose]
 
-binding.pry
+@ai.run
+
+# binding.pry

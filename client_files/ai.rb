@@ -53,7 +53,10 @@ class AI
 		puts "in AI::see" if @@verbose
 
 		@server.puts 'see'
+		k = 0
 		begin
+			k += 1
+			@server.puts 'see' if k % 1000000 == 0
 			s = @server.get(:see)
 		end while s.nil?
 		@player.see s[:see]
@@ -136,9 +139,9 @@ class AI
 					@player.see r.keys.first
 				else
 					if r.to_s.include? 'take'
-						@player.put r.keys.first.split(' ')[1] if r.values.first == 'ko'
+						@player.put r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
 					elsif r.to_s.include? 'put'
-						@player.take r.keys.first.split(' ')[1] if r.values.first == 'ko'
+						@player.take r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
 					elsif r.to_s.include? 'broadcast'
 						# handle broadcast
 					end
@@ -146,6 +149,12 @@ class AI
 		end
 	end
 
-	# def run
-	# end
+	def run
+		loop do
+			find_food
+			buff_results
+			find_food
+			look_for_resources
+		end
+	end
 end

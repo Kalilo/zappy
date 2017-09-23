@@ -16,7 +16,8 @@ class Server
 		@sock.puts @team
 
 		@queue_read = Queue.new
-		@queue_write = Queue.new 
+		@queue_write = Queue.new
+		@missing = Queue.new 
 		
 		@queue_read << 'welcome'
 		@queue_read << 'connect_nbr'
@@ -25,6 +26,7 @@ class Server
 		@@verbose = verbose unless verbose.nil?
 
 		listen_loop
+		write_loop
 	end
 
 	def gets
@@ -38,6 +40,7 @@ class Server
 
 		key_value = key_value.to_sym
 		pos = @response.find_index { |e| e.keys.first == key_value }
+		# binding.pry if pos.nil? && @response.size > 0
 		@response.delete_at(pos) unless pos.nil?
 	end
 
@@ -58,16 +61,18 @@ class Server
 	end
 
 	def run_request(request)
-		@sock.puts request.to_s + "\n"
+		# @sock.puts request.to_s + "\n"
+		@queue_write << request.to_s
 
-		@queue_read << request
+		# @queue_read << request.to_sym
 	end
 
 	# should only be used for debug messages
 	def response_to(msg)
 		puts "in Server::response_to(#{msg})" if @@verbose
 
-		@sock.puts msg
+		# @sock.puts msg
+		@queue_write << msg
 		@sock.gets.strip!.delete("\x00")
 	end
 
@@ -87,8 +92,14 @@ class Server
 			loop do
 				response = @sock.gets.strip!.delete("\x00")
 
+				STDOUT.write "response: #{response}\n" # debug
+
+				# interprate_response(response)
+
+				key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
+
 				if !(%W(death GAMEOVER error moving message).find { |e| response.include? e })
-					@response << { @queue_read.pop.to_sym => response }
+					@response << { key => response }
 				elsif %W(moving message).find { |e| response.include? e }
 					@response << { move: response } if response.include? 'moving'
 					@response << { message: response } if response.include? 'message'
@@ -96,6 +107,58 @@ class Server
 					abort "Server Returned: '#{response}'"
 				end
 			end
+		end
+	end
+
+	def write_loop
+		Thread.new do
+			loop do
+				t1 = Time.now
+				loop do
+					break if @queue_read.size < 10 && @queue_write.size > 0
+					t2 = Time.now
+					if (t2 - t1) >= 1
+						@sock.puts "connect_nbr\n"
+						@queue_read << 'connect_nbr'
+						binding.pry if @queue_read.size >= 11
+						t1 = Time.now
+					end
+				end
+				msg = @queue_write.pop
+				@sock.puts msg + "\n"
+				@queue_read << msg
+
+				STDOUT.write "sent: #{msg}\n"
+			end
+		end
+	end
+
+	private
+
+	def interprate_response(response)
+		if response.include?('{')
+			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
+			if (i.count(',') == 6)
+				@missing << key if key != :inventory
+				@response << { inventory: response }
+			else
+				@missing << key if key != :see
+				@response << { see: response }
+			end
+		elsif %W(ok ko).include? response
+			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
+			@response << { key => response }
+		elsif %W(moving message).find { |e| response.include? e }
+			if response.include? 'moving'
+				@response << { move: response } if response.include? 'moving'
+			else
+				@response << { message: response } if response.include? 'message'
+			end
+		elsif %W(death GAMEOVER error).include? response
+			abort "Server Returned: '#{response}'"
+		elsif response.to_i
+			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
+			@response << { key => response }
 		end
 	end
 end

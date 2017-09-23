@@ -32,10 +32,18 @@ class AI
       @player.level.times { advance } unless sight.include? 'food'
     end while !(sight.include? 'food')
 
-    path = @player.path_to('food')
-    @server.execute_list path[:path]
-    self.take 'food'
-    @player.goto_last_path_result
+    pos = @player.current_pos
+
+    if pos.include? 'food'
+      pos.scan(/(?=#{'food'})/).count.times do
+        self.take 'food'
+      end
+    else
+      path = @player.path_to 'food'
+      @server.execute_list path[:path]
+      self.take 'food'
+      @player.goto_last_path_result
+    end
   end
 
   def advance
@@ -63,10 +71,10 @@ class AI
     puts "in AI::see" if @@verbose
 
     @server.puts 'see'
-    k = 0
+    # k = 0
     begin
-      k += 1
-      @server.puts 'see' if (k % 1_000_000).zero?
+      # k += 1
+      # @server.puts 'see' if (k % 1_000_000).zero?
       s = @server.get(:see)
     end while s.nil?
     @player.see s[:see]
@@ -77,10 +85,10 @@ class AI
     puts "in AI::inventory" if @@verbose
 
     @server.puts 'inventory'
-    k = 0
+    # k = 0
     begin
-      k += 1
-      @server.puts 'inventory' if (k % 1_000_000).zero?
+      # k += 1
+      # @server.puts 'inventory' if (k % 1_000_000).zero?
       i = @server.get(:inventory)
     end while i.nil?
     @player.update_inventory i[:inventory]

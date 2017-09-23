@@ -85,7 +85,7 @@ class Player
 	end
 
 	def path_to_pos(coord)
-		puts "in Player::path_to_pos(#{coord})"
+		puts "in Player::path_to_pos(#{coord})" if @@verbose
 
 		gen_path_to_resource(coord)
 	end

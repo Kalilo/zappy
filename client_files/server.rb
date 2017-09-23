@@ -23,6 +23,8 @@ class Server
 		@queue_read << 'connect_nbr'
 		@queue_read << 'pos'
 
+		@response_lock = Mutex.new
+
 		@@verbose = verbose unless verbose.nil?
 
 		listen_loop
@@ -32,16 +34,20 @@ class Server
 	def gets
 		puts "in Server::gets" if @@verbose
 
-		@response.shift
+		@response.empty? ? nil : @response.shift
 	end
 
 	def get(key_value)
 		puts "in Server::get(#{value})" if @@verbose
 
+		@response_lock.lock
 		key_value = key_value.to_sym
 		pos = @response.find_index { |e| e.keys.first == key_value }
 		# binding.pry if pos.nil? && @response.size > 0
-		@response.delete_at(pos) unless pos.nil?
+		r = @response.delete_at(pos) unless pos.nil?
+		@response_lock.unlock
+
+		r
 	end
 
 	def puts(msg)
@@ -61,20 +67,17 @@ class Server
 	end
 
 	def run_request(request)
-		# @sock.puts request.to_s + "\n"
 		@queue_write << request.to_s
-
-		# @queue_read << request.to_sym
 	end
 
-	# should only be used for debug messages
-	def response_to(msg)
-		puts "in Server::response_to(#{msg})" if @@verbose
+	# # should only be used for debug messages
+	# def response_to(msg)
+	# 	puts "in Server::response_to(#{msg})" if @@verbose
 
-		# @sock.puts msg
-		@queue_write << msg
-		@sock.gets.strip!.delete("\x00")
-	end
+	# 	# @sock.puts msg
+	# 	@queue_write << msg
+	# 	@sock.gets.strip!.delete("\x00")
+	# end
 
 	def	get_direct
 		puts "in Server::get_direct" if @@verbose
@@ -94,6 +97,8 @@ class Server
 
 				STDOUT.write "response: #{response}\n" # debug
 
+				@response_lock.lock
+
 				# interprate_response(response)
 
 				key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
@@ -106,6 +111,8 @@ class Server
 				else
 					abort "Server Returned: '#{response}'"
 				end
+
+				@response_lock.unlock
 			end
 		end
 	end
@@ -113,16 +120,16 @@ class Server
 	def write_loop
 		Thread.new do
 			loop do
-				t1 = Time.now
+				# t1 = Time.now
 				loop do
 					break if @queue_read.size < 10 && @queue_write.size > 0
-					t2 = Time.now
-					if (t2 - t1) >= 1
-						@sock.puts "connect_nbr\n"
-						@queue_read << 'connect_nbr'
-						binding.pry if @queue_read.size >= 11
-						t1 = Time.now
-					end
+					# t2 = Time.now
+					# if (t2 - t1) >= 1
+					# 	@sock.puts "connect_nbr\n"
+					# 	@queue_read << 'connect_nbr'
+					# 	binding.pry if @queue_read.size >= 11
+					# 	t1 = Time.now
+					# end
 				end
 				msg = @queue_write.pop
 				@sock.puts msg + "\n"

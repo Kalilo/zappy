@@ -97,16 +97,16 @@ class Server
 	end
 
 	def wait_for(key_value)
-		t1 = Time.now
+		# t1 = Time.now
 		loop do
 			@last_response = get(key_value)
 			break unless @last_response.nil?
-			t2 = Time.now
+			# t2 = Time.now
 
-			if (t2 - t1) > (7 * @time_unit) && @queue_write.empty?
-				@queue_write << key_value.to_s
-				t = Time.now
-			end
+			# if (t2 - t1) > (7 * @time_unit) && @queue_write.empty?
+			# 	@queue_write << key_value.to_s
+			# 	t = Time.now
+			# end
 		end
 		@last_response
 	end

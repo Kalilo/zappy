@@ -181,12 +181,12 @@ class AI
     puts "in AI::incanate" if @@verbose
 
     inventory
-    abort_incanation && return unless can_incanate?(@player.required_res)
+    # abort_incanation && return unless can_incanate?(@player.required_res)
 
     @server.execute_list @player.path_to_pos({x: 0, y: 0})
     @player.goto_last_path_result
 
-    return unless wait_scan
+    # return unless wait_scan
     @server.puts 'incantation'
     @player.level += 1
   end

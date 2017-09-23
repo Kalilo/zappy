@@ -69,12 +69,14 @@ class Player
 	def take(item)
 		puts "in Player::take('#{item}')" if @@verbose
 
+		@map[@pos.x][@pos.y].slice! item.to_s
 		@inventory[item.to_sym] += 1
 	end
 
 	def put(item)
 		puts "in Player::put('#{item}')" if @@verbose
 
+		@map[@pos.x][@pos.y] += " #{item.to_s}"
 		@inventory[item.to_sym] -= 1
 	end
 

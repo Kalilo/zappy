@@ -1,4 +1,4 @@
-require './position.rb'
+require './client_files/position.rb'
 
 # This class is the main class for managing a player
 class Player
@@ -69,12 +69,14 @@ class Player
 	def take(item)
 		puts "in Player::take('#{item}')" if @@verbose
 
+		@map[@pos.x][@pos.y].slice! item.to_s
 		@inventory[item.to_sym] += 1
 	end
 
 	def put(item)
 		puts "in Player::put('#{item}')" if @@verbose
 
+		@map[@pos.x][@pos.y] += " #{item.to_s}"
 		@inventory[item.to_sym] -= 1
 	end
 
@@ -272,6 +274,8 @@ class Player
 		pos = @pos.dup
 
 		while (diff = pos.diff(res_pos)) > 0
+			# result << "take food".to_sym if @map[@pos.x][@pos.y].include? 'food'
+
 			if res_pos.diff(pos.advance_pos) < diff
 				pos.advance
 				result << :advance

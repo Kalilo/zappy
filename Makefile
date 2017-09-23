@@ -88,7 +88,7 @@ $(NAME): $(OBJS)
 	@make qme
 	@$(call colourecho, " - Making $(NAME)")
 	@make -C libft
-	# @$(CC) $(CFLAGS2) -o $(NAME) $^ $(LIBRARY) $(INCLUDES) -I$(INCLUDES_PATH)
+	@# @$(CC) $(CFLAGS2) -o $(NAME) $^ $(LIBRARY) $(INCLUDES) -I$(INCLUDES_PATH)
 	@ar -rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 	@make server
@@ -109,8 +109,8 @@ server: del_server
 	@mv server_files/server .
 
 client: del_client
-	@make -C client_files
-	@mv client_files/client .
+	@echo "$(shell which ruby) ./client_files/client.rb \$$@" > client
+	@chmod 755 ./client
 
 quick:
 	@make server
@@ -130,7 +130,7 @@ clean:
 	@$(call colourecho, " - Clearing object files")
 	@rm -f $(OBJS)
 	@make clean -C libft
-	@make clean -C client_files
+	@# @make clean -C client_files
 	@make clean -C server_files
 	@$(call colourecho, "clean done!")
 
@@ -138,7 +138,7 @@ fclean: clean del_server del_client
 	@$(call colourecho, "Clearing executable files")
 	@rm -f $(NAME)
 	@make fclean -C libft
-	@make fclean -C client_files
+	@# @make fclean -C client_files
 	@make fclean -C server_files
 	@$(call colourecho, "fclean done")
 
@@ -153,7 +153,7 @@ norm:
 	@$(call colourecho2, "Norminette:")
 	@norminette $(SRCS)
 	@norminette $(HEADER)
-	@make norme -C client_files
+	@# @make norme -C client_files
 	@make norme -C server_files
 
 fnorm: fnorme
@@ -162,7 +162,7 @@ fnorme:
 	@$(call colourecho2, "Norminette:")
 	@find $(SRCS_PATH) -name "*.c" -maxdepth 1 -type f -exec norminette  {} \;
 	@find $(INCLUDES_PATH) -name "*.h" -maxdepth 1 -type f -exec norminette  {} \;
-	@make fnorme -C client_files
+	@# @make fnorme -C client_files
 	@make fnorme -C server_files
 
 qme:

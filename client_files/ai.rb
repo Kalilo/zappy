@@ -71,12 +71,9 @@ class AI
     puts "in AI::see" if @@verbose
 
     @server.puts 'see'
-    k = 0
-    begin
-      k += 1
-      @server.puts 'see' if (k % 1_000_000).zero?
-      s = @server.get(:see)
-    end while s.nil?
+
+    s = @server.wait_for(:see)
+
     @player.see s[:see]
     s[:see]
   end
@@ -85,12 +82,9 @@ class AI
     puts "in AI::inventory" if @@verbose
 
     @server.puts 'inventory'
-    k = 0
-    begin
-      k += 1
-      @server.puts 'inventory' if (k % 1_000_000).zero?
-      i = @server.get(:inventory)
-    end while i.nil?
+
+    i = @server.wait_for(:inventory)
+
     @player.update_inventory i[:inventory]
   end
 

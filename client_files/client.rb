@@ -37,6 +37,8 @@ size = (@server.get_direct)[:pos].split(' ')
 
 @player.team = @options[:team]
 
+# puts "timing ~= #{@server.get_approximate_timing}"
+
 require './ai.rb'
 
 @ai = AI.new @player, @server, @options[:verbose]

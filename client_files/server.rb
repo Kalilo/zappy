@@ -27,6 +27,8 @@ class Server
 
 		@@verbose = verbose unless verbose.nil?
 
+		@time_unit ||= 1 / 30
+
 		listen_loop
 		write_loop
 	end
@@ -88,6 +90,32 @@ class Server
 		response
 	end
 
+	def get_approximate_timing
+		t1 = Time.now
+		@sock.puts 'connect_nbr'
+		@sock.gets
+		@sock.puts 'connect_nbr'
+		@sock.gets
+		t2 = Time.now
+
+		@time_unit = (t2 - t1) / 2
+	end
+
+	def wait_for(key_value)
+		t1 = Time.now
+		loop do
+			@last_response = get(key_value)
+			break unless @last_response.nil?
+			t2 = Time.now
+			
+			if (t2 - t1) > (7 * @time_unit) && @queue_write.empty?
+				@queue_write << key_value.to_s
+				t = Time.now
+			end
+		end
+		@last_response
+	end
+
 	private
 
 	def listen_loop
@@ -139,8 +167,6 @@ class Server
 			end
 		end
 	end
-
-	private
 
 	def interprate_response(response)
 		if response.include?('{')

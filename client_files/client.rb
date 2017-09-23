@@ -30,7 +30,6 @@ abort "no connections avaliable" if (@server.get_direct)[:connect_nbr].to_i < 0
 
 # Initialize the Player
 require './player.rb'
-
 size = (@server.get_direct)[:pos].split(' ')
 
 @player = Player.new(size[0], size[1], @options[:verbose])
@@ -38,6 +37,8 @@ size = (@server.get_direct)[:pos].split(' ')
 @player.team = @options[:team]
 
 # puts "timing ~= #{@server.get_approximate_timing}"
+
+@server.activate_write_loop
 
 require './ai.rb'
 

@@ -272,6 +272,8 @@ class Player
 		pos = @pos.dup
 
 		while (diff = pos.diff(res_pos)) > 0
+			# result << "take food".to_sym if @map[@pos.x][@pos.y].include? 'food'
+
 			if res_pos.diff(pos.advance_pos) < diff
 				pos.advance
 				result << :advance

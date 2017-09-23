@@ -16,7 +16,7 @@ class Server
 		@sock.puts @team
 
 		@queue_read = Queue.new
-		@missing = Queue.new 
+		# @missing = Queue.new 
 		
 		@queue_read << 'welcome'
 		@queue_read << 'connect_nbr'
@@ -166,23 +166,23 @@ class Server
 		if response.include?('{')
 			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
 			if (response.count(',') == 6)
-				@missing << key if key != :inventory
+				# @missing << key if key != :inventory
 				@response << { inventory: response }
 			else
-				@missing << key if key != :see
+				# @missing << key if key != :see
 				@response << { see: response }
 			end
 		elsif %W(ok ko).include? response
 			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
 			if %W(advance right left fork).include? key.to_s && response == 'ko'
-				@missing << key
+				# @missing << key
 				@response << { key => 'ok' }
 			else
 				@response << { key => response }
 			end
 		elsif response.to_i.to_s == response
 			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
-			@missing << key if key != :connect_nbr || key != :pos
+			# @missing << key if key != :connect_nbr || key != :pos
 			@response << { key => response }
 		elsif %W(moving message).find { |e| response.include? e }
 			if response.include? 'moving'

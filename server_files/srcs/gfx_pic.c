@@ -24,9 +24,12 @@ char	*gfx_pic_str(t_cli *cli, int level, t_coord pos)
 	str = ft_str_append3(&str, &tmp);
 	while (cli)
 	{
-		tmp = ft_itoa(cli->client->level);
-		ft_str_append(&str, " ");
-		str = ft_str_append3(&str, &tmp);
+		if (cli->client)
+		{
+			tmp = ft_itoa(cli->client->id);
+			ft_str_append(&str, " ");
+			str = ft_str_append3(&str, &tmp);
+		}
 		cli = cli->next;
 	}
 	ft_str_append(&str, "\n");

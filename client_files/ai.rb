@@ -39,10 +39,10 @@ class AI
         self.take 'food'
       end
     else
-      path = @player.path_to 'food'
-      @server.execute_list path[:path]
-      self.take 'food'
-      @player.goto_last_path_result
+    path = @player.path_to 'food'
+    @server.execute_list path[:path]
+    self.take 'food'
+    @player.goto_last_path_result
     end
   end
 
@@ -116,10 +116,10 @@ class AI
     current_required = required.select { |item| pos.include? item.to_s }
     found = false
     current_required.each do |e|
-      [pos.scan(/(?=#{e})/).count, e[1]].min.times do
+      # [pos.scan(/(?=#{e})/).count, e[1]].min.times do
         self.take e.first
         found = true
-      end
+      # end
     end
     unless found
       required.each do |e|
@@ -154,6 +154,7 @@ class AI
         when :incantation
           # handle incanation
           # should go find food?
+          @player.level -= 1 if r.values.first = 'ko'
         when :inventory
           # handle inventory
           @player.update_inventory r.values.first
@@ -208,10 +209,7 @@ class AI
     # pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
 	# Process.detach(pid)
 
-	# binding.pry
-
     p = "ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
-    puts p
     Process.fork { system p }
   end
 

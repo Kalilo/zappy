@@ -232,6 +232,14 @@ class Player
 		@map[@pos.x][@pos.y]
 	end
 
+	def scan_nearby(resource)
+		puts "in Player::scan_nearby('#{resource}')" if @@verbose
+
+		(0..2).each do |k|
+			result = scan_square(k, resource)
+		end
+	end
+
 	private
 
 	def scan_square(radius, resource)

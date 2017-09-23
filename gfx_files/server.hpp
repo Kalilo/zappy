@@ -26,6 +26,5 @@ class server
 		void	connect_(int ac, char **av);
 		int		choose_pc_port(void);// /Connect  (as required by the pdf)	
 		int		connect_client(char *ip_address, int port);//perfect for lib function
-
 };
 #endif

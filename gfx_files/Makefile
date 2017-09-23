@@ -1,4 +1,4 @@
-SRCS =	main.cpp get_next_line.cpp engine.cpp server.cpp
+SRCS =	main.cpp get_next_line.cpp engine.cpp server.cpp map.cpp
 
 OBJS = ${SRCS:.c=.o}
 
@@ -10,7 +10,7 @@ LDFLAGS =
 CC = g++
 
 all:
-		g++ -o ${NAME} ${OBJS} ${LDFLAGS}
+		g++ -o ${NAME} ${OBJS} ${LDFLAGS} -lpthread
 
 clean:
 		make fclean

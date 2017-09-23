@@ -9,20 +9,17 @@
 # include "get_next_line.h"
 
 # include "server.hpp"
+# include <vector>
 
-typedef struct  s_env
-{
-	int		sockfd;
-	int		state;//probably not needed.
-}			t_env;
+# include <pthread.h>
 
-//	engine class
-//should create the environmental var
-class	main
-{
-	private:
-	public:
-};
 
-//place in server.hpp
+
+//   do bct									--check
+//	 push to repo
+//	 neaten ogl data by writing a class.
+//	 add ogl class to renderer + gfx.
+//	 copy object renderer.
+// 	 render everything that's in the map in the engine->renderer();
+
 #endif

@@ -12,50 +12,30 @@ engine	&e(void)
 	return (env);
 }
 
-
-int		receive_line(int state, char *recvline)//put in engine.
+void	*receive_line(void *ptr)//put in engine.
 {
-	char	*line;//MOVE to engine class... to get data faster.
+//	char	*t;//for strstr magicianary.
+//	char	*line;//MOVE to engine class... to get data faster.
 
-	while (get_next_line(e().getconnector().getsockfd(), &line))
+	while (get_next_line(e().getconnector().getsockfd(), &e().getconnector().getline()))
 	{
-		//receive line:
-		printf("%s\n", line);
+		e().getmapper().msz();//checks to get mapsize()
+		e().getmapper().bct();//places block data into mapping.
+	//receive line:
+		printf("%s\n", e().getconnector().getline());
 	//place data in correct struct place...
 	//add map_generator to use blocks to store information once map-size has been established
-		free(line);
+		free(e().getconnector().getline());
+		e().getconnector().getline() = NULL;
 		printf("test\n");
 	}
 	printf("test2\n");
-
-	/*
-	int	len;
-
-	while ((len = read(sockfd, recvline, 4096)) > 0)
-	{
-		if (!len)
-		{
-			memset(recvline, 0, 4096);
-			free(recvline);
-			write(2, "The server terminated prematurely\n", 34);
-			return (0);
-		}
-		if (!strncmp(recvline, "/Quit", len))
-			return (0);
-		write(1, "\b\b\b", 3);
-		write(1, recvline, len);//will do something with the received string here...
-		write(1, "$> ", 3);
-	}
-	if (state)
-		write(2, "error in reading from server\n", 29);
-	free(recvline);
-	*/
 	return (0);
 }
 
 
 
-int	algorithm(void)
+int	algorithm(void)//NORMAL CLIENT ideology.
 {
 	//SEE (function call)
 	// if player is getting hungry
@@ -71,28 +51,34 @@ int	algorithm(void)
 	return (1);
 }
 
-// int		connect_client(char *ip_address, int port)//perfect for lib function
-// {
-// }
-
 int	main(int ac, char **av)
 {
-	t_env	env;
-	pid_t	f;
-	char	*line;//put in engine.
-	char	buf[1024];
+	int			iret1;
+	pthread_t	thread1;
 
 	e();//registers as graphics engine with server-side
 	e().getconnector().connect_(ac, av);
-	if (!(f = fork()))//will read from here:
-		receive_line(env.state, (char *)malloc(sizeof(char) * 4096));
+//thread to server(for good reason):
+	iret1 = pthread_create( &thread1, NULL, receive_line, (void*)"server::thread");
+	if(iret1)
+		exit(EXIT_FAILURE + 0 * fprintf(stderr,"Error - pthread_create() return code: %d\n",iret1));
 	while (1)//gameloop
 	{
-		//printf("render from engine data\n");
+		if (e().getmapper().getmap().size())
+			if (e().getmapper().getmap()[0].size())
+				if (e().getmapper().getmap()[0][0].size())
+				{
+					//engine to render here.
+					e().getmapper().print_map(1);
+				}
+//		printf("render from engine data: msz X Y %d %d\n", e().getmapper().getmap().size() ? e().getmapper().getmap()[0].size() : -1, (e().getmapper().getmap().size() && e().getmapper().getmap()[0].size()) ? e().getmapper().getmap()[0][0].size() : -1);
 		//AT interval time should send specific requests to server-side to get updates...
 		//or will read from server from here (if this client is doing the timing)
 		//render(which will be added to repo later)
+//		exit(1);
 	}
+	pthread_join( thread1, NULL);
 	exit(0);
 	return (0);
 }
+

@@ -1,6 +1,5 @@
 #include "engine.hpp"
 
-
 engine::engine(void)
 {
 	//this->connector();//tries to call its constructor...
@@ -15,3 +14,7 @@ server	&engine::getconnector(void)
 	return (this->connector);
 }
 
+map		&engine::getmapper(void)
+{
+	return (this->mapper);
+}

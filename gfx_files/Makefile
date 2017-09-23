@@ -1,4 +1,4 @@
-SRCS =	main.cpp get_next_line.cpp
+SRCS =	main.cpp get_next_line.cpp engine.cpp server.cpp
 
 OBJS = ${SRCS:.c=.o}
 

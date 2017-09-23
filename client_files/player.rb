@@ -2,7 +2,7 @@ require './client_files/position.rb'
 
 # This class is the main class for managing a player
 class Player
-	attr_accessor :width, :height, :map, :level, :pos, :team
+	attr_accessor :width, :height, :map, :level, :pos, :team, :inventory
 
 	@@verbose ||= false
 
@@ -115,7 +115,7 @@ class Player
 		case @level
 			when 1
 				{
-					food: (3 - @inventory[:food]),
+					food: (@inventory[:food] >= 10 ? 0 : 10 - @inventory[:food]),
 					linemate: (1 - @inventory[:linemate]),
 					deraumere: 0,
 					sibur: 0,

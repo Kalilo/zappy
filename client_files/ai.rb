@@ -181,12 +181,12 @@ class AI
     puts "in AI::incanate" if @@verbose
 
     inventory
-    # abort_incanation && return unless can_incanate?(@player.required_res)
+    abort_incanation && return unless can_incanate?(@player.required_res)
 
     @server.execute_list @player.path_to_pos({x: 0, y: 0})
     @player.goto_last_path_result
 
-    # return unless wait_scan
+    return unless wait_scan
     @server.puts 'incantation'
     @player.level += 1
   end
@@ -221,12 +221,14 @@ class AI
     loop do
       find_food
       buff_results
+      look_for_resources
       find_food
-      pre_check_incanation(@player.required_res) if look_for_resources
-
+      inventory
+      pre_check_incanation(@player.required_res) # if look_for_resources
+      find_food
       if can_incanate?(@player.required_res)
         incanate
-      elsif @incanation[:checks] >= 2
+      elsif @incanation[:checks] >= 3
         fork
         @incanation[:checks] = 0
       end
@@ -258,7 +260,7 @@ class AI
     return unless enough_res_to_incanate? required_res
 
     @incanation[:enough_res] = true
-    @incanation[:req_players] = required_res[:player]
+    @incanation[:req_players] = required_res[:player] - 1
 
     @server.puts "broadcast can_incanate?"
   end
@@ -286,7 +288,7 @@ class AI
   def enough_res_to_incanate?(required_res)
     puts "in AI::enough_res_to_incanate?(#{required_res})" if @@verbose
 
-    return false unless required_res[:food] >= 10
+    return false unless required_res[:food] >= 7
     return false unless required_res[:linemate] == 0
     return false unless required_res[:deraumere] == 0
     return false unless required_res[:sibur] == 0

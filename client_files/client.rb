@@ -7,14 +7,14 @@ require 'socket'
 
 # Run the argument parser
 begin
-  require './parse_args.rb'
+  require './client_files/parse_args.rb'
 rescue
   abort "Error parsing args"
 end
 
 # Initialize the Server
 begin
-  require './server.rb'
+  require './client_files/server.rb'
 
   @server = Server.new(@options[:host], @options[:port], @options[:team])
 rescue
@@ -29,7 +29,7 @@ abort "no connections avaliable" if (@server.get_direct)[:connect_nbr].to_i < 0
 # Process.detach(pid)
 
 # Initialize the Player
-require './player.rb'
+require './client_files/player.rb'
 size = (@server.get_direct)[:pos].split(' ')
 
 @player = Player.new(size[0], size[1], @options[:verbose])
@@ -40,7 +40,7 @@ size = (@server.get_direct)[:pos].split(' ')
 
 @server.activate_write_loop
 
-require './ai.rb'
+require './client_files/ai.rb'
 
 @ai = AI.new @player, @server, @options[:verbose]
 

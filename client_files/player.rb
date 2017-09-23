@@ -1,4 +1,4 @@
-require './position.rb'
+require './client_files/position.rb'
 
 # This class is the main class for managing a player
 class Player

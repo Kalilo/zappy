@@ -41,6 +41,21 @@ char	valid_command(char *str)
 	return (0);
 }
 
+char	can_do_command2(char *str, int delay)
+{
+	if (!ft_strncmp(str, "b", 1))
+		return (delay >= 7);
+	if (!ft_strncmp(str, "inc", 3))
+		return (delay >= 300);
+	if (!ft_strncmp(str, "f", 1))
+		return (delay >= 42);
+	if (!ft_strncmp(str, "c", 1))
+		return (1);
+	if (!(ft_strncmp(str, "e", 1)))
+		return (delay >= 600);
+	return (0);
+}
+
 char	can_do_command(char *str, int delay)
 {
 	if (!ft_strncmp(str, "a", 1))
@@ -59,13 +74,5 @@ char	can_do_command(char *str, int delay)
 		return (delay >= 7);
 	if (!ft_strncmp(str, "k", 1))
 		return (delay >= 7);
-	if (!ft_strncmp(str, "b", 1))
-		return (delay >= 7);
-	if (!ft_strncmp(str, "inc", 3))
-		return (delay >= 300);
-	if (!ft_strncmp(str, "f", 1))
-		return (delay >= 42);
-	if (!ft_strncmp(str, "c", 1))
-		return (1);
-	return (0);
+	return (can_do_command2(str, delay));
 }

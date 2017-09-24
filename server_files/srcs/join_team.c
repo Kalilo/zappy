@@ -12,6 +12,13 @@
 
 #include "../includes/server.h"
 
+void	join_via_egg(t_client *client, char *team)
+{
+	client->pos = hatch_egg(find_team(team));
+	client->command = new_command(client, ft_strdup("egg"));
+	client->life = 600;
+}
+
 char	join_team(t_client *client, char *team)
 {
 	t_team	*t;
@@ -25,8 +32,8 @@ char	join_team(t_client *client, char *team)
 	}
 	if (!t || (t->avaliable_cons < 1 && !g_env.settings.num_unused_conn))
 		return (0);
-	if (t->eggs && ((client->delay = -600) || 1))
-		client->pos = hatch_egg(find_team(team));
+	if (t->eggs)
+		join_via_egg(client, team);
 	else if (g_env.settings.num_unused_conn && \
 			(g_env.settings.num_unused_conn--))
 		client->pos = (t_coord){rand() % G_WIDTH, rand() % G_HEIGHT};
@@ -37,6 +44,6 @@ char	join_team(t_client *client, char *team)
 	client->direction = (rand() & 0b11) << 1;
 	client->level = 1;
 	client->team_id = t->id;
-	client->life = 1260;
+	client->life += 1260;
 	return (1);
 }

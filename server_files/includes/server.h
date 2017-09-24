@@ -296,6 +296,7 @@ void				delete_all_commands(t_client *client);
 ** command_validation.c
 */
 char				valid_command(char *str);
+char				can_do_command2(char *str, int delay);
 char				can_do_command(char *str, int delay);
 
 /*
@@ -342,6 +343,11 @@ void				do_bradcast(t_client *client, char *msg);
 ** do_connect_nbr.c
 */
 void				do_connect_nbr(t_client *client);
+
+/*
+** do_egg.c
+*/
+void				do_egg(t_client *client);
 
 /*
 ** do_fork.c
@@ -594,6 +600,7 @@ char				*inventory_to_str(t_inventory *inventory);
 /*
 ** join_team.c
 */
+void				join_via_egg(t_client *client, char *team);
 char				join_team(t_client *client, char *team);
 
 /*

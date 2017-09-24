@@ -25,6 +25,7 @@ SRCS_NAME_1 =	accept_new_client.c			\
 				do_advance.c				\
 				do_broadcast.c				\
 				do_connect_nbr.c			\
+				do_egg.c					\
 				do_fork.c					\
 				do_incantation.c			\
 				do_inventory.c				\

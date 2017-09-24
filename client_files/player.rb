@@ -11,8 +11,8 @@ class Player
 		@level = 1
 		@width = width.to_i
 		@height = height.to_i
-		# Position.set_width = @width
-		# Position.set_height = @height
+		@pos.set_global_width @width
+		@pos.set_global_height @height
 		@map = Array.new(@width) { Array.new(@height, '') }
 		@inventory = Hash.new(0)
 		@path_result = @pos

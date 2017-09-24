@@ -46,6 +46,16 @@ class Position
 		@@height = height
 	end
 
+	def set_global_width(width)
+		puts "in Player::set_global_width(#{width})" if @@verbose
+		@@width = width
+	end
+
+	def set_global_height(height)
+		puts "in Player::set_global_height(#{height})" if @@verbose
+		@@height = height
+	end
+
 	def diff pos
 		puts "in Player::diff(#{pos})" if @@verbose
 

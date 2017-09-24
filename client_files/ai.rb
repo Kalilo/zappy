@@ -112,8 +112,8 @@ class AI
     puts "in AI::look_for_resources" if @@verbose
 
     required = @player.required_res
-    pos = @player.current_pos
-    current_required = required.select { |item| pos.include? item.to_s }
+    pos = @player.current_pos || ''
+    current_required = required.select { |item| pos.include? item.to_s } rescue []
     found = false
     current_required.each do |e|
       # [pos.scan(/(?=#{e})/).count, e[1]].min.times do
@@ -258,7 +258,7 @@ class AI
     return unless enough_res_to_incanate? required_res
 
     @incanation[:enough_res] = true
-    @incanation[:req_players] = required_res[:player] - 1
+    @incanation[:req_players] = required_res[:player]
 
     @server.puts "broadcast can_incanate?"
   end

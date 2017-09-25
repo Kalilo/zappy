@@ -25,7 +25,7 @@ t_egg	*new_egg(t_client *client)
 	return (egg);
 }
 
-void	lay_egg(t_client *client)
+int		lay_egg(t_client *client)
 {
 	t_egg		*egg;
 	t_egg		*tmp;
@@ -50,6 +50,7 @@ void	lay_egg(t_client *client)
 	}
 	else
 		team->eggs = egg;
+	return (egg->id);
 }
 
 int		hatch_egg(t_team *team, t_coord *pos)

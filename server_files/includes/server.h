@@ -413,7 +413,7 @@ void				do_take(t_client *client, char *what);
 ** egg_lst.c
 */
 t_egg				*new_egg(t_client *client);
-void				lay_egg(t_client *client);
+int					lay_egg(t_client *client);
 int					hatch_egg(t_team *team, t_coord *pos);
 int					delete_egg(t_team *team);
 void				dec_egg_health(void);
@@ -468,8 +468,8 @@ void				gfx_eht_auto(int egg_id);
 /*
 ** gfx_enw.c
 */
-char				*gfx_enw_str(t_client *client);
-void				gfx_enw_auto(t_client *client);
+char				*gfx_enw_str(t_client *client, int egg_id);
+void				gfx_enw_auto(t_client *client, int egg_id);
 
 /*
 ** gfx_mct.c

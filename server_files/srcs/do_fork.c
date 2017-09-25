@@ -14,10 +14,9 @@
 
 void	do_fork(t_client *client)
 {
-	lay_egg(client);
 	write_msg_to_sock(client->sock, "ok\n");
 	client->delay -= 42;
-	gfx_enw_auto(client);
+	gfx_enw_auto(client, lay_egg(client));
 }
 
 void	pre_fork(t_client *client)

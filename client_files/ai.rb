@@ -161,6 +161,7 @@ class AI
         when :fork
           # abort "Fatal error: 'fork' returned '#{r.values.first}'" unless r.values.first == 'ok'
           # handle fork
+          new_client
         when :connect_nbr
           # handle connect_nbr
         when :see
@@ -205,12 +206,6 @@ class AI
     begin
       f = @server.get(:fork)
     end while f.nil?
-
-    # pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
-	# Process.detach(pid)
-
-    p = "ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
-    Process.fork { system p }
   end
 
   def run
@@ -226,7 +221,7 @@ class AI
       find_food
       if can_incanate?(@player.required_res)
         incanate
-      elsif @incanation[:checks] >= 3
+      elsif @incanation[:checks] >= 3 && @player.get_food_level >= 10
         fork
         @incanation[:checks] = 0
       end
@@ -251,6 +246,14 @@ class AI
   end
 
   private
+
+  def new_client
+    # pid = spawn("ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
+    # Process.detach(pid)
+
+    p = "ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
+    Process.fork { system p }
+  end
 
   def pre_check_incanation(required_res)
     puts "in AI::pre_check_incanation(#{required_res})" if @@verbose

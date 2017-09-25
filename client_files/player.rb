@@ -240,6 +240,10 @@ class Player
 		end
 	end
 
+	def get_food_level
+		@inventory[:food]
+	end
+
 	private
 
 	def scan_square(radius, resource)

@@ -449,8 +449,8 @@ char				make_gfx_cli(t_client *client);
 /*
 ** gfx_ebo.c
 */
-char				*gfx_ebo_str(void);
-void				gfx_ebo_auto(void);
+char				*gfx_ebo_str(int id);
+void				gfx_ebo_auto(t_egg *egg);
 
 /*
 ** gfx_edi.c

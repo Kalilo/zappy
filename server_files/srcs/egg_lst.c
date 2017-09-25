@@ -65,6 +65,7 @@ t_coord	hatch_egg(t_team *team)
 	if ((egg = MAP(pos.x, pos.y).eggs))
 		while (egg->next && egg->team_id != team->id && (tmp = egg))
 			egg = egg->next;
+	gfx_ebo_auto(egg);
 	if (egg && egg->team_id == team->id && tmp)
 	{
 		tmp->next = egg->next;
@@ -76,7 +77,6 @@ t_coord	hatch_egg(t_team *team)
 		free(egg);
 	}
 	g_env.settings.num_eggs--;
-	gfx_ebo_auto();
 	return (pos);
 }
 

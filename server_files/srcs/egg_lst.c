@@ -44,8 +44,7 @@ int		lay_egg(t_client *client)
 	egg = ft_memalloc(sizeof(t_egg));
 	if (memcpy(egg, tmp, sizeof(t_egg)) && (tmp = team->eggs))
 	{
-		while (tmp->next)
-			tmp = tmp->next;
+		while (tmp->next) tmp = tmp->next;
 		tmp->next = egg;
 	}
 	else
@@ -63,7 +62,6 @@ int		hatch_egg(t_team *team, t_coord *pos)
 
 	*pos = egg->pos;
 	team->eggs = egg->next;
-	free(egg);
 	tmp = NULL;
 	if ((egg = MAP(pos->x, pos->y).eggs))
 		while (egg->next && egg->team_id != team->id && (tmp = egg))
@@ -71,15 +69,12 @@ int		hatch_egg(t_team *team, t_coord *pos)
 	gfx_ebo_auto(egg);
 	egg_id = egg->id;
 	if (egg && egg->team_id == team->id && tmp)
-	{
 		tmp->next = egg->next;
-		free(egg);
-	}
 	else if (egg && egg->team_id == team->id)
-	{
 		MAP(pos->x, pos->y).eggs = (egg) ? egg->next : NULL;
-		free(egg);
-	}
+	else
+		return (-1);
+	free(egg);
 	g_env.settings.num_eggs--;
 	return (egg_id);
 }
@@ -95,23 +90,19 @@ int		delete_egg(t_team *team)
 	pos = egg->pos;
 	id = egg->id;
 	team->eggs = egg->next;
-	free(egg);
 	tmp = NULL;
 	if ((egg = MAP(pos.x, pos.y).eggs))
 		while (egg->next && egg->team_id != team->id && (tmp = egg))
 			egg = egg->next;
 	if (egg && egg->team_id == team->id && tmp)
-	{
 		tmp->next = egg->next;
-		free(egg);
-	}
 	else if (egg && egg->team_id == team->id)
-	{
 		MAP(pos.x, pos.y).eggs = (egg) ? egg->next : NULL;
-		free(egg);
-	}
+	else
+		return (-1);
+	free(egg);
 	g_env.settings.num_eggs--;
-	return(id);
+	return (id);
 }
 
 void	dec_egg_health(void)

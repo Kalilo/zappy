@@ -31,6 +31,7 @@ void		manaage_client_loop(t_client *start, t_client *client, \
 				!ft_strcmp(GNL_LINE, "quit"))
 			{
 				ft_putendl("Client disconnected...");
+				gfx_pdi_auto(client);
 				close(client->sock);
 				client = (previous) ? previous : start;
 				if (gfx == 0)

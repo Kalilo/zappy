@@ -171,6 +171,7 @@ typedef struct		s_cli
 
 typedef struct		s_egg
 {
+	int				id;
 	int				team_id;
 	int				life;
 	t_coord			pos;
@@ -410,6 +411,7 @@ void				do_take(t_client *client, char *what);
 /*
 ** egg_lst.c
 */
+t_egg				*new_egg(t_client *client);
 void				lay_egg(t_client *client);
 t_coord				hatch_egg(t_team *team);
 void				delete_egg(t_team *team);

@@ -12,18 +12,28 @@
 
 #include "../includes/server.h"
 
+t_egg	*new_egg(t_client *client)
+{
+	static int	id_count;
+	t_egg		*egg;
+
+	egg = (t_egg *)ft_strnew(sizeof(t_egg));
+	egg->id = ++id_count;
+	egg->team_id = client->team_id;
+	egg->pos = client->pos;
+	return (egg);
+}
+
 void	lay_egg(t_client *client)
 {
-	t_egg	*egg;
-	t_egg	*tmp;
-	t_team	*team;
+	t_egg		*egg;
+	t_egg		*tmp;
+	t_team		*team;
 
 	egg = MAP(client->pos.x, client->pos.y).eggs;
 	while (egg && egg->next)
 		egg = egg->next;
-	tmp = (t_egg *)ft_strnew(sizeof(t_egg));
-	tmp->team_id = client->team_id;
-	tmp->pos = client->pos;
+	tmp = new_egg(client);
 	if ((tmp->life = 1260) && ++g_env.settings.num_eggs && egg)
 		egg->next = tmp;
 	else
@@ -43,9 +53,9 @@ void	lay_egg(t_client *client)
 
 t_coord	hatch_egg(t_team *team)
 {
-	t_coord	pos;
-	t_egg	*egg;
-	t_egg	*tmp;
+	t_coord		pos;
+	t_egg		*egg;
+	t_egg		*tmp;
 
 	egg = team->eggs;
 	pos = egg->pos;
@@ -72,9 +82,9 @@ t_coord	hatch_egg(t_team *team)
 
 void	delete_egg(t_team *team)
 {
-	t_coord	pos;
-	t_egg	*egg;
-	t_egg	*tmp;
+	t_coord		pos;
+	t_egg		*egg;
+	t_egg		*tmp;
 
 	egg = team->eggs;
 	pos = egg->pos;
@@ -99,9 +109,9 @@ void	delete_egg(t_team *team)
 
 void	dec_egg_health(void)
 {
-	t_team	*team;
-	t_egg	*egg;
-	t_egg	*previous;
+	t_team		*team;
+	t_egg		*egg;
+	t_egg		*previous;
 
 	team = g_env.settings.teams;
 	while (team)

@@ -38,15 +38,16 @@ void	populate_map(void)
 	unsigned int	max;
 
 	k = 0;
+	srand(time(NULL));
 	while (k < G_WIDTH)
 	{
 		l = 0;
 		while (l < G_HEIGHT)
 		{
 			max = 0;
-			while (rand() % 100 > 60 && ++max < 20)
+			while ((rand() % 100) > 60 && ++max < 20)
 				add_random_gem(k, l);
-			while (rand() % 100 > 55 && ++max < 20)
+			while ((rand() % 100) > 50 && ++max < 20)
 				(MAP(k, l).inventory.food)++;
 			l++;
 		}

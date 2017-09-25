@@ -455,8 +455,8 @@ void				gfx_ebo_auto(t_egg *egg);
 /*
 ** gfx_edi.c
 */
-char				*gfx_edi_str(void);
-void				gfx_edi_auto(void);
+char				*gfx_edi_str(int id);
+void				gfx_edi_auto(t_egg *egg);
 
 /*
 ** gfx_eht.c

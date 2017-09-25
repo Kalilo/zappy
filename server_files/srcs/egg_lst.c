@@ -122,7 +122,7 @@ void	dec_egg_health(void)
 		{
 			if (--egg->life <= 0)
 			{
-				gfx_edi_auto();
+				gfx_edi_auto(egg);
 				delete_egg(team);
 				egg = (previous) ? previous : team->eggs;
 			}

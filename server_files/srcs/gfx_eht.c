@@ -12,23 +12,23 @@
 
 #include "../includes/server.h"
 
-char	*gfx_eht_str(void)
+char	*gfx_eht_str(int id)
 {
 	char	*str;
 
-	str = ft_itoa(g_env.settings.num_eggs);
+	str = ft_itoa(id);
 	ft_str_append2("eht ", &str);
 	ft_str_append(&str, "\n");
 	return (str);
 }
 
-void	gfx_eht_auto(void)
+void	gfx_eht_auto(int egg_id)
 {
 	char	*str;
 
 	if (!g_env.gfx_cli)
 		return ;
-	str = gfx_eht_str();
+	str = gfx_eht_str(egg_id);
 	send_gfx(str);
 	ft_strdel(&str);
 }

@@ -160,6 +160,7 @@ typedef struct		s_client
 	int				level;
 	int				life;
 	int				id;
+	int				egg_id;
 	struct s_client	*next;
 }					t_client;
 
@@ -413,8 +414,8 @@ void				do_take(t_client *client, char *what);
 */
 t_egg				*new_egg(t_client *client);
 void				lay_egg(t_client *client);
-t_coord				hatch_egg(t_team *team);
-void				delete_egg(t_team *team);
+int					hatch_egg(t_team *team, t_coord *pos);
+int					delete_egg(t_team *team);
 void				dec_egg_health(void);
 
 /*
@@ -456,13 +457,13 @@ void				gfx_ebo_auto(t_egg *egg);
 ** gfx_edi.c
 */
 char				*gfx_edi_str(int id);
-void				gfx_edi_auto(t_egg *egg);
+void				gfx_edi_auto(int egg_id);
 
 /*
 ** gfx_eht.c
 */
-char				*gfx_eht_str(void);
-void				gfx_eht_auto(void);
+char				*gfx_eht_str(int id);
+void				gfx_eht_auto(int egg_id);
 
 /*
 ** gfx_enw.c

@@ -22,13 +22,13 @@ char	*gfx_edi_str(int id)
 	return (str);
 }
 
-void	gfx_edi_auto(t_egg *egg)
+void	gfx_edi_auto(int egg_id)
 {
 	char	*str;
 
 	if (!g_env.gfx_cli)
 		return ;
-	str = gfx_edi_str(egg->id);
+	str = gfx_edi_str(egg_id);
 	send_gfx(str);
 	ft_strdel(&str);
 }

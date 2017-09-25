@@ -21,6 +21,7 @@ t_egg	*new_egg(t_client *client)
 	egg->id = ++id_count;
 	egg->team_id = client->team_id;
 	egg->pos = client->pos;
+	egg->life = 1260;
 	return (egg);
 }
 
@@ -34,7 +35,7 @@ void	lay_egg(t_client *client)
 	while (egg && egg->next)
 		egg = egg->next;
 	tmp = new_egg(client);
-	if ((tmp->life = 1260) && ++g_env.settings.num_eggs && egg)
+	if (++g_env.settings.num_eggs && egg)
 		egg->next = tmp;
 	else
 		MAP(client->pos.x, client->pos.y).eggs = tmp;
@@ -51,21 +52,23 @@ void	lay_egg(t_client *client)
 		team->eggs = egg;
 }
 
-t_coord	hatch_egg(t_team *team)
+int		hatch_egg(t_team *team, t_coord *pos)
 {
-	t_coord		pos;
 	t_egg		*egg;
 	t_egg		*tmp;
+	int			egg_id;
 
 	egg = team->eggs;
-	pos = egg->pos;
+
+	*pos = egg->pos;
 	team->eggs = egg->next;
 	free(egg);
 	tmp = NULL;
-	if ((egg = MAP(pos.x, pos.y).eggs))
+	if ((egg = MAP(pos->x, pos->y).eggs))
 		while (egg->next && egg->team_id != team->id && (tmp = egg))
 			egg = egg->next;
 	gfx_ebo_auto(egg);
+	egg_id = egg->id;
 	if (egg && egg->team_id == team->id && tmp)
 	{
 		tmp->next = egg->next;
@@ -73,21 +76,23 @@ t_coord	hatch_egg(t_team *team)
 	}
 	else if (egg && egg->team_id == team->id)
 	{
-		MAP(pos.x, pos.y).eggs = (egg) ? egg->next : NULL;
+		MAP(pos->x, pos->y).eggs = (egg) ? egg->next : NULL;
 		free(egg);
 	}
 	g_env.settings.num_eggs--;
-	return (pos);
+	return (egg_id);
 }
 
-void	delete_egg(t_team *team)
+int		delete_egg(t_team *team)
 {
 	t_coord		pos;
 	t_egg		*egg;
 	t_egg		*tmp;
+	int			id;
 
 	egg = team->eggs;
 	pos = egg->pos;
+	id = egg->id;
 	team->eggs = egg->next;
 	free(egg);
 	tmp = NULL;
@@ -105,6 +110,7 @@ void	delete_egg(t_team *team)
 		free(egg);
 	}
 	g_env.settings.num_eggs--;
+	return(id);
 }
 
 void	dec_egg_health(void)
@@ -122,8 +128,7 @@ void	dec_egg_health(void)
 		{
 			if (--egg->life <= 0)
 			{
-				gfx_edi_auto(egg);
-				delete_egg(team);
+				gfx_edi_auto(delete_egg(team));
 				egg = (previous) ? previous : team->eggs;
 			}
 			egg = (egg) ? egg->next : NULL;

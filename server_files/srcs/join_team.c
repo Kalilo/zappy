@@ -14,7 +14,10 @@
 
 void	join_via_egg(t_client *client, char *team)
 {
-	client->pos = hatch_egg(find_team(team));
+	t_coord	pos;
+
+	client->egg_id = hatch_egg(find_team(team), &pos);
+	client->pos = pos;
 	client->command = new_command(client, ft_strdup("egg"));
 	client->life = 600;
 }

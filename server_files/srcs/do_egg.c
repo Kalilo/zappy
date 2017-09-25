@@ -15,5 +15,5 @@
 void	do_egg(t_client *client)
 {
 	(void)client;
-	gfx_eht_auto();
+	gfx_eht_auto(client->egg_id);
 }

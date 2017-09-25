@@ -176,7 +176,7 @@ class Server
 			key = (@queue_read.empty?) ? :unknown : @queue_read.pop.to_sym
 			if %W(advance right left fork).include? key.to_s && response == 'ko'
 				# @missing << key
-				@response << { key => 'ok' }
+				# @response << { key => 'ok' }
 			else
 				@response << { key => response }
 			end

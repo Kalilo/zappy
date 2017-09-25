@@ -189,7 +189,7 @@ class AI
     @player.goto_last_path_result
 
     return unless wait_scan
-    @server.puts 'incantation'
+    @server.puts "incantation"
     @player.level += 1
   end
 
@@ -210,9 +210,11 @@ class AI
 
   def run
     puts "in AI::run" if @@verbose
+    last = :none
 
     loop do
       find_food
+      new_client if last == :fork
       buff_results
       look_for_resources
       find_food
@@ -221,9 +223,13 @@ class AI
       find_food
       if can_incanate?(@player.required_res)
         incanate
+        last = :incanate
       elsif @incanation[:checks] >= 3 && @player.get_food_level >= 10
         fork
+        last = :fork
         @incanation[:checks] = 0
+      else
+        last = :none
       end
     end
   end
@@ -248,11 +254,11 @@ class AI
   private
 
   def new_client
-    # pid = spawn("ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
-    # Process.detach(pid)
+    pid = spawn("ruby #{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}")
+    Process.detach(pid)
 
-    p = "ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
-    Process.fork { system p }
+    # p = "ruby #{Dir.pwd}/#{$PROGRAM_NAME} -n #{@player.team} -p #{@server.port}"
+    # Process.fork { system p }
   end
 
   def pre_check_incanation(required_res)
@@ -271,17 +277,17 @@ class AI
 
     m = (message.split(','))[1] || ''
 
-    if m == 'can_incanate?'
+    if m == ' can_incanate?'
       if @incanation[:enough_res] == true
         @server.puts 'broadcast can_incanate? yes'
       else
         @server.puts 'broadcast can_incanate? no'
       end
-    elsif m == 'can_incanate? yes'
+    elsif m == ' can_incanate? yes'
       @incanation[:player] += 1
-    elsif m == 'can_incanate? abort'
+    elsif m == ' can_incanate? abort'
       @incanation[:player] -= 1
-    elsif m == 'incantation' && @incanation[:enough_res] == false
+    elsif m == ' incantation' && @incanation[:enough_res] == false
       @incanation[:player] = 0
     end
   end

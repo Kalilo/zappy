@@ -20,7 +20,7 @@ class AI
     begin
       sight = self.see
       b = b ? false : true
-      if b
+      if (rand(10) <= 3 ? (rand(2) == 1 ? true : false) : b)
         self.right && (sight = self.see) unless sight.include? 'food'
         self.right && (sight = self.see) unless sight.include? 'food'
         self.right && (sight = self.see) unless sight.include? 'food'
@@ -111,14 +111,14 @@ class AI
   def look_for_resources
     puts "in AI::look_for_resources" if @@verbose
 
-    required = @player.required_res
+    required = @player.remaining_resources
     pos = @player.current_pos || ''
     current_required = required.select { |item| pos.include? item.to_s } rescue []
     found = false
     current_required.each do |e|
       # [pos.scan(/(?=#{e})/).count, e[1]].min.times do
         self.take e.first
-        found = true
+        # found = true
       # end
     end
     unless found
@@ -154,7 +154,7 @@ class AI
         when :incantation
           # handle incanation
           # should go find food?
-          @player.level -= 1 if r.values.first = 'ko'
+          @player.level -= 1 if r.values.first == 'ko'
         when :inventory
           # handle inventory
           @player.update_inventory r.values.first
@@ -183,7 +183,7 @@ class AI
     puts "in AI::incanate" if @@verbose
 
     inventory
-    abort_incanation && return unless can_incanate?(@player.required_res)
+    abort_incanation && return unless can_incanate?(@player.remaining_resources)
 
     @server.execute_list @player.path_to_pos({x: 0, y: 0})
     @player.goto_last_path_result
@@ -219,9 +219,9 @@ class AI
       look_for_resources
       find_food
       inventory
-      pre_check_incanation(@player.required_res) # if look_for_resources
+      pre_check_incanation(@player.remaining_resources) # if look_for_resources
       find_food
-      if can_incanate?(@player.required_res)
+      if can_incanate?(@player.remaining_resources)
         incanate
         last = :incanate
       elsif @incanation[:checks] >= 3 && @player.get_food_level >= 10
@@ -295,7 +295,7 @@ class AI
   def enough_res_to_incanate?(required_res)
     puts "in AI::enough_res_to_incanate?(#{required_res})" if @@verbose
 
-    return false unless required_res[:food] >= 7
+    return false unless required_res[:food] >= 0
     return false unless required_res[:linemate] == 0
     return false unless required_res[:deraumere] == 0
     return false unless required_res[:sibur] == 0
@@ -323,19 +323,19 @@ class AI
 
     loop do
       pos = @player.current_pos
-      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
       see
       left
-      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
       see
       left
-      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
       see
       left
-      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players]
+      return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
       see
       inventory

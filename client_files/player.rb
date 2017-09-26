@@ -193,6 +193,12 @@ class Player
 		end
 	end
 
+	def remaining_resources
+		required = required_res || Hash.new(0)
+		remaing = Hash.new(0)
+		required.each { |k| remaing[k[0]] = @inventory[k[0]] - k[1] }
+	end
+
 	def path_to(resource)
 		puts "in Player::path_to('#{resource}')" if @@verbose
 

@@ -24,6 +24,7 @@ char	*gfx_enw_str(t_client *client, int egg_id)
 	str = ft_str_append3(&str, &tmp);
 	ft_str_append(&str, " ");
 	tmp = coord_to_str(client->pos);
+	str = ft_str_append3(&str, &tmp);
 	ft_str_append(&str, "\n");
 	return (str);
 }

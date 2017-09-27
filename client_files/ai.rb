@@ -202,10 +202,6 @@ class AI
     @player.goto_last_path_result
 
     @server.puts "fork"
-
-    begin
-      f = @server.get(:fork)
-    end while f.nil?
   end
 
   def run
@@ -241,6 +237,7 @@ class AI
 
     return false unless @incanation[:enough_res]
     return false unless required_res[:player] >= @incanation[:player]
+    return false unless @player.remaining_resources[:food] >= 10
     return true
   end
 

@@ -32,7 +32,7 @@
 /*
 ** limits
 */
-# define MAX_CLIENTS	SHRT_MAX
+# define MAX_CLIENTS	65535
 
 /*
 ** shorthand

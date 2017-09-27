@@ -38,7 +38,7 @@ static char	parse_basic_arg(int ac, char **av, int *k, int itmp)
 	if (!ft_strcmp(av[*k], "-p") && SET_FLAG(p))
 	{
 		ERR_QUIT_CON((*k + 1) >= ac, "Please Specify port.");
-		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 0 || itmp >= SHRT_MAX,
+		ERR_QUIT_CON((itmp = ft_atoi(av[++(*k)])) < 0 || itmp >= MAX_CLIENTS,
 			"Invalid port number.");
 		g_env.settings.port = itmp;
 	}

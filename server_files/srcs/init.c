@@ -38,7 +38,7 @@ void	sig_setter(void)
 
 char	init_main_socket(int port)
 {
-	if (port <= 0 || SHRT_MAX <= port)
+	if (port <= 0 || MAX_CLIENTS <= port)
 		error_quit("Invalid port number given.");
 	if ((MASTER_SOCK = socket(AF_INET, SOCK_STREAM, 0)) == 0)
 		error_quit("Failed to open master socket.");

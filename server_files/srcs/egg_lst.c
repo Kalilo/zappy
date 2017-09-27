@@ -44,7 +44,8 @@ int		lay_egg(t_client *client)
 	egg = ft_memalloc(sizeof(t_egg));
 	if (memcpy(egg, tmp, sizeof(t_egg)) && (tmp = team->eggs))
 	{
-		while (tmp->next) tmp = tmp->next;
+		while (tmp->next)
+			tmp = tmp->next;
 		tmp->next = egg;
 	}
 	else
@@ -59,7 +60,6 @@ int		hatch_egg(t_team *team, t_coord *pos)
 	int			egg_id;
 
 	egg = team->eggs;
-
 	*pos = egg->pos;
 	team->eggs = egg->next;
 	tmp = NULL;

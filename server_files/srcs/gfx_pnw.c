@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   gfx_pnw.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: khansman <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/16 08:40:52 by khansman          #+#    #+#             */
-/*   Updated: 2017/09/16 08:40:54 by khansman         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   gfx_pnw.c										  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: khansman <marvin@42.fr>					+#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2017/09/16 08:40:52 by khansman		  #+#	#+#			 */
+/*   Updated: 2017/09/16 08:40:54 by khansman		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../includes/server.h"
@@ -27,7 +27,7 @@ char	*gfx_pnw_str(t_client *client)
 	tmp = coord_to_str(client->pos);
 	str = ft_str_append3(&str, &tmp);
 	ft_str_append(&str, " ");
-	tmp = ft_itoa((int)client->direction >> 1);
+	tmp = ft_itoa(((int)client->direction >> 1) + 1);
 	str = ft_str_append3(&str, &tmp);
 	ft_str_append(&str, " ");
 	tmp = ft_itoa(client->level);

@@ -14,8 +14,10 @@
 
 static void	do_put_2(t_client *client, int id)
 {
-	gfx_pdr_auto(client, id);
 	write_msg_to_sock(client->sock, "ok\n");
+	gfx_pdr_auto(client, id);
+	gfx_pin_auto(client);
+	gfx_bct_auto(client->pos);
 	client->delay -= 7;
 }
 

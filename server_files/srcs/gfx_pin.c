@@ -43,3 +43,14 @@ void	gfx_pin(t_client *client, char *player_id)
 	write_msg_to_sock(client->sock, str);
 	ft_strdel(&str);
 }
+
+void	gfx_pin_auto(t_client *player)
+{
+	char		*str;
+
+	if (!(g_env.gfx_cli))
+		return ;
+	str = gfx_pin_str(player);
+	send_gfx(str);
+	ft_strdel(&str);
+}

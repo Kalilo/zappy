@@ -14,9 +14,16 @@
 
 static void	do_take_2(t_client *client, int id)
 {
+	int				x;
+	int				y;
+
 	write_msg_to_sock(client->sock, "ok\n");
+	x = rand() % G_WIDTH;
+	y = rand() % G_HEIGHT;
+	add_random_gem(x, y);
 	gfx_pgt_auto(client, id);
-	add_random_gem(rand() % G_WIDTH, rand() % G_HEIGHT);
+	gfx_pin_auto(client);
+	gfx_bct_auto((t_coord){x, y});
 	client->delay -= 7;
 }
 

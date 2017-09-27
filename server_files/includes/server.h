@@ -437,6 +437,7 @@ char				run_iteration(void);
 */
 char				*gfx_bct_str(t_coord pos);
 void				gfx_bct(t_client *client, char *params);
+void				gfx_bct_auto(t_coord pos);
 
 /*
 ** gfx_cli.c
@@ -534,6 +535,7 @@ void				gfx_pie_auto(t_coord pos, char sucess);
 */
 char				*gfx_pin_str(t_client *player);
 void				gfx_pin(t_client *client, char *player_id);
+void				gfx_pin_auto(t_client *player);
 
 /*
 ** gfx_plv.c

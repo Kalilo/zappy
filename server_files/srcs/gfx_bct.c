@@ -43,3 +43,14 @@ void	gfx_bct(t_client *client, char *params)
 	write_msg_to_sock(client->sock, str);
 	ft_strdel(&str);
 }
+
+void	gfx_bct_auto(t_coord pos)
+{
+	char	*str;
+
+	if (!(g_env.gfx_cli))
+		return ;
+	str = gfx_bct_str(pos);
+	send_gfx(str);
+	ft_strdel(&str);
+}

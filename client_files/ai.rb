@@ -215,11 +215,11 @@ class AI
     loop do
       find_food
       new_client if last == :fork
-      buff_results
       look_for_resources
       find_food
       inventory
       pre_check_incanation(@player.remaining_resources) # if look_for_resources
+      buff_results
       find_food
       if can_incanate?(@player.remaining_resources)
         incanate

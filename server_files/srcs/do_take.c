@@ -12,7 +12,7 @@
 
 #include "../includes/server.h"
 
-static void	do_take_2(t_client *client, int id)
+static void	do_take_2(t_client *client, int id, char *what)
 {
 	int				x;
 	int				y;
@@ -20,7 +20,10 @@ static void	do_take_2(t_client *client, int id)
 	write_msg_to_sock(client->sock, "ok\n");
 	x = rand() % G_WIDTH;
 	y = rand() % G_HEIGHT;
-	add_random_gem(x, y);
+	if (!ft_strcmp("food", what))
+		add_random_gem(x, y);
+	else
+		(MAP(x, y).inventory.food)++;
 	gfx_pgt_auto(client, id);
 	gfx_pin_auto(client);
 	gfx_bct_auto((t_coord){x, y});
@@ -52,5 +55,5 @@ void		do_take(t_client *client, char *what)
 		write_msg_to_sock(client->sock, "ko\n");
 		return ;
 	}
-	do_take_2(client, id);
+	do_take_2(client, id, what);
 }

@@ -191,6 +191,7 @@ class AI
     return unless wait_scan
     @server.puts "incantation"
     @player.level += 1
+    @incanation[:enough_res] = false
   end
 
   def fork
@@ -220,7 +221,7 @@ class AI
       if can_incanate?(@player.remaining_resources)
         incanate
         last = :incanate
-      elsif @incanation[:checks] >= 3 && @player.get_food_level >= 10
+      elsif @incanation[:checks] >= 3 && @player.get_food_level >= 10 && @incanation[:enough_res]
         fork
         last = :fork
         @incanation[:checks] = 0

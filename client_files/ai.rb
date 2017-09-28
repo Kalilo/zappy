@@ -51,6 +51,8 @@ class AI
 
     @server.puts 'advance'
     @player.advance
+
+    @player.required_res.each { |x| @server.puts "take #{x[0]}" if @player.current_pos.include?(x[0].to_s) && x[1] > 0 } if @player.get_food_level > 5
   end
 
   def left
@@ -75,6 +77,9 @@ class AI
     s = @server.wait_for(:see)
 
     @player.see s[:see]
+
+    @player.required_res.each { |x| @server.puts "take #{x[0]}" if s.include?(x[0].to_s) && x[1] > 0 } if @player.get_food_level > 5
+
     s[:see]
   end
 
@@ -148,6 +153,7 @@ class AI
           # abort "Fatal error: 'left' returned '#{r.values.first}'" unless r.values.first == 'ok'
         when :message
           # handle message case
+          next unless @player.inventory[:food] < 3
           recieve_message r.values.first
         when :move
           @player.move r.values.first.split(' ')[1]
@@ -197,7 +203,7 @@ class AI
   def fork
     puts "in AI::fork" if @@verbose
 
-    return unless inventory[:food].to_i >= 10
+    return unless inventory[:food].to_i >= 8 + (@player.level * 2)
 
     @server.execute_list @player.path_to_pos({x: 0, y: 0})
     @player.goto_last_path_result
@@ -221,7 +227,7 @@ class AI
       if can_incanate?(@player.remaining_resources)
         incanate
         last = :incanate
-      elsif @incanation[:checks] >= 3 && @player.get_food_level >= 10 && @incanation[:enough_res]
+      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 8 + (@player.level * 2) && @incanation[:enough_res]
         fork
         last = :fork
         @incanation[:checks] = 0
@@ -238,7 +244,7 @@ class AI
 
     return false unless @incanation[:enough_res]
     return false unless required_res[:player] >= @incanation[:player]
-    return false unless @player.remaining_resources[:food] >= 10
+    return false unless @player.remaining_resources[:food] >= 8 + (@player.level * 2)
     return true
   end
 
@@ -293,7 +299,7 @@ class AI
   def enough_res_to_incanate?(required_res)
     puts "in AI::enough_res_to_incanate?(#{required_res})" if @@verbose
 
-    return false unless required_res[:food] >= 0
+    return false unless required_res[:food] == 0
     return false unless required_res[:linemate] == 0
     return false unless required_res[:deraumere] == 0
     return false unless required_res[:sibur] == 0

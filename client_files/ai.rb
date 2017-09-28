@@ -222,12 +222,13 @@ class AI
       find_food
       inventory
       pre_check_incanation(@player.remaining_resources) # if look_for_resources
-      buff_results
       find_food
+      buff_results
+
       if can_incanate?(@player.remaining_resources)
         incanate
         last = :incanate
-      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 8 + (@player.level * 2) && @incanation[:enough_res]
+      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 8 + (@player.level * 2) && @incanation[:enough_res] == true
         fork
         last = :fork
         @incanation[:checks] = 0
@@ -242,9 +243,10 @@ class AI
 
     @incanation[:checks] += 1
 
-    return false unless @incanation[:enough_res]
+    return false unless @incanation[:enough_res] == true
     return false unless required_res[:player] >= @incanation[:player]
-    return false unless @player.remaining_resources[:food] >= 8 + (@player.level * 2)
+    return false unless @player.get_food_level >= 8 + (@player.level * 2)
+  
     return true
   end
 
@@ -270,7 +272,6 @@ class AI
 
     return unless enough_res_to_incanate? required_res
 
-    @incanation[:enough_res] = true
     @incanation[:req_players] = required_res[:player]
 
     @server.puts "broadcast can_incanate?"
@@ -300,12 +301,14 @@ class AI
     puts "in AI::enough_res_to_incanate?(#{required_res})" if @@verbose
 
     return false unless required_res[:food] == 0
-    return false unless required_res[:linemate] == 0
-    return false unless required_res[:deraumere] == 0
-    return false unless required_res[:sibur] == 0
-    return false unless required_res[:mendiane] == 0
-    return false unless required_res[:phiras] == 0
-    return false unless required_res[:thystame] == 0
+    return false unless required_res[:linemate] <= 0
+    return false unless required_res[:deraumere] <= 0
+    return false unless required_res[:sibur] <= 0
+    return false unless required_res[:mendiane] <= 0
+    return false unless required_res[:phiras] <= 0
+    return false unless required_res[:thystame] <= 0
+
+    @incanation[:enough_res] = true
 
     true
   end

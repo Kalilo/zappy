@@ -83,7 +83,8 @@ class Server
 	end
 
 	def get_approximate_timing
-		Thread.new do
+		sleep(0.5)
+		# Thread.new do
 			t1 = Time.now
 			@sock.puts "connect_nbr\n"
 			@sock.gets
@@ -92,21 +93,21 @@ class Server
 			t2 = Time.now
 
 			@time_unit = (t2.to_f - t1.to_f).fdiv(2.0)
-		end
+		# end
 		@time_unit
 	end
 
 	def wait_for(key_value)
-		# t1 = Time.now
+		t1 = Time.now
 		loop do
 			@last_response = get(key_value)
 			break unless @last_response.nil?
-			# t2 = Time.now
+			t2 = Time.now
 
-			# if (t2 - t1) > (7 * @time_unit) && @queue_write.empty?
-			# 	@queue_write << key_value.to_s
-			# 	t = Time.now
-			# end
+			if ((t2 - t1) > (7 * @time_unit) && @queue_write.empty?) || ((t2 - t1) > 7 && @queue_read.empty?)
+				@queue_write << key_value.to_s
+				t = Time.now
+			end
 		end
 		@last_response
 	end

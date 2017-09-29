@@ -116,27 +116,30 @@ class AI
   def look_for_resources
     puts "in AI::look_for_resources" if @@verbose
 
+    return false if @player.get_food_level < 7
+
     required = @player.remaining_resources
+    current_required = required.select { |item| pos.include?(item.to_s) && required[item] > 0 } rescue []
+    required.select! { |x| required[x] > 0 }
+    required.delete(:player)
     pos = @player.current_pos || ''
-    current_required = required.select { |item| pos.include? item.to_s } rescue []
     found = false
+
     current_required.each do |e|
-      # [pos.scan(/(?=#{e})/).count, e[1]].min.times do
-        self.take e.first
-        # found = true
-      # end
+      self.take e.first
+      found = true
     end
-    unless found
-      required.each do |e|
-        path = @player.path_to e.first.to_s
-        unless path[:error]
-          @server.execute_list path[:path]
-          @player.goto_last_path_result
-          self.take e.first
-          return true
-        end
+
+    required.each do |e|
+      path = @player.path_to e.first.to_s
+      unless path[:error]
+        @server.execute_list path[:path]
+        @player.goto_last_path_result
+        self.take e.first
+        return true
       end
     end
+
     found
   end
 
@@ -191,19 +194,23 @@ class AI
     inventory
     abort_incanation && return unless can_incanate?(@player.remaining_resources)
 
-    @server.execute_list @player.path_to_pos({x: 0, y: 0})
-    @player.goto_last_path_result
+    if @player.level > 1
+      @server.execute_list @player.path_to_pos({x: 0, y: 0})
+      @player.goto_last_path_result
 
-    return unless wait_scan
+      return unless wait_scan
+    end
+
     @server.puts "incantation"
     @player.level += 1
+    @incanation[:checks] = 0
     @incanation[:enough_res] = false
   end
 
   def fork
     puts "in AI::fork" if @@verbose
 
-    return unless inventory[:food].to_i >= 8 + (@player.level * 2)
+    return unless inventory[:food].to_i >= 10 + (@player.level * 2)
 
     @server.execute_list @player.path_to_pos({x: 0, y: 0})
     @player.goto_last_path_result
@@ -216,19 +223,23 @@ class AI
     last = :none
 
     loop do
+      look_for_resources if @player.get_food_level > 30
       find_food
       new_client if last == :fork
       look_for_resources
       find_food
+      look_for_resources if @player.get_food_level > 30
+      buff_results
       inventory
       pre_check_incanation(@player.remaining_resources) # if look_for_resources
       find_food
+      look_for_resources if @player.get_food_level > 30
       buff_results
 
       if can_incanate?(@player.remaining_resources)
         incanate
         last = :incanate
-      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 8 + (@player.level * 2) && @incanation[:enough_res] == true
+      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 10 + (@player.level * 2) && @incanation[:enough_res] == true
         fork
         last = :fork
         @incanation[:checks] = 0
@@ -244,9 +255,11 @@ class AI
     @incanation[:checks] += 1
 
     return false unless @incanation[:enough_res] == true
-    return false unless required_res[:player] >= @incanation[:player]
-    return false unless @player.get_food_level >= 8 + (@player.level * 2)
-  
+    if @player.level > 1
+      return false unless required_res[:player] >= @incanation[:player]
+    end
+    return false unless @player.get_food_level >= 10 + (@player.level * 2)
+
     return true
   end
 
@@ -274,7 +287,7 @@ class AI
 
     @incanation[:req_players] = required_res[:player]
 
-    @server.puts "broadcast can_incanate?"
+    @server.puts "broadcast can_incanate?" if @player.level > 1
   end
 
   def recieve_message(message)
@@ -328,22 +341,30 @@ class AI
   def wait_scan
     puts "in AI::wait_scan" if @@verbose
 
+    return false if @incanation[:player] < @incanation[:req_players]
+
+   start_food = @player.get_food_level 
+
     loop do
       pos = @player.current_pos
       return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
+      return false if pos[:food] - start_food >= 7
       see
       left
       return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
+      return false if pos[:food] - start_food >= 7
       see
       left
       return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
+      return false if pos[:food] - start_food >= 7
       see
       left
       return true if pos.scan(/(?='player')/).count >= @incanation[:req_players] - 1
       return false if inventory[:food] <= 5
+      return false if pos[:food] - start_food >= 7
       see
       inventory
     end

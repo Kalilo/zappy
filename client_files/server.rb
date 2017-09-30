@@ -35,7 +35,11 @@ class Server
 	def gets
 		puts "in Server::gets" if @@verbose
 
-		@response.empty? ? nil : @response.shift
+		@response_lock.lock
+		r = @response.empty? ? nil : @response.shift
+		@response_lock.unlock
+
+		r
 	end
 
 	def get(key_value)

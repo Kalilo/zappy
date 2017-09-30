@@ -178,9 +178,9 @@ class AI
           @player.see r.values.first
         else
           if r.to_s.include? 'take'
-            @player.put r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
+            # @player.put r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
           elsif r.to_s.include? 'put'
-            @player.take r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
+            # @player.take r.keys.first.to_s.split(' ')[1] if r.values.first == 'ko'
           elsif r.to_s.include? 'broadcast'
             # handle broadcast
           end
@@ -239,7 +239,7 @@ class AI
       if can_incanate?(@player.remaining_resources)
         incanate
         last = :incanate
-      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 10 + (@player.level * 2) && @incanation[:enough_res] == true
+      elsif @incanation[:checks] >= 5 && @player.get_food_level >= 10 + (@player.level * 2) && @incanation[:enough_res] == true && @incanation[:num_players] >= @incanation[:req_players]
         fork
         last = :fork
         @incanation[:checks] = 0
@@ -296,6 +296,7 @@ class AI
     m = (message.split(','))[1] || ''
 
     if m == ' can_incanate?'
+      @incanation[:num_players] = 0
       if @incanation[:enough_res] == true
         @server.puts 'broadcast can_incanate? yes'
       else
@@ -303,8 +304,10 @@ class AI
       end
     elsif m == ' can_incanate? yes'
       @incanation[:player] += 1
+      @incanation[:num_players] += 1
     elsif m == ' can_incanate? abort'
       @incanation[:player] -= 1
+      @incanation[:num_players] += 1
     elsif m == ' incantation' && @incanation[:enough_res] == false
       @incanation[:player] = 0
     end
@@ -333,6 +336,7 @@ class AI
     @incanation[:enough_res] = false
     @incanation[:player] = 0
     @incanation[:checks] = 0
+    @incanation[:num_players] = 0
     @incanation[:req_players] = 0
     @incanation[:res] = Hash.new(0)
     @incanation[:abort] = 0

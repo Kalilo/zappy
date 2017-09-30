@@ -30,7 +30,7 @@ abort "no connections avaliable" if (@server.get_direct)[:connect_nbr].to_i < 0
 
 # Initialize the Player
 require './client_files/player.rb'
-size = (@server.get_direct)[:pos].split(' ')
+size = (@server.get_direct)[:pos].split(' ') rescue abort("Failed to gain map size")
 
 @player = Player.new(size[0], size[1], @options[:verbose])
 

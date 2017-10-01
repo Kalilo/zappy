@@ -33,7 +33,7 @@ void	gfx_pgt_auto(t_client *client, int resource_id)
 
 	if (!g_env.gfx_cli)
 		return ;
-	str = gfx_pdr_str(client->id, resource_id);
+	str = gfx_pgt_str(client->id, resource_id);
 	tmp = gfx_pin_str(client);
 	str = ft_str_append3(&str, &tmp);
 	tmp = gfx_bct_str(client->pos);

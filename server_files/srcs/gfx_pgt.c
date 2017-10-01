@@ -18,7 +18,7 @@ char	*gfx_pgt_str(int id, int resource_id)
 	char	*tmp;
 
 	str = ft_itoa(id);
-	ft_str_append2("pfk ", &str);
+	ft_str_append2("pgt ", &str);
 	ft_str_append(&str, " ");
 	tmp = ft_itoa(resource_id);
 	str = ft_str_append3(&str, &tmp);
